@@ -13,7 +13,7 @@ import App from './App'
 import store from './store'
 import router from './router'
 
-import './icons' // icon
+import './assets/icons' // icon
 import './permission' // permission control
 import './utils/error-log' // error log
 
@@ -28,9 +28,10 @@ import * as filters from './filters' // global filters
  * please remove it before going online! ! !
  */
 import { mockXHR } from '../mock'
-if (process.env.NODE_ENV === 'production') {
-  mockXHR()
-}
+console.log('%c%s', 'padding:4px 10px;color:red;background:yellow', process.env.NODE_ENV)
+// if (process.env.NODE_ENV === 'production') {
+mockXHR()
+// }
 
 Vue.use(Element, {
   size: Cookies.get('size') || 'medium' // set element-ui default size

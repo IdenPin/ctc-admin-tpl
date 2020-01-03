@@ -22,6 +22,7 @@ export function filterAsyncRoutes(routes, roles) {
   const res = []
 
   routes.forEach(route => {
+    // 浅拷贝
     const tmp = { ...route }
     if (hasPermission(roles, tmp)) {
       if (tmp.children) {
