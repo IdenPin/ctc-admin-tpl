@@ -35,7 +35,6 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
         const { data } = response
-        console.log('data', data)
         commit('SET_TOKEN', data.token)
         setToken(data.token)
         resolve()
@@ -55,8 +54,7 @@ const actions = {
           reject('Verification failed, please Login again.')
         }
 
-        const { roles, name, introduction } = data
-        const avatar = require('@/assets/base/avatar.png')
+        const { roles, name, avatar, introduction } = data
 
         // roles must be a non-empty array
         if (!roles || roles.length <= 0) {

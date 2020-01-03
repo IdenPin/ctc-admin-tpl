@@ -7,10 +7,10 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 /* Router Modules */
-// import componentsRouter from './modules/components'
-// import chartsRouter from './modules/charts'
-// import tableRouter from './modules/table'
-// import nestedRouter from './modules/nested'
+import componentsRouter from './modules/components'
+import chartsRouter from './modules/charts'
+import tableRouter from './modules/table'
+import nestedRouter from './modules/nested'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -79,7 +79,19 @@ export const constantRoutes = [
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
-        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+        meta: { title: 'dashboard', icon: 'dashboard', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/documentation',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/documentation/index'),
+        name: 'Documentation',
+        meta: { title: 'documentation', icon: 'documentation', affix: true }
       }
     ]
   },
@@ -92,7 +104,7 @@ export const constantRoutes = [
         path: 'index',
         component: () => import('@/views/guide/index'),
         name: 'Guide',
-        meta: { title: '指南', icon: 'guide', noCache: true }
+        meta: { title: 'guide', icon: 'guide', noCache: true }
       }
     ]
   },
@@ -100,320 +112,289 @@ export const constantRoutes = [
     path: '/profile',
     component: Layout,
     redirect: '/profile/index',
-    hidden: false,
+    hidden: true,
     children: [
       {
         path: 'index',
         component: () => import('@/views/profile/index'),
         name: 'Profile',
-        meta: { title: '个人中心', icon: 'user', noCache: true }
+        meta: { title: 'profile', icon: 'user', noCache: true }
       }
     ]
   }
 ]
 
-// /**
-//  * asyncRoutes
-//  * the routes that need to be dynamically loaded based on user roles
-//  */
+/**
+ * asyncRoutes
+ * the routes that need to be dynamically loaded based on user roles
+ */
 export const asyncRoutes = [
   {
-    path: '/demo',
+    path: '/permission',
     component: Layout,
-    redirect: '/demo/demo-page',
-    always: true,
-    name: 'Demo',
+    redirect: '/permission/page',
+    alwaysShow: true, // will always show the root menu
+    name: 'Permission',
     meta: {
-      icon: 'component',
-      title: 'Demo页面',
+      title: 'permission',
+      icon: 'lock',
       roles: ['admin', 'editor'] // you can set roles in root nav
     },
     children: [
       {
-        path: '/demo/demo-page',
-        component: () => import('@/views/deme-page'),
-        name: 'DemoPage',
+        path: 'page',
+        component: () => import('@/views/permission/page'),
+        name: 'PagePermission',
         meta: {
-          title: '测试页面',
-          icon: 'table',
-          roles: ['admin', 'editor']
+          title: 'pagePermission',
+          roles: ['admin'] // or you can only set roles in sub nav
         }
       },
       {
-        path: '/demo/complex-table',
-        component: () => import('@/views/deme-page/complex-table'),
-        name: 'DemoPage',
+        path: 'directive',
+        component: () => import('@/views/permission/directive'),
+        name: 'DirectivePermission',
         meta: {
-          title: '复杂table',
-          icon: 'table',
-          roles: ['admin', 'editor']
+          title: 'directivePermission'
+          // if do not set roles, means: this page does not require permission
         }
       },
       {
-        path: '/demo/inline-edit-table',
-        component: () => import('@/views/deme-page/inline-edit-table'),
-        name: 'DemoPage',
+        path: 'role',
+        component: () => import('@/views/permission/role'),
+        name: 'RolePermission',
         meta: {
-          title: '行修改',
-          icon: 'table',
-          roles: ['admin', 'editor']
+          title: 'rolePermission',
+          roles: ['admin']
         }
       }
     ]
   },
-  //   {
-  //     path: '/permission',
-  //     component: Layout,
-  //     redirect: '/permission/page',
-  //     alwaysShow: true, // will always show the root menu
-  //     name: 'Permission',
-  //     meta: {
-  //       title: 'Permission',
-  //       icon: 'lock',
-  //       roles: ['admin', 'editor'] // you can set roles in root nav
-  //     },
-  //     children: [
-  //       {
-  //         path: 'page',
-  //         component: () => import('@/demo/permission/page'),
-  //         name: 'PagePermission',
-  //         meta: {
-  //           title: 'Page Permission',
-  //           roles: ['admin'] // or you can only set roles in sub nav
-  //         }
-  //       },
-  //       {
-  //         path: 'directive',
-  //         component: () => import('@/demo/permission/directive'),
-  //         name: 'DirectivePermission',
-  //         meta: {
-  //           title: 'Directive Permission'
-  //           // if do not set roles, means: this page does not require permission
-  //         }
-  //       },
-  //       {
-  //         path: 'role',
-  //         component: () => import('@/demo/permission/role'),
-  //         name: 'RolePermission',
-  //         meta: {
-  //           title: 'Role Permission',
-  //           roles: ['admin']
-  //         }
-  //       }
-  //     ]
-  //   },
 
-  //   {
-  //     path: '/icon',
-  //     component: Layout,
-  //     children: [
-  //       {
-  //         path: 'index',
-  //         component: () => import('@/demo/icons/index'),
-  //         name: 'Icons',
-  //         meta: { title: 'Icons', icon: 'icon', noCache: true }
-  //       }
-  //     ]
-  //   },
+  {
+    path: '/icon',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/icons/index'),
+        name: 'Icons',
+        meta: { title: 'icons', icon: 'icon', noCache: true }
+      }
+    ]
+  },
 
-  //   /** when your routing map is too long, you can split it into small modules **/
-  //   componentsRouter,
-  //   chartsRouter,
-  //   nestedRouter,
-  //   tableRouter,
+  /** when your routing map is too long, you can split it into small modules **/
+  componentsRouter,
+  chartsRouter,
+  nestedRouter,
+  tableRouter,
 
-  //   {
-  //     path: '/example',
-  //     component: Layout,
-  //     redirect: '/example/list',
-  //     name: 'Example',
-  //     meta: {
-  //       title: 'Example',
-  //       icon: 'example'
-  //     },
-  //     children: [
-  //       {
-  //         path: 'create',
-  //         component: () => import('@/demo/example/create'),
-  //         name: 'CreateArticle',
-  //         meta: { title: 'Create Article', icon: 'edit' }
-  //       },
-  //       {
-  //         path: 'edit/:id(\\d+)',
-  //         component: () => import('@/demo/example/edit'),
-  //         name: 'EditArticle',
-  //         meta: { title: 'Edit Article', noCache: true, activeMenu: '/example/list' },
-  //         hidden: true
-  //       },
-  //       {
-  //         path: 'list',
-  //         component: () => import('@/demo/example/list'),
-  //         name: 'ArticleList',
-  //         meta: { title: 'Article List', icon: 'list' }
-  //       }
-  //     ]
-  //   },
+  {
+    path: '/example',
+    component: Layout,
+    redirect: '/example/list',
+    name: 'Example',
+    meta: {
+      title: 'example',
+      icon: 'example'
+    },
+    children: [
+      {
+        path: 'create',
+        component: () => import('@/views/example/create'),
+        name: 'CreateArticle',
+        meta: { title: 'createArticle', icon: 'edit' }
+      },
+      {
+        path: 'edit/:id(\\d+)',
+        component: () => import('@/views/example/edit'),
+        name: 'EditArticle',
+        meta: { title: 'editArticle', noCache: true, activeMenu: '/example/list' },
+        hidden: true
+      },
+      {
+        path: 'list',
+        component: () => import('@/views/example/list'),
+        name: 'ArticleList',
+        meta: { title: 'articleList', icon: 'list' }
+      }
+    ]
+  },
 
-  //   {
-  //     path: '/tab',
-  //     component: Layout,
-  //     children: [
-  //       {
-  //         path: 'index',
-  //         component: () => import('@/demo/tab/index'),
-  //         name: 'Tab',
-  //         meta: { title: 'Tab', icon: 'tab' }
-  //       }
-  //     ]
-  //   },
+  {
+    path: '/tab',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/tab/index'),
+        name: 'Tab',
+        meta: { title: 'tab', icon: 'tab' }
+      }
+    ]
+  },
 
-  //   {
-  //     path: '/error',
-  //     component: Layout,
-  //     redirect: 'noRedirect',
-  //     name: 'ErrorPages',
-  //     meta: {
-  //       title: 'Error Pages',
-  //       icon: '404'
-  //     },
-  //     children: [
-  //       {
-  //         path: '401',
-  //         component: () => import('@/demo/error-page/401'),
-  //         name: 'Page401',
-  //         meta: { title: '401', noCache: true }
-  //       },
-  //       {
-  //         path: '404',
-  //         component: () => import('@/demo/error-page/404'),
-  //         name: 'Page404',
-  //         meta: { title: '404', noCache: true }
-  //       }
-  //     ]
-  //   },
+  {
+    path: '/error',
+    component: Layout,
+    redirect: 'noRedirect',
+    name: 'ErrorPages',
+    meta: {
+      title: 'errorPages',
+      icon: '404'
+    },
+    children: [
+      {
+        path: '401',
+        component: () => import('@/views/error-page/401'),
+        name: 'Page401',
+        meta: { title: 'page401', noCache: true }
+      },
+      {
+        path: '404',
+        component: () => import('@/views/error-page/404'),
+        name: 'Page404',
+        meta: { title: 'page404', noCache: true }
+      }
+    ]
+  },
 
-  //   {
-  //     path: '/error-log',
-  //     component: Layout,
-  //     children: [
-  //       {
-  //         path: 'log',
-  //         component: () => import('@/demo/error-log/index'),
-  //         name: 'ErrorLog',
-  //         meta: { title: 'Error Log', icon: 'bug' }
-  //       }
-  //     ]
-  //   },
+  {
+    path: '/error-log',
+    component: Layout,
+    children: [
+      {
+        path: 'log',
+        component: () => import('@/views/error-log/index'),
+        name: 'ErrorLog',
+        meta: { title: 'errorLog', icon: 'bug' }
+      }
+    ]
+  },
 
-  //   {
-  //     path: '/excel',
-  //     component: Layout,
-  //     redirect: '/excel/export-excel',
-  //     name: 'Excel',
-  //     meta: {
-  //       title: 'Excel',
-  //       icon: 'excel'
-  //     },
-  //     children: [
-  //       {
-  //         path: 'export-excel',
-  //         component: () => import('@/demo/excel/export-excel'),
-  //         name: 'ExportExcel',
-  //         meta: { title: 'Export Excel' }
-  //       },
-  //       {
-  //         path: 'export-selected-excel',
-  //         component: () => import('@/demo/excel/select-excel'),
-  //         name: 'SelectExcel',
-  //         meta: { title: 'Export Selected' }
-  //       },
-  //       {
-  //         path: 'export-merge-header',
-  //         component: () => import('@/demo/excel/merge-header'),
-  //         name: 'MergeHeader',
-  //         meta: { title: 'Merge Header' }
-  //       },
-  //       {
-  //         path: 'upload-excel',
-  //         component: () => import('@/demo/excel/upload-excel'),
-  //         name: 'UploadExcel',
-  //         meta: { title: 'Upload Excel' }
-  //       }
-  //     ]
-  //   },
+  {
+    path: '/excel',
+    component: Layout,
+    redirect: '/excel/export-excel',
+    name: 'Excel',
+    meta: {
+      title: 'excel',
+      icon: 'excel'
+    },
+    children: [
+      {
+        path: 'export-excel',
+        component: () => import('@/views/excel/export-excel'),
+        name: 'ExportExcel',
+        meta: { title: 'exportExcel' }
+      },
+      {
+        path: 'export-selected-excel',
+        component: () => import('@/views/excel/select-excel'),
+        name: 'SelectExcel',
+        meta: { title: 'selectExcel' }
+      },
+      {
+        path: 'export-merge-header',
+        component: () => import('@/views/excel/merge-header'),
+        name: 'MergeHeader',
+        meta: { title: 'mergeHeader' }
+      },
+      {
+        path: 'upload-excel',
+        component: () => import('@/views/excel/upload-excel'),
+        name: 'UploadExcel',
+        meta: { title: 'uploadExcel' }
+      }
+    ]
+  },
 
-  //   {
-  //     path: '/zip',
-  //     component: Layout,
-  //     redirect: '/zip/download',
-  //     alwaysShow: true,
-  //     name: 'Zip',
-  //     meta: { title: 'Zip', icon: 'zip' },
-  //     children: [
-  //       {
-  //         path: 'download',
-  //         component: () => import('@/demo/zip/index'),
-  //         name: 'ExportZip',
-  //         meta: { title: 'Export Zip' }
-  //       }
-  //     ]
-  //   },
+  {
+    path: '/zip',
+    component: Layout,
+    redirect: '/zip/download',
+    alwaysShow: true,
+    name: 'Zip',
+    meta: { title: 'zip', icon: 'zip' },
+    children: [
+      {
+        path: 'download',
+        component: () => import('@/views/zip/index'),
+        name: 'ExportZip',
+        meta: { title: 'exportZip' }
+      }
+    ]
+  },
 
-  //   {
-  //     path: '/pdf',
-  //     component: Layout,
-  //     redirect: '/pdf/index',
-  //     children: [
-  //       {
-  //         path: 'index',
-  //         component: () => import('@/demo/pdf/index'),
-  //         name: 'PDF',
-  //         meta: { title: 'PDF', icon: 'pdf' }
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     path: '/pdf/download',
-  //     component: () => import('@/demo/pdf/download'),
-  //     hidden: true
-  //   },
+  {
+    path: '/pdf',
+    component: Layout,
+    redirect: '/pdf/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/pdf/index'),
+        name: 'PDF',
+        meta: { title: 'pdf', icon: 'pdf' }
+      }
+    ]
+  },
+  {
+    path: '/pdf/download',
+    component: () => import('@/views/pdf/download'),
+    hidden: true
+  },
 
-  //   {
-  //     path: '/theme',
-  //     component: Layout,
-  //     children: [
-  //       {
-  //         path: 'index',
-  //         component: () => import('@/demo/theme/index'),
-  //         name: 'Theme',
-  //         meta: { title: 'Theme', icon: 'theme' }
-  //       }
-  //     ]
-  //   },
+  {
+    path: '/theme',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/theme/index'),
+        name: 'Theme',
+        meta: { title: 'theme', icon: 'theme' }
+      }
+    ]
+  },
 
-  //   {
-  //     path: '/clipboard',
-  //     component: Layout,
-  //     children: [
-  //       {
-  //         path: 'index',
-  //         component: () => import('@/demo/clipboard/index'),
-  //         name: 'ClipboardDemo',
-  //         meta: { title: 'Clipboard', icon: 'clipboard' }
-  //       }
-  //     ]
-  //   },
+  {
+    path: '/clipboard',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/clipboard/index'),
+        name: 'ClipboardDemo',
+        meta: { title: 'clipboardDemo', icon: 'clipboard' }
+      }
+    ]
+  },
 
-  //   {
-  //     path: 'external-link',
-  //     component: Layout,
-  //     children: [
-  //       {
-  //         path: 'https://github.com/PanJiaChen/vue-element-admin',
-  //         meta: { title: 'External Link', icon: 'link' }
-  //       }
-  //     ]
-  //   },
+  {
+    path: '/i18n',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/i18n-demo/index'),
+        name: 'I18n',
+        meta: { title: 'i18n', icon: 'international' }
+      }
+    ]
+  },
+
+  {
+    path: 'external-link',
+    component: Layout,
+    children: [
+      {
+        path: 'https://github.com/PanJiaChen/vue-element-admin',
+        meta: { title: 'externalLink', icon: 'link' }
+      }
+    ]
+  },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
