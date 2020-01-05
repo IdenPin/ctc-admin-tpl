@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+// import qs from 'qs'
 
 export function login(data) {
   return request({
@@ -7,6 +8,13 @@ export function login(data) {
     data
   })
 }
+// export function login(data) {
+//   return request({
+//     url: 'auth/account/login',
+//     method: 'post',
+//     data: qs.stringify(data)
+//   })
+// }
 
 export function getInfo(token) {
   return request({

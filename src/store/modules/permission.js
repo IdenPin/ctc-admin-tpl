@@ -1,5 +1,4 @@
 import { asyncRoutes, constantRoutes } from '@/router'
-
 /**
  * Use meta.role to determine if the current user has permission
  * @param roles
@@ -20,8 +19,8 @@ function hasPermission(roles, route) {
  */
 export function filterAsyncRoutes(routes, roles) {
   const res = []
-
-  routes.forEach(route => {
+  routes.forEach((route, i) => {
+    // 对象使用扩展运算可以实现浅复制
     const tmp = { ...route }
     if (hasPermission(roles, tmp)) {
       if (tmp.children) {
@@ -42,7 +41,7 @@ const state = {
 const mutations = {
   SET_ROUTES: (state, routes) => {
     state.addRoutes = routes
-    state.routes = constantRoutes.concat(routes)
+    state.routes = [...constantRoutes, ...routes]
   }
 }
 
