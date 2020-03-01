@@ -1,9 +1,15 @@
 <template>
   <div id="app">
-    <router-view/>
+    <Layout/>
   </div>
 </template>
 <script>
+import Layout from '@/components/Layout/index'
+export default {
+  components: {
+    Layout
+  }
+}
 </script>
 <style lang="scss">
 @import '@@/style/global.scss'

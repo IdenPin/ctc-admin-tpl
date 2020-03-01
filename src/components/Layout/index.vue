@@ -1,19 +1,34 @@
 <template>
   <div>
-    <el-container class="layout-container">
+    <el-container class="app-main">
       <Header />
       <el-container>
         <Aside/>
         <el-main class="layout-content">
-          <router-view/>
+            <router-view/>
         </el-main>
       </el-container>
       <Footer/>
     </el-container>
   </div>
 </template>
+<script>
+import Header from './Header'
+import Aside from './Aside'
+import Footer from './Footer'
+import ResizeHandler from '@/mixin/resizeHandler'
+export default {
+  name: 'Layout',
+  mixins: [ResizeHandler],
+  components: {
+    Header,
+    Aside,
+    Footer
+  }
+}
+</script>
 <style lang="scss" scoped>
-.layout-container{
+.app-main{
   margin-top: $headerHeight;
   border: 1px solid #eee;
   border-bottom: none;
@@ -24,16 +39,3 @@
   }
 }
 </style>
-
-<script>
-import Header from './Header'
-import Aside from './Aside'
-import Footer from './Footer'
-export default {
-  components: {
-    Header,
-    Aside,
-    Footer
-  }
-}
-</script>
