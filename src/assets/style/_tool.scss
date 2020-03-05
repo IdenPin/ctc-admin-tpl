@@ -1,0 +1,72 @@
+
+
+.text-center{
+  text-align: center;
+}
+.text-right{
+  text-align: right;
+}
+.text-left{
+  text-align: left;
+}
+
+.mx-auto{
+  margin-left:  auto;
+  margin-right:  auto;
+}
+
+// .m-10 -> margin: 10px;
+// .m--10-> margin: -10px;
+@each $typeKey, $typeVal in $spacing-types {
+  @each $sizeKey, $sizeVal in $spacing-sizes {
+    @if $typeKey == m{
+      .-#{$typeKey}-#{$sizeKey}{
+         #{$typeVal}: -$sizeVal;
+      }
+    }
+    .#{$typeKey}-#{$sizeKey}{
+      #{$typeVal}:$sizeVal;
+    }
+  }
+}
+
+// .ml-10 -> margin-left: 10px;
+@each $typeKey, $typeVal in $spacing-types {
+  @each $sizeKey, $sizeVal in $spacing-sizes {
+    @each $directionKey, $directionVal in $spacing-direction {
+      @if $typeKey == m {
+        .-#{$typeKey}#{$directionKey}-#{$sizeKey}{
+          #{$typeVal}-#{$directionVal}:-$sizeVal;
+        }
+      }
+      .#{$typeKey}#{$directionKey}-#{$sizeKey}{
+        #{$typeVal}-#{$directionVal}:$sizeVal;
+      }
+   }
+  }
+}
+
+// .mx-10 -> margin-left: 10px; margin-right: 10px;
+// .py-10 -> padding-top: 10px; padding-bottom: 10px;
+@each $typeKey, $typeVal in $spacing-types {
+  @each $sizeKey, $sizeVal in $spacing-sizes {
+      @if $typeKey == m {
+        .-#{$typeKey}x-#{$sizeKey}{
+          #{$typeVal}-left:-$sizeVal;
+          #{$typeVal}-right:-$sizeVal;
+        }
+        .-#{$typeKey}y-#{$sizeKey}{
+          #{$typeVal}-top:-$sizeVal;
+          #{$typeVal}-bottom:-$sizeVal;
+        }
+      }
+      .#{$typeKey}x-#{$sizeKey}{
+        #{$typeVal}-left:$sizeVal;
+        #{$typeVal}-right:$sizeVal;
+      }
+      .#{$typeKey}y-#{$sizeKey}{
+        #{$typeVal}-top:$sizeVal;
+        #{$typeVal}-bottom:$sizeVal;
+      }
+  }
+}

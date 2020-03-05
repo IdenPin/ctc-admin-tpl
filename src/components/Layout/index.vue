@@ -14,7 +14,7 @@
 </template>
 <script>
 import Header from './Header'
-import Aside from './Aside'
+import Aside from './Aside/index'
 import Footer from './Footer'
 import ResizeHandler from '@/mixin/resizeHandler'
 export default {

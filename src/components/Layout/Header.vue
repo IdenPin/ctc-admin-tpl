@@ -2,7 +2,7 @@
   <el-header class="layout-header">
     <div class="container">
       <!-- 'display': device === 'mobile' ? 'none' : 'block' -->
-      <div class="logo" :style="{'width': !sidebar ? '254px' : '63px'}">
+      <div class="logo" :style="{'width': !sidebar ? '210px' : '63px'}">
         <svg-icon icon-class="bulb" :class="{'svg-logo-max': !sidebar ? true : false}"/>
       </div>
       <div class="header-right">
@@ -15,10 +15,10 @@
             <i class="el-icon-setting" style="margin-right: 15px"></i>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>查看</el-dropdown-item>
-              <el-dropdown-item>退出</el-dropdown-item>
+              <el-dropdown-item @click.native="logout">退出</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
-          <span>韩嘉琛</span>
+          <span>{{ username }}</span>
         </div>
       </div>
     </div>
@@ -28,7 +28,13 @@
 import { mapGetters } from 'vuex'
 export default {
   computed: {
-    ...mapGetters(['sidebar', 'device'])
+    ...mapGetters(['sidebar', 'device', 'username', 'token'])
+  },
+  methods: {
+    logout () {
+      this.$store.dispatch('doLogout')
+      this.$router.push('/login')
+    }
   }
 }
 </script>
@@ -59,6 +65,7 @@ export default {
       height: $headerHeight;
       line-height: $headerHeight;
       border-right: 1px solid $borderGrey;
+      text-align: center;
     }
     .header-right{
       padding-left: 20px;
