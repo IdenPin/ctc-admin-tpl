@@ -15,4 +15,11 @@ export default class UserSev {
       url: '/menu'
     })
   }
+
+  static profile () {
+    return service({
+      method: 'get',
+      url: '/profile'
+    })
+  }
 }

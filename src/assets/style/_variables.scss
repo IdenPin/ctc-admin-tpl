@@ -1,7 +1,10 @@
 // 系统 header 高度
 $headerHeight: 64px;
-$spaceSize: 12px;
+$spaceSize: 20px;
 
+// sidebar 宽度
+$sidebarMaxWidth: 210;
+$sidebarMinWidth: 65;
 
 
 // 主题背景色
@@ -48,3 +51,14 @@ $spacing-sizes: (
   '56': 14rem,
   '64': 16rem,
 );
+
+
+
+
+
+// https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
+:export {
+  headerHeight: $headerHeight;
+  sidebarMaxWidth: $sidebarMaxWidth;
+  sidebarMinWidth: $sidebarMinWidth;
+}

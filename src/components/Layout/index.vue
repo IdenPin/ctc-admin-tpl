@@ -5,7 +5,9 @@
       <el-container>
         <Aside/>
         <el-main class="layout-content">
-            <router-view/>
+            <div class="main-wrapper">
+              <router-view/>
+            </div>
         </el-main>
       </el-container>
       <Footer/>

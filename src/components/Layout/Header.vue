@@ -1,8 +1,7 @@
 <template>
   <el-header class="layout-header">
     <div class="container">
-      <!-- 'display': device === 'mobile' ? 'none' : 'block' -->
-      <div class="logo" :style="{'width': !sidebar ? '210px' : '63px'}">
+      <div class="logo" :style= "{'width':(!sidebar ? (variables.sidebarMaxWidth + 'px') : variables.sidebarMinWidth - 2 + 'px')}">
         <svg-icon icon-class="bulb" :class="{'svg-logo-max': !sidebar ? true : false}"/>
       </div>
       <div class="header-right">
@@ -26,9 +25,14 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import variables from '@@/style/_variables.scss'
+
 export default {
   computed: {
-    ...mapGetters(['sidebar', 'device', 'username', 'token'])
+    ...mapGetters(['sidebar', 'device', 'username', 'token']),
+    variables () {
+      return variables
+    }
   },
   methods: {
     logout () {
@@ -68,8 +72,8 @@ export default {
       text-align: center;
     }
     .header-right{
-      padding-left: 20px;
-      padding-right: 20px;
+      padding-left: $spaceSize;
+      padding-right: $spaceSize;
       flex: 1;
       .user{
         float: right;

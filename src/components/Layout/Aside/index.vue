@@ -1,7 +1,11 @@
 <template>
-  <el-aside
-    id="layout-aside"
-    :width="sidebar ? '64px' : '211px'"
+    <el-aside
+      class='layout-aside'
+      :style= "{'width':(sidebar ? Number(variables.sidebarMinWidth - 1) + 'px' : Number(variables.sidebarMaxWidth) + 1 + 'px')}"
+      :class="{
+        'show-sidebar' : !sidebar ? true : false,
+        'hide-sidebar' : sidebar ? true : false,
+      }"
     >
       <el-menu
         :default-active="activeMenu"
@@ -14,13 +18,15 @@
         class="el-menu-aside">
           <sidebar-item v-for="route in menu" :key="route.path" :item="route" :base-path="route.path" />
       </el-menu>
-  </el-aside>
+    </el-aside>
+
 </template>
 <script>
 import { mapGetters } from 'vuex'
 import { isExternal } from '@@/utils/validate'
 import SidebarItem from './SidebarItem'
 import FixiOSBug from './FixiOSBug'
+import variables from '@@/style/_variables.scss'
 import path from 'path'
 export default {
   components: {
@@ -42,7 +48,13 @@ export default {
         return meta.activeMenu
       }
       return path
+    },
+    variables () {
+      return variables
     }
+  },
+  mounted () {
+    console.log('----', variables)
   },
   methods: {
     hasOneShowingChild (children = [], parent) {
@@ -81,12 +93,8 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
-.el-menu-aside:not(.el-menu--collapse) {
-  width: 210px;
-  min-height: 400px;
-}
-#layout-aside {
+<style lang="scss">
+.layout-aside{
   color: #333;
   background-color: #fff;
   border-right: 1px solid $borderGrey!important;
@@ -98,5 +106,42 @@ export default {
       top: -2px;
     }
   }
+  .menu-wrapper {
+    .router-link-active{
+      .el-submenu__title,
+      .el-menu-item{
+        background-color: #ecf5ff;
+      }
+    }
+  }
+
 }
+.menu-wrapper{
+  a{
+    text-decoration: none!important;
+  }
+}
+
+// .hide-sidebar{
+//   width: #{$sidebarMinWidth + 'px'};
+// }
+// .show-sidebar{
+//   width: #{$sidebarMaxWidth + 'px'};
+//   // .menu-wrapper {
+//   //   .svg-ico{
+//   //     margin-right: 6px!important;
+//   //   }
+//   // }
+// }
+.hide-sidebar .el-submenu__title span,
+.hide-sidebar .el-submenu__title .el-icon-arrow-right{
+  display: none;
+}
+// .hide-sidebar ::v-deep {
+//   .menu-wrapper {
+//     svg.svg-ico{
+//       margin-right: 0!important;
+//     }
+//   }
+// }
 </style>
