@@ -5,10 +5,13 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "new:comp": "node ./script/generateComponent",
+    "new:view": "node ./script/generateView"
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "chalk": "^3.0.0",
     "core-js": "^3.6.4",
     "dayjs": "^1.8.21",
     "element-ui": "^2.13.0",
