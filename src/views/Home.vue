@@ -23,7 +23,7 @@ export default {
       address: '上海市普陀区金沙江路 1518'
     }
     return {
-      tableData: Array(9).fill(item)
+      tableData: Array(30).fill(item)
     }
   }
 }
