@@ -8,58 +8,57 @@ import Log from './log'
 Vue.use(VueRouter)
 
 // 前端没有权限的路由
-const CONST_ROUTER = [
+export const CONST_ROUTER = [
   {
-    path: '/login',
-    name: 'Login',
-    component: () => import('../views/Login')
+    path: '/home',
+    name: 'Home',
+    component: () => import('../views/Home'),
+    meta: {
+      title: '首页',
+      icon: 'table'
+    }
   },
   {
-    path: '/',
-    name: 'Layout',
-    component: () => import('@/components/Layout/index'),
-    redirect: '/',
-    children: [
-      {
-        path: '/home',
-        name: 'Home',
-        component: () => import('../views/Home')
-      },
-      {
-        path: '/list',
-        name: 'List',
-        component: () => import('@/views/List')
-      }
-    ]
-  },
-  System,
-  Eco,
-  Log
+    path: '/404',
+    component: () => import('@/views/error-page/404'),
+    hidden: true
+  }
+  // { path: '*', redirect: '/404', hidden: true }
 ]
 
 // 后台接口请求返回的路由
-const ASYNC_ROUTER = [
+export const ASYNC_ROUTER = [
+  System,
+  Eco,
+  Log,
   {
     path: '/about',
     name: 'About',
-    component: () => import('@/components/Layout/index'),
-    children: [
-      {
-        path: '/about',
-        component: () =>
-          import(/* webpackChunkName: "about" */ '../views/About')
-      }
-    ]
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/About')
   }
 ]
-const routes = [...CONST_ROUTER, ...ASYNC_ROUTER]
-
-const router = new VueRouter({
+const createRouter = () => new VueRouter({
   mode: 'history',
-  routes
+  routes: [
+    {
+      path: '/login',
+      name: 'Login',
+      component: () => import('../views/Login')
+    },
+    {
+      path: '/',
+      name: 'Layout',
+      component: () => import('@/components/Layout/index'),
+      children: [...CONST_ROUTER]
+    }
+  ]
 })
+const router = createRouter()
+
+// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
+export function resetRouter () {
+  const newRouter = createRouter()
+  router.matcher = newRouter.matcher // reset router
+}
 
 export default router

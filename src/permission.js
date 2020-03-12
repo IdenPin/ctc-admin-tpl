@@ -4,7 +4,6 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 NProgress.configure({ showSpinner: true })
 const whiteRouterArray = ['/login', '/auth-redirect']
-
 Router.beforeEach((to, from, next) => {
   NProgress.start()
   if (Store.getters.token) {
@@ -22,6 +21,7 @@ Router.beforeEach((to, from, next) => {
       NProgress.done()
     }
   }
+  next()
 })
 
 Router.afterEach(() => {

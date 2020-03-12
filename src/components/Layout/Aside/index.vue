@@ -53,9 +53,6 @@ export default {
       return variables
     }
   },
-  mounted () {
-    console.log('----', variables)
-  },
   methods: {
     hasOneShowingChild (children = [], parent) {
       const showingChildren = children.filter(item => {

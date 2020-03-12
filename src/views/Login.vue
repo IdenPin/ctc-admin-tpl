@@ -65,17 +65,16 @@ export default {
           const data = await this.$store.dispatch('doLogin', this.ruleForm)
           if (data) {
             // 获取菜单
-            this.$store.dispatch('fetchMenu').then(res => {
-              if (res) {
-                this.$notify({
-                  type: 'success',
-                  title: '成功',
-                  message: '登录成功',
-                  duration: 1000
-                })
-                this.$router.push('/')
-              }
-            })
+            const asyncRoutes = await this.$store.dispatch('fetchMenu')
+            if (asyncRoutes) {
+              this.$notify({
+                type: 'success',
+                title: '成功',
+                message: '登录成功',
+                duration: 1000
+              })
+              this.$router.push('/home')
+            }
           }
         } else {
           console.log('error submit!!')
