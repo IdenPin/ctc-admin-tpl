@@ -1,38 +1,37 @@
 import UserSev from '@/api/UserSev'
-import router, { CONST_ROUTER, ASYNC_ROUTER, resetRouter } from '@/router'
-const filterPermissionRoutes = (data, localData) => {
-  data.forEach((v, i) => {
-    // 第一层菜单
-    v.deepLevel = 1
-    // console.log('path->1：' + v.path)
-    if (v.path === localData[i].path) {
-      v.component = localData[i].component
-    }
-    if (v.children) {
-      v.children.forEach((vv, ii) => {
-        // 第二层菜单
-        vv.deepLevel = 2
-        // console.log('path-->2：' + v.path + '/' + vv.path)
-        const biz = localData[i].children
-        if (vv.path === biz[ii].path) {
-          vv.component = biz[ii].component
-        }
-        if (vv.children) {
-          vv.children.forEach((vvv, iii) => {
-            // 第三层菜单
-            vvv.deepLevel = 3
-            const foo = biz[ii].children[iii]
-            if (vvv.path === foo.path) {
-              vvv.component = foo.component
-            }
-            // console.log('path--->3：' + v.path + '/' + vv.path + '/' + vvv.path)
-          })
-        }
-      })
+import router, { CONST_ROUTER, ASYNC_LOCAL_ROUTER, resetRouter } from '@/router'
+/**
+ * 路由权限过滤
+ * 1. 将本地 ASYNC_LOCAL_ROUTER 拍平存入新对象
+ * 2. 循环查找复制
+ * @param {接口返回的路由树} data
+ * @param {本地携带 component 的路由} ASYNC_LOCAL_ROUTER
+ */
+// 1. 将本地 ASYNC_LOCAL_ROUTER 拍平存入新对象
+const clapLocalMenu = {}
+function clapLocalMenuFn (data) {
+  data.forEach(item => {
+    clapLocalMenu[item.path] = item.component
+    if (item.children) {
+      clapLocalMenuFn(item.children)
     }
   })
-  return data
 }
+clapLocalMenuFn(ASYNC_LOCAL_ROUTER)
+
+// 2. 循环查找复制
+const filterPermissionRoutes = (data, clapLocalMenu) => {
+  data.forEach(item => {
+    var component = clapLocalMenu[item.path]
+    if (component) {
+      item.component = component
+    }
+    if (item.children) {
+      filterPermissionRoutes(item.children, clapLocalMenu)
+    }
+  })
+}
+
 const user = {
   state: {
     token: '',
@@ -48,7 +47,6 @@ const user = {
     },
     SET_MENU (state, data) {
       state.menu = CONST_ROUTER.concat(data)
-      console.log(CONST_ROUTER.concat(data))
     }
   },
   actions: {
@@ -65,12 +63,9 @@ const user = {
     },
     async fetchMenu ({ commit }) {
       const { data } = await UserSev.menu()
-      // 1. 接口获取菜单树
-      // 2. 通过对比父级和子集的 path 字段动态加载本地的 component
-      const asyncRouter = filterPermissionRoutes(data, ASYNC_ROUTER)
-      // console.log('---', asyncRouter)
-      commit('SET_MENU', asyncRouter)
-      router.addRoutes(asyncRouter)
+      filterPermissionRoutes(data, clapLocalMenu)
+      commit('SET_MENU', data)
+      router.addRoutes(data)
       return true
     }
   }

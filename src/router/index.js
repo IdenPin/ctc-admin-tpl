@@ -12,30 +12,38 @@ export const CONST_ROUTER = [
   {
     path: '/home',
     name: 'Home',
-    component: () => import('../views/Home'),
+    component: () => import('@/views/Home'),
     meta: {
       title: '首页',
       icon: 'table'
     }
-  },
-  {
-    path: '/404',
-    component: () => import('@/views/error-page/404'),
-    hidden: true
   }
-  // { path: '*', redirect: '/404', hidden: true }
 ]
 
 // 后台接口请求返回的路由
-export const ASYNC_ROUTER = [
-  System,
+export const ASYNC_LOCAL_ROUTER = [
   Eco,
   Log,
+  System,
+  // {
+  //   path: '/external-link',
+  //   name: 'ExternalLink',
+  //   meta: {
+  //     title: 'External Link',
+  //     icon: 'link'
+  //   },
+  //   component: () => import('@/components/Layout/index')
+  // },
   {
     path: '/about',
     name: 'About',
-    component: () => import('../views/About')
-  }
+    component: () => import('@/views/About.vue')
+  },
+  {
+    path: '/404',
+    component: () => import('@/views/error-page/404')
+  },
+  { path: '*', redirect: '/404', hidden: true }
 ]
 const createRouter = () => new VueRouter({
   mode: 'history',
@@ -43,7 +51,7 @@ const createRouter = () => new VueRouter({
     {
       path: '/login',
       name: 'Login',
-      component: () => import('../views/Login')
+      component: () => import('@/views/Login')
     },
     {
       path: '/',
