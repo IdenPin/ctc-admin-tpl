@@ -95,6 +95,7 @@ export default {
   color: #333;
   background-color: #fff;
   border-right: 1px solid $borderGrey!important;
+  transition: width 0.28s;
   .el-menu {
     border-right: none;
     .el-menu-item [class^=el-icon-],

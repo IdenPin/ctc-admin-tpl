@@ -14,6 +14,7 @@
     "chalk": "^3.0.0",
     "core-js": "^3.6.4",
     "dayjs": "^1.8.21",
+    "echarts": "^4.6.0",
     "element-ui": "^2.13.0",
     "nprogress": "^0.2.0",
     "svg-sprite-loader": "^4.2.1",
@@ -55,10 +56,13 @@
       "parser": "babel-eslint"
     },
     "rules": {
-       "no-unused-vars": [1, { 
-        "vars": "local",
-        "args": "none" 
-       }]
+      "no-unused-vars": [
+        1,
+        {
+          "vars": "local",
+          "args": "none"
+        }
+      ]
     }
   },
   "browserslist": [
