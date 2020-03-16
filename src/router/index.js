@@ -37,7 +37,14 @@ export const ASYNC_LOCAL_ROUTER = [
   {
     path: '/about',
     name: 'About',
-    component: () => import('@/views/About.vue')
+    component: () => import('@/components/Layout/index'),
+    children: [
+      {
+        component: () => import('@/views/About.vue'),
+        path: 'index',
+        name: 'Index'
+      }
+    ]
   },
   {
     path: '/404',
@@ -45,22 +52,27 @@ export const ASYNC_LOCAL_ROUTER = [
   },
   { path: '*', redirect: '/404', hidden: true }
 ]
-const createRouter = () => new VueRouter({
-  mode: 'history',
-  routes: [
-    {
-      path: '/login',
-      name: 'Login',
-      component: () => import('@/views/Login')
-    },
-    {
-      path: '/',
-      name: 'Layout',
-      component: () => import('@/components/Layout/index'),
-      children: [...CONST_ROUTER]
-    }
-  ]
-})
+const createRouter = () =>
+  new VueRouter({
+    mode: 'history',
+    routes: [
+      {
+        path: '/',
+        redirect: '/home'
+      },
+      {
+        path: '/login',
+        name: 'Login',
+        component: () => import('@/views/Login')
+      },
+      {
+        path: '/',
+        name: 'Layout',
+        component: () => import('@/components/Layout/index'),
+        children: [...CONST_ROUTER]
+      }
+    ]
+  })
 const router = createRouter()
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
