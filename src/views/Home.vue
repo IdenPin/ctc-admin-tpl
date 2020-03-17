@@ -17,6 +17,9 @@
 // @ is an alias to /src
 import dayjs from 'dayjs'
 import Echarts from 'echarts'
+import _ from 'lodash'
+import { Xcharts } from '@pdeng/x-charts'
+import Chart from '@@/utils/x-charts/index'
 export default {
   name: 'Home',
   data () {
@@ -31,37 +34,34 @@ export default {
     }
   },
   mounted () {
-    this.renderChart()
-    this.resizeView()
-    window.addEventListener('resize', this.resizeView)
-    this.$once('hook:beforeDestroy', () => {
-      window.removeEventListener('resize', this.resizeView)
-    })
+    this.chartObj = new Chart({
+      el: '#line-chart',
+      type: 'bar'
+    }).showLoading()
+    this.chartObj.source().hideLoading()
+    console.log('Line', this.chartObj)
+    // T.chart.showLoading()
+    // T.chart.hideLoading()
+
+    // this.renderChart()
+    // this.resizeView()
+    // window.addEventListener('resize', _.debounce(this.resizeView, 150))
+    // this.$once('hook:beforeDestroy', () => {
+    //   if (!this.chartObj) {
+    //     return
+    //   }
+    //   window.removeEventListener('resize', this.resizeView)
+    //   this.chartObj.charts.dispose()
+    //   this.chartObj = null
+    // })
 
     const layoutAside = document.querySelector('.layout-aside')
-    layoutAside.addEventListener('transitionend', this.resizeView)
+    layoutAside.addEventListener('transitionend', _.debounce(this.resizeView, 150))
   },
   methods: {
     renderChart () {
-      this.chartObj = Echarts.init(document.querySelector('#line-chart'))
-      this.chartObj.setOption({
-        title: {
-          text: 'ECharts 入门示例'
-        },
-        tooltip: {},
-        legend: {
-          data: ['销量']
-        },
-        xAxis: {
-          data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
-        },
-        yAxis: {},
-        series: [{
-          name: '销量',
-          type: 'bar',
-          data: [5, 20, 36, 10, 10, 20]
-        }]
-      })
+      this.chartObj = new Xcharts('line-chart', 'line')
+      this.chartObj.setData()
     },
     resizeView () {
       this.chartObj.resize()

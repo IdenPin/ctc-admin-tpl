@@ -17,7 +17,6 @@ function clapLocalMenuFn (data) {
     }
   })
 }
-console.log('clapLocalMenu', clapLocalMenu)
 clapLocalMenuFn(ASYNC_LOCAL_ROUTER)
 
 // 2. 循环查找复制

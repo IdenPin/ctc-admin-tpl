@@ -10,12 +10,14 @@
     "new:view": "node ./script/generateView"
   },
   "dependencies": {
+    "@pdeng/x-charts": "0.0.3-0",
     "axios": "^0.19.2",
     "chalk": "^3.0.0",
     "core-js": "^3.6.4",
     "dayjs": "^1.8.21",
     "echarts": "^4.6.0",
     "element-ui": "^2.13.0",
+    "lodash": "^4.17.15",
     "nprogress": "^0.2.0",
     "svg-sprite-loader": "^4.2.1",
     "vue": "^2.6.11",
