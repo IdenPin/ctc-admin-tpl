@@ -17,7 +17,7 @@
 // @ is an alias to /src
 import dayjs from 'dayjs'
 import _ from 'lodash'
-import Chart from '@@/utils/x-charts/index'
+import Chart from '@@/utils/chart'
 export default {
   name: 'Home',
   data () {
@@ -27,105 +27,75 @@ export default {
       address: '上海市普陀区金沙江路 1518'
     }
     return {
-      tableData: Array(30).fill(item),
-      chartObj: null
+      tableData: Array(30).fill(item)
     }
   },
   mounted () {
-    setTimeout(() => {
-      console.log('开始了。。。')
-      for (var i = 1; i <= 10; i++) {
-        console.log(i)
-        new Chart({
-          el: `#line-chart-${i}`,
-          type: 'bar',
-          style: {
-            title: {
-              text: `图表${i}`
-            },
-            tooltip: {
-              borderRadius: 10,
-              textStyle: {
-                color: 'yellow'
-              }
-            }
-          }
-        })
-          .showLoading()
-          .source({
-            xData: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'],
-            series: [{
-              name: '销量',
-              type: 'bar',
-              data: Array.from({ length: 6 }, () => {
-                return String(Math.random()).slice(-2)
-              })
+    for (var i = 1; i <= 10; i++) {
+      this['chart' + i] = new Chart({
+        el: `#line-chart-${i}`,
+        type: 'bar',
+        style: {
+          title: {
+            text: `图表${i}`
+          },
+          series: [
+            {
+              smooth: true,
+              type: 'line'
             },
             {
-              name: '售价',
-              type: 'bar',
-              data: Array.from({ length: 6 }, () => {
-                return String(Math.random()).slice(-2)
-              })
-            }]
-          })
-          .hideLoading()
-      }
-    }, 2000)
+              smooth: true,
+              type: 'line'
+            }
+          ]
+        }
+      })
+        .showLoading()
+        .source({
+          xData: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'],
+          series: [{
+            name: '销量',
+            type: 'bar',
+            data: Array.from({ length: 6 }, () => {
+              return String(Math.random()).slice(-2)
+            })
+          },
+          {
+            name: '售价',
+            type: 'line',
+            data: Array.from({ length: 6 }, () => {
+              return String(Math.random()).slice(-2)
+            })
+          }]
+        })
+        .hideLoading()
+    }
 
-    // this.chartObj = new Chart({
-    //   el: '#line-chart',
-    //   type: 'bar',
-    //   style: {
-    //     title: {
-    //       text: '启蒙'
-    //     },
-    //     tooltip: {
-    //       borderRadius: 10,
-    //       textStyle: {
-    //         color: 'yellow'
-    //       }
-    //     }
-    //   }
-    // })
-    // this.chartObj
-    //   .showLoading()
-    //   .source({
-    //     yData: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'],
-    //     series: [{
-    //       name: '销量',
-    //       type: 'bar',
-    //       data: [5, 20, 36, 10, 10, 20]
-    //     },
-    //     {
-    //       name: '售价',
-    //       type: 'bar',
-    //       data: [51, 201, 316, 101, 101, 120]
-    //     }]
-    //   })
-    //   .hideLoading()
-    // console.log('Line', this.chartObj)
-    // window.addEventListener('resize', _.debounce(this.resizeView, 150))
-    // this.$once('hook:beforeDestroy', () => {
-    //   if (!this.chartObj) {
-    //     return
-    //   }
-    //   window.removeEventListener('resize', this.resizeView)
-    //   this.chartObj.dispose()
-    //   this.chartObj = null
-    // })
+    window.addEventListener('resize', _.debounce(this.resizeView, 150))
+    this.$once('hook:beforeDestroy', () => {
+      if (!this.chart1) {
+        return
+      }
+      window.removeEventListener('resize', this.resizeView)
+      for (var i = 1; i <= 10; i++) {
+        this['chart' + i].dispose()
+        this['chart' + i] = null
+      }
+    })
 
     const layoutAside = document.querySelector('.layout-aside')
     layoutAside.addEventListener('transitionend', _.debounce(this.resizeView, 150))
   },
   methods: {
-    // renderChart () {
-    //   this.chartObj = new Xcharts('line-chart', 'line')
-    //   this.chartObj.setData()
-    // },
-    // resizeView () {
-    //   this.chartObj && this.chartObj.resize()
-    // }
+    resizeView () {
+      console.log(this.chart1)
+      if (this.chart1) {
+        for (var i = 1; i <= 10; i++) {
+          this['chart' + i].resize()
+        }
+      }
+    }
   }
 }
 </script>
