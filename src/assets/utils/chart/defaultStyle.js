@@ -145,7 +145,24 @@ export default {
       legend: {
         orient: 'vertical',
         x: 'left'
-      }
+      },
+      series: [
+        {
+          type: 'pie',
+          radius: [0, '80%'],
+          label: {
+            normal: {
+              show: false,
+              position: 'center'
+            }
+          },
+          labelLine: {
+            normal: {
+              show: false
+            }
+          }
+        }
+      ]
     })
   },
   radar: () => {

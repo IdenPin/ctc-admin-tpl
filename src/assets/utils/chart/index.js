@@ -24,38 +24,43 @@ export default class Chart {
   }
 
   source (data) {
-    this.mergeStyleData = _.merge({}, this.mergeStyle, {
-      series: data.series,
-      xAxis: {
-        data: data.xData || null
-      },
-      yAxis: {
-        data: data.yData || null
-      }
-    })
-    if (this.opt.type === 'pie') {
+    if (this.opt.type === 'line' || this.opt.type === 'bar') {
       this.mergeStyleData = _.merge({}, this.mergeStyle, {
-        series: [
-          {
-            type: 'pie',
-            radius: [0, '80%'],
-            label: {
-              normal: {
-                show: false,
-                position: 'center'
-              }
-            },
-            labelLine: {
-              normal: {
-                show: false
-              }
-            },
-            data: data.series
-          }
-        ]
+        series: data.series,
+        xAxis: {
+          data: data.xData || null
+        },
+        yAxis: {
+          data: data.yData || null
+        }
       })
     }
-    console.log('-----', this.mergeStyleData)
+    if (this.opt.type === 'pie') {
+      const tempData = []
+      // 组合 pie
+      if (this.mergeStyle.series.length > 1) {
+        data.series.forEach(v => {
+          tempData.push({
+            data: v
+          })
+        })
+      } else {
+        // 单个 pie
+        tempData.push({
+          data: data.series
+        })
+      }
+      this.mergeStyleData = _.merge({}, this.mergeStyle, {
+        series: tempData
+      })
+    }
+
+    if (this.opt.type === 'radar') {
+      this.mergeStyleData = _.merge({}, this.mergeStyle, {
+        series: data.series,
+        radar: data.radar
+      })
+    }
 
     this.chart.setOption(this.mergeStyleData)
     return this

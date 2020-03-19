@@ -1,8 +1,8 @@
 <template>
   <div>
-    Admin组件
-    <div id="chart" style="height: 400px"></div>
+    <div id="chart" style="height: 400px;" ></div>
     <div id="chart-1" style="height: 400px"></div>
+    <div id="chart-2" style="height: 400px"></div>
   </div>
 </template>
 <script>
@@ -104,13 +104,139 @@ export default {
 
     new Chart({
       el: '#chart-1',
-      type: 'pie'
+      type: 'pie',
+      style: {
+        series: [
+          {
+            radius: ['50%', '70%']
+          }
+        ]
+      }
     }).source({
       series: [{ value: 335, name: '直接访问' },
         { value: 310, name: '邮件营销' },
         { value: 234, name: '联盟广告' },
         { value: 135, name: '视频广告' },
         { value: 1548, name: '搜索引擎' }]
+    })
+
+    new Chart({
+      el: '#chart-2',
+      type: 'pie',
+      style: {
+        series: [
+          {
+            type: 'pie',
+            radius: '25%',
+            center: ['50%', '50%'],
+            animation: false,
+            label: {
+              position: 'outer',
+              alignTo: 'none',
+              bleedMargin: 5
+            },
+            left: 0,
+            right: '66.6667%',
+            top: 0,
+            bottom: 0
+          },
+          {
+            type: 'pie',
+            radius: ['20%', '40%'],
+            center: ['50%', '50%'],
+            animation: false,
+            label: {
+              position: 'outer',
+              alignTo: 'labelLine',
+              bleedMargin: 5
+            },
+            left: '33.3333%',
+            right: '33.3333%',
+            top: 0,
+            bottom: 0
+          },
+          {
+            type: 'pie',
+            radius: '25%',
+            center: ['50%', '50%'],
+            animation: false,
+            label: {
+              position: 'outer',
+              alignTo: 'edge',
+              margin: 20
+            },
+            left: '66.6667%',
+            right: 0,
+            top: 0,
+            bottom: 0
+          }
+        ]
+      }
+    }).source({
+      series: [[{
+        name: 'Apples',
+        value: 70
+      }, {
+        name: 'Strawberries',
+        value: 68
+      }, {
+        name: 'Bananas',
+        value: 48
+      }, {
+        name: 'Oranges',
+        value: 40
+      }, {
+        name: 'Pears',
+        value: 32
+      }, {
+        name: 'Pineapples',
+        value: 27
+      }, {
+        name: 'Grapes',
+        value: 18
+      }], [{
+        name: 'Apples',
+        value: 70
+      }, {
+        name: 'Strawberries',
+        value: 68
+      }, {
+        name: 'Bananas',
+        value: 48
+      }, {
+        name: 'Oranges',
+        value: 40
+      }, {
+        name: 'Pears',
+        value: 32
+      }, {
+        name: 'Pineapples',
+        value: 27
+      }, {
+        name: 'Grapes',
+        value: 18
+      }], [{
+        name: 'Apples',
+        value: 70
+      }, {
+        name: 'Strawberries',
+        value: 68
+      }, {
+        name: 'Bananas',
+        value: 48
+      }, {
+        name: 'Oranges',
+        value: 40
+      }, {
+        name: 'Pears',
+        value: 32
+      }, {
+        name: 'Pineapples',
+        value: 27
+      }, {
+        name: 'Grapes',
+        value: 18
+      }]]
     })
   }
 }

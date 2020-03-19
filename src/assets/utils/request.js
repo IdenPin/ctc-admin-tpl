@@ -47,7 +47,6 @@ service.interceptors.response.use(response => {
     return res
   }
 }, error => {
-  console.log('err', error)
   Notification.error({
     title: '失败',
     message: error.message
