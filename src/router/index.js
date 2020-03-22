@@ -71,6 +71,21 @@ export const ASYNC_LOCAL_ROUTER = [
         }
       }
     ]
+  },
+  {
+    path: '/http://www.baidu.com',
+    name: 'Baidu',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'BaiduIndex',
+        meta: {
+          title: '百度',
+          icon: '第三方'
+        }
+      }
+    ]
   }
   // Log,
 ]

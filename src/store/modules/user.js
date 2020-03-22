@@ -1,6 +1,7 @@
 import UserSev from '@/api/UserSev'
 import router, { CONST_ROUTER, ASYNC_LOCAL_ROUTER, resetRouter } from '@/router'
 import _ from 'lodash'
+import { isExternal } from '@@/utils/validate'
 
 // 方便服务端接口数据返回，如果只用一级不用返回 layout 路由
 function addIndexRouter (data) {
@@ -32,6 +33,7 @@ function clapLocalMenuFn (data) {
   data.forEach(item => {
     clapLocalMenu[item.name] = {
       component: item.component,
+      path: item.path,
       name: item.name,
       meta: item.meta
     }
@@ -44,15 +46,19 @@ function clapLocalMenuFn (data) {
 // 2. 循环查找复制
 const filterPermissionRoutes = (data, clapLocalMenu) => {
   data.forEach(item => {
-    // console.log('item', item)
-    var component = clapLocalMenu[item.name].component
-    var meta = clapLocalMenu[item.name].meta
-    if (component) {
-      item.component = component
-      item.meta = meta
-    }
-    if (item.children) {
-      filterPermissionRoutes(item.children, clapLocalMenu)
+    if (!isExternal(item.path)) {
+      // console.log('item', item)
+      const component = clapLocalMenu[item.name].component
+      const meta = clapLocalMenu[item.name].meta
+      const path = clapLocalMenu[item.name].path
+      if (component) {
+        item.component = component
+        item.meta = meta
+        item.path = path
+      }
+      if (item.children) {
+        filterPermissionRoutes(item.children, clapLocalMenu)
+      }
     }
   })
 }
@@ -90,9 +96,10 @@ const user = {
       const { data } = await UserSev.menu()
       addIndexRouter(data)
       clapLocalMenuFn(ASYNC_LOCAL_ROUTER)
+      // console.log('clapLocalMenu', clapLocalMenu)
       filterPermissionRoutes(data, clapLocalMenu)
       data.push({ path: '*', redirect: '/error', hidden: true })
-      console.log('--clapLocalMenu---', clapLocalMenu)
+      console.log('--data---', data)
       commit('SET_MENU', data)
       router.addRoutes(data)
       return true
