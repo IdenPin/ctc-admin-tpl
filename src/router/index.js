@@ -2,8 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Layout from '@/components/Layout/index'
 // 导入业务路由
-// import System from './system'
-// import Eco from './eco/index'
+import System from './system'
+import Eco from './eco/index'
 // import Log from './log'
 
 Vue.use(VueRouter)
@@ -19,9 +19,10 @@ export const CONST_ROUTER = [
     path: '/',
     name: 'Layout',
     component: Layout,
+    redirect: 'home',
     children: [
       {
-        path: '/home',
+        path: 'home',
         name: 'Home',
         component: () => import('@/views/Home'),
         meta: {
@@ -32,29 +33,14 @@ export const CONST_ROUTER = [
     ]
   },
   {
-    path: '/about',
-    name: 'About',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'index',
-        component: () => import('@/views/About.vue'),
-        meta: {
-          title: '关于',
-          icon: 'table'
-        }
-      }
-    ]
-  },
-  {
     path: '/error',
     component: Layout,
     name: 'error',
     hidden: true,
+    redirect: '/error/404',
     children: [
       {
-        path: '/404',
+        path: '404',
         name: 'Error404',
         meta: {
           title: '404',
@@ -68,25 +54,25 @@ export const CONST_ROUTER = [
 
 // 后台接口请求返回的路由
 export const ASYNC_LOCAL_ROUTER = [
-  // Eco,
+  Eco,
+  System,
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'ProfileIndex',
+        component: () => import('@/views/Profile.vue'),
+        meta: {
+          title: '关于',
+          icon: 'table'
+        }
+      }
+    ]
+  }
   // Log,
-  // System,
-  // {
-  //   path: '/about',
-  //   name: 'About',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       name: 'index',
-  //       component: () => import('@/views/About.vue'),
-  //       meta: {
-  //         title: '关于',
-  //         icon: 'table'
-  //       }
-  //     }
-  //   ]
-  // }
 ]
 const createRouter = () =>
   new VueRouter({

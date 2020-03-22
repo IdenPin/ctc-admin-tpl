@@ -3,7 +3,10 @@ import EcoWebPage from './eco-web-page'
 export default {
   path: '/eco',
   name: 'Eco',
-  redirect: '/',
+  meta: {
+    title: '环保生态圈',
+    icon: 'international'
+  },
   component: () => import('@/components/Layout/index'),
   children: [SpManager, EcoWebPage]
 }

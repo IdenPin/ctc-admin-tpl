@@ -13,7 +13,7 @@
           <el-dropdown>
             <i class="el-icon-setting" style="margin-right: 15px"></i>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item @click.native="() => $router.push('/about')">
+              <el-dropdown-item @click.native="() => $router.push('/profile/index')">
                 查看
               </el-dropdown-item>
               <el-dropdown-item @click.native="logout">退出</el-dropdown-item>
