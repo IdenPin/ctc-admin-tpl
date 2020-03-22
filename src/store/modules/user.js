@@ -17,7 +17,6 @@ function clapLocalMenuFn (data) {
     }
   })
 }
-clapLocalMenuFn(ASYNC_LOCAL_ROUTER)
 
 // 2. 循环查找复制
 const filterPermissionRoutes = (data, clapLocalMenu) => {
@@ -63,7 +62,9 @@ const user = {
     },
     async fetchMenu ({ commit }) {
       const { data } = await UserSev.menu()
+      clapLocalMenuFn(ASYNC_LOCAL_ROUTER)
       filterPermissionRoutes(data, clapLocalMenu)
+      console.log('data---', data)
       commit('SET_MENU', data)
       router.addRoutes(data)
       return true

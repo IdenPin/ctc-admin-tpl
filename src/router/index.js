@@ -1,77 +1,97 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Layout from '@/components/Layout/index'
 // 导入业务路由
-import System from './system'
-import Eco from './eco/index'
-import Log from './log'
+// import System from './system'
+// import Eco from './eco/index'
+// import Log from './log'
 
 Vue.use(VueRouter)
 
 // 前端没有权限的路由
 export const CONST_ROUTER = [
   {
-    path: '/home',
-    name: 'Home',
-    component: () => import('@/views/Home'),
-    meta: {
-      title: '首页',
-      icon: 'table'
-    }
+    path: '/login',
+    name: 'Login',
+    component: () => import('@/views/Login')
+  },
+  {
+    path: '/',
+    name: 'Layout',
+    component: Layout,
+    children: [
+      {
+        path: '/home',
+        name: 'Home',
+        component: () => import('@/views/Home'),
+        meta: {
+          title: '首页',
+          icon: 'table'
+        }
+      }
+    ]
+  },
+  {
+    path: '/about',
+    name: 'About',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'index',
+        component: () => import('@/views/About.vue'),
+        meta: {
+          title: '关于',
+          icon: 'table'
+        }
+      }
+    ]
+  },
+  {
+    path: '/error',
+    component: Layout,
+    name: 'error',
+    hidden: true,
+    children: [
+      {
+        path: '/404',
+        name: 'Error404',
+        meta: {
+          title: '404',
+          icon: '404'
+        },
+        component: () => import('@/views/error-page/404')
+      }
+    ]
   }
 ]
 
 // 后台接口请求返回的路由
 export const ASYNC_LOCAL_ROUTER = [
-  Eco,
-  Log,
-  System,
+  // Eco,
+  // Log,
+  // System,
   // {
-  //   path: '/external-link',
-  //   name: 'ExternalLink',
-  //   meta: {
-  //     title: 'External Link',
-  //     icon: 'link'
-  //   },
-  //   component: () => import('@/components/Layout/index')
-  // },
-  {
-    path: '/about',
-    name: 'About',
-    component: () => import('@/components/Layout/index'),
-    children: [
-      {
-        component: () => import('@/views/About.vue'),
-        path: 'index',
-        name: 'Index'
-      }
-    ]
-  },
-  {
-    path: '/404',
-    component: () => import('@/views/error-page/404')
-  },
-  { path: '*', redirect: '/404', hidden: true }
+  //   path: '/about',
+  //   name: 'About',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       name: 'index',
+  //       component: () => import('@/views/About.vue'),
+  //       meta: {
+  //         title: '关于',
+  //         icon: 'table'
+  //       }
+  //     }
+  //   ]
+  // }
 ]
 const createRouter = () =>
   new VueRouter({
     mode: 'history',
-    routes: [
-      {
-        path: '/',
-        redirect: '/home'
-      },
-      {
-        path: '/login',
-        name: 'Login',
-        component: () => import('@/views/Login')
-      },
-      {
-        path: '/',
-        name: 'Layout',
-        component: () => import('@/components/Layout/index'),
-        children: [...CONST_ROUTER]
-      }
-    ]
+    routes: CONST_ROUTER
   })
 const router = createRouter()
 

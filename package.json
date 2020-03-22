@@ -2,10 +2,13 @@
   "name": "admin",
   "version": "0.1.0",
   "private": true,
+  "author": "pdeng",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
+    "ui:init": "et -i src/assets/style/element-variables.scss",
+    "ui:theme": "et -c src/assets/style/element-variables.scss -o src/assets/style/theme/ -m --watch",
     "new:comp": "node ./script/generateComponent",
     "new:view": "node ./script/generateView"
   },
@@ -33,6 +36,8 @@
     "@vue/cli-service": "^4.2.0",
     "@vue/eslint-config-standard": "^5.1.0",
     "babel-eslint": "^10.0.3",
+    "element-theme": "^2.0.1",
+    "element-theme-chalk": "^2.13.0",
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-node": "^11.0.0",
@@ -59,7 +64,7 @@
     },
     "rules": {
       "no-unused-vars": [
-        1,
+        0,
         {
           "vars": "local",
           "args": "none"

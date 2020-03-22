@@ -89,7 +89,6 @@ export default {
   },
   methods: {
     resizeView () {
-      console.log(this.chart1)
       if (this.chart1) {
         for (var i = 1; i <= 10; i++) {
           this['chart' + i].resize()
