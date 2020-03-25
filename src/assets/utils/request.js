@@ -3,7 +3,7 @@ import Store from '@/store'
 import { Notification, MessageBox } from 'element-ui'
 
 const service = Axios.create({
-  baseURL: 'http://localhost:3000/api'
+  baseURL: process.env.BASE_URL
 })
 
 // 请求拦截
@@ -47,10 +47,25 @@ service.interceptors.response.use(response => {
     return res
   }
 }, error => {
-  Notification.error({
-    title: '失败',
-    message: error.message
-  })
+  // 断网 或者 请求超时 状态
+  if (!error.response) {
+    // 请求超时状态
+    if (error.message.includes('timeout')) {
+      console.log('超时了')
+      Notification.error({
+        title: '失败',
+        message: '请求超时，请检查网络是否连接正常'
+      })
+    } else {
+      // 可以展示断网组件
+      Notification.error({
+        title: '失败',
+        message: '请求失败，请检查网络是否已连接'
+      })
+    }
+    return
+  }
+  // 省略其它代码 ······
   return Promise.reject(error)
 })
 

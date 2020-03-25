@@ -1,5 +1,17 @@
 const path = require('path')
+// const CompressionPlugin = require('compression-webpack-plugin')
 module.exports = {
+  publicPath: '/',
+  configureWebpack: () => ({
+    devtool: 'source-map',
+    resolve: {
+      alias: {
+        '@': path.resolve('src'),
+        '@@': path.resolve('src/assets')
+      }
+    }
+  }),
+
   // variables全局引入
   // 1. vue add style-resources-loader 2. 配置vue.config.js
   pluginOptions: {
@@ -16,10 +28,25 @@ module.exports = {
   chainWebpack (config) {
     config.plugins.delete('preload')
     config.plugins.delete('prefetch')
-    // alias 设置
-    config.resolve.alias
-      .set('@', path.resolve('src'))
-      .set('@@', path.resolve('src/assets'))
+    config.plugin('define').tap(args => {
+      args[0]['process.env'].BASE_URL = JSON.stringify(process.env.BASE_URL)
+      return args
+    })
+    // if (process.env.NODE_ENV === 'production') {
+    //   // #region 启用GZip压缩
+    //   config
+    //     .plugin('compression')
+    //     .use(CompressionPlugin, {
+    //       asset: '[path].gz[query]',
+    //       algorithm: 'gzip',
+    //       test: new RegExp('\\.(' + ['js', 'css'].join('|') + ')$'),
+    //       threshold: 10240,
+    //       minRatio: 0.8,
+    //       cache: true
+    //     })
+    //     .tap(args => { })
+    // }
+
     // 打包文件带 hash
     config.output.filename('[name].[hash].js').end()
 
