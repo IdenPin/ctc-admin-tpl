@@ -5,7 +5,7 @@ import 'nprogress/nprogress.css'
 import { setPageTitle } from '@@/utils'
 NProgress.configure({ showSpinner: true })
 const whiteRouterArray = ['/login', '/demo']
-Store.dispatch('fetchMenu')
+Store.getters.token && Store.dispatch('fetchMenu')
 Router.beforeEach((to, from, next) => {
   NProgress.start()
   setPageTitle(to.meta.title || '') // 设置title

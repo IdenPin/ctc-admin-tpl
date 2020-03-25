@@ -10,6 +10,10 @@ Vue.use(Element, {
   size: 'small'
 })
 
+if (process.env.NODE_ENV !== 'production') {
+  require('./mock')
+}
+
 Vue.config.productionTip = false
 new Vue({
   router,
