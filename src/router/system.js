@@ -11,14 +11,14 @@ export default {
     {
       path: 'user',
       name: 'SystemUser',
-      meta: { title: '角色管理', icon: 'ball', noCache: true },
+      meta: { title: '用户管理', icon: 'ball', noCache: true },
 
       component: () => import('@/views/system/User')
     },
     {
       path: 'role',
       name: 'SystemRole',
-      meta: { title: '用户管理', icon: 'ball', noCache: true },
+      meta: { title: '角色管理', icon: 'ball', noCache: true },
 
       component: () => import('@/views/system/Role')
     },
