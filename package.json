@@ -7,7 +7,6 @@
     "serve": "vue-cli-service serve",
     "local": "vue-cli-service serve --mode local",
     "build": "vue-cli-service build --mode production",
-    "": "vue-cli-service build --mode production",
     "lint": "vue-cli-service lint",
     "ui:init": "et -i src/assets/style/element-variables.scss",
     "ui:theme": "et -c src/assets/style/element-variables.scss -o src/assets/style/theme/ -m --watch",
