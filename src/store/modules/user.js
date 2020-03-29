@@ -99,7 +99,6 @@ const user = {
       // console.log('clapLocalMenu', clapLocalMenu)
       filterPermissionRoutes(data, clapLocalMenu)
       data.push({ path: '*', redirect: '/error', hidden: true })
-      console.log('--data---', data)
       commit('SET_MENU', data)
       router.addRoutes(data)
       return true
