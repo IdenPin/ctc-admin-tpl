@@ -23,7 +23,7 @@
     "dayjs": "^1.8.21",
     "echarts": "^4.6.0",
     "element-ui": "^2.13.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "nprogress": "^0.2.0",
     "svg-sprite-loader": "^4.2.1",
     "vue": "^2.6.11",
