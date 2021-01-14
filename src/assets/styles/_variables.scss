@@ -1,0 +1,94 @@
+// 系统 header 高度
+$headerHeight: 44px;
+$subHeaderHeight: 40px;
+$footerHeight: 30px;
+$spaceSize: 10px;
+$minWidth: 640px;
+
+// sidebar 宽度
+$sidebarMaxWidth: 200px;
+$sidebarMinWidth: 64px;
+$topHeaderColor: #323856;
+/*
+blackColor1
+1、系统菜单
+2、模块/段落标题
+3、其它需要突出的内容
+*/
+$blackColor1: #303133;
+
+/*
+blackColor2
+1、【table】-内容基础字体颜色
+2、段落内容
+3、文本框内类容
+4、【只读模式表单项】-内容字体色
+*/
+$blackColor2: #4f5154;
+
+/*
+greyColor1
+1、【table】-字体颜色
+2、【只读模式表单项】-内容字体色
+*/
+$greyColor1: #909399;
+
+/*
+greyColor2
+1、系统菜单
+2、模块/段落标题
+3、其它需要突出的内容
+*/
+$greyColor2: #b2b5b9;
+
+$mainColor: #0079ff;
+$subMainText: #606266;
+// $bgGrey: #f5f7fc;
+$bgGrey: #f0f2f5;
+
+// 边框颜色
+$borderGrey: #edeff3;
+
+// tool
+$spacing-types: (
+  p: padding,
+  m: margin
+);
+
+$spacing-direction: (
+  t: top,
+  r: right,
+  b: bottom,
+  l: left
+);
+
+$spacing-sizes: (
+  '0': 0,
+  '1': 1px,
+  '2': 2px,
+  '3': 3px,
+  '4': 4px,
+  '5': 5px,
+  '6': 6px,
+  '8': 8px,
+  '10': 10px,
+  '12': 12px,
+  '16': 16px,
+  '20': 20px,
+  '22': 22px,
+  '24': 24px,
+  '30': 30px,
+  '35': 35px,
+  '40': 40px,
+  '48': 48px,
+  '56': 56px,
+  '64': 64px
+);
+
+// https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
+:export {
+  mainColor: $mainColor;
+  headerHeight: $headerHeight;
+  sidebarMaxWidth: $sidebarMaxWidth;
+  sidebarMinWidth: $sidebarMinWidth;
+}

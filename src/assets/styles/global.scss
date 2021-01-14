@@ -1,0 +1,100 @@
+@import './tool';
+@import './mixin';
+@import './flex';
+@import './element-hack';
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+}
+html,
+body {
+  color: #000000a6;
+  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, PingFang SC, Hiragino Sans GB, Microsoft YaHei,
+    Helvetica Neue, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+  font-variant: tabular-nums;
+  background-color: #fff;
+  font-feature-settings: 'tnum';
+}
+
+a {
+  outline: none;
+  text-decoration: none;
+}
+
+ul,
+li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+// 滚动条样式调整
+// ::-webkit-scrollbar-track-piece {
+//   background-color: #fff;
+//   -webkit-border-radius: 0;
+// }
+// ::-webkit-scrollbar {
+//   width: 10px;
+//   height: 10px;
+// }
+// ::-webkit-scrollbar-thumb {
+//   height: 50px;
+//   background-color: #b8b8b8;
+//   outline: 2px solid #fff;
+//   outline-offset: -2px;
+//   border: 2px solid #fff;
+//   filter: alpha(opacity = 50);
+//   -moz-opacity: 0.5;
+//   -khtml-opacity: 0.5;
+//   opacity: 0.5;
+// }
+// ::-webkit-scrollbar-thumb:hover {
+//   height: 50px;
+//   background-color: #878987;
+// }
+
+.main-card {
+  background-color: #fff;
+  padding: $spaceSize;
+  // height: calc(100vh - #{$headerHeight + 45px})!important;
+}
+
+// 右侧table布局公用部分（带search）
+// .comm-page-table-warp {
+//   .el-card {
+//     height: calc(100vh - 190px);
+//     min-height: 700px;
+//     background-color: #fff;
+//     // margin-top:44px;
+//     border-bottom-color: transparent;
+//   }
+// }
+
+// 禁止操作层
+.disabled-wrap {
+  position: relative;
+  .disabled-mask {
+    position: absolute;
+    background: #fff;
+    top: 0;
+    right: 20px;
+    border: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+    z-index: 2;
+  }
+}
+
+// hover Popover title
+.popover-header {
+  font-size: 14px;
+  line-height: 36px;
+  text-indent: 20px;
+  margin: -8px -12px 0 -12px;
+  color: $blackColor1;
+  border-bottom: 1px solid $borderGrey;
+}

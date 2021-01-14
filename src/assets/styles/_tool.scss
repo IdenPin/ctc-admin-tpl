@@ -1,0 +1,152 @@
+.dn {
+  display: none;
+}
+.db {
+  display: block;
+}
+.cursor-p {
+  cursor: pointer;
+}
+
+.fs-13 {
+  font-size: 13px;
+}
+.fs-14 {
+  font-size: 14px;
+}
+.fs-16 {
+  font-size: 14px;
+}
+
+.fc-black1 {
+  color: $blackColor1;
+}
+.fc-black2 {
+  color: $blackColor2;
+}
+.fc-grey1 {
+  color: $greyColor1;
+}
+.fc-grey2 {
+  color: $greyColor2;
+}
+.fc-main {
+  color: $mainColor;
+}
+.sub-main-text {
+  color: $subMainText;
+}
+
+.text-ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.text-left {
+  text-align: left;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+.flex {
+  display: flex;
+}
+.flex-1 {
+  flex: 1;
+}
+.al-center {
+  align-items: center;
+}
+.jc-center {
+  justify-content: center;
+}
+.jc-between {
+  justify-content: space-between;
+}
+.jc-around {
+  justify-content: space-around;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+.text-underline {
+  text-decoration: underline;
+}
+.ib {
+  display: inline-block;
+}
+.db {
+  display: block;
+}
+
+// .m-10 -> margin: 10px;
+// .m--10-> margin: -10px;
+@each $typeKey, $typeVal in $spacing-types {
+  @each $sizeKey, $sizeVal in $spacing-sizes {
+    @if $typeKey == m {
+      .-#{$typeKey}-#{$sizeKey} {
+        #{$typeVal}: -$sizeVal;
+      }
+    }
+    .#{$typeKey}-#{$sizeKey} {
+      #{$typeVal}: $sizeVal;
+    }
+  }
+}
+
+// .ml-10 -> margin-left: 10px;
+@each $typeKey, $typeVal in $spacing-types {
+  @each $sizeKey, $sizeVal in $spacing-sizes {
+    @each $directionKey, $directionVal in $spacing-direction {
+      @if $typeKey == m {
+        .-#{$typeKey}#{$directionKey}-#{$sizeKey} {
+          #{$typeVal}-#{$directionVal}: -$sizeVal;
+        }
+      }
+      .#{$typeKey}#{$directionKey}-#{$sizeKey} {
+        #{$typeVal}-#{$directionVal}: $sizeVal;
+      }
+    }
+  }
+}
+
+// .mx-10 -> margin-left: 10px; margin-right: 10px;
+// .py-10 -> padding-top: 10px; padding-bottom: 10px;
+@each $typeKey, $typeVal in $spacing-types {
+  @each $sizeKey, $sizeVal in $spacing-sizes {
+    @if $typeKey == m {
+      .-#{$typeKey}x-#{$sizeKey} {
+        #{$typeVal}-left: -$sizeVal;
+        #{$typeVal}-right: -$sizeVal;
+      }
+      .-#{$typeKey}y-#{$sizeKey} {
+        #{$typeVal}-top: -$sizeVal;
+        #{$typeVal}-bottom: -$sizeVal;
+      }
+    }
+    .#{$typeKey}x-#{$sizeKey} {
+      #{$typeVal}-left: $sizeVal;
+      #{$typeVal}-right: $sizeVal;
+    }
+    .#{$typeKey}y-#{$sizeKey} {
+      #{$typeVal}-top: $sizeVal;
+      #{$typeVal}-bottom: $sizeVal;
+    }
+  }
+}
