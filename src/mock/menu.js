@@ -1,3 +1,0 @@
-export const menu = req => {
-  return { code: 0, msg: '操作成功！', data: [{ path: '/http://www.baidu.com', name: 'Baidu' }, { path: '/profile', name: 'Profile' }, { path: '/system', name: 'System', children: [{ path: 'role', name: 'SystemRole' }, { path: 'user', name: 'SystemUser' }, { path: 'manage', name: 'SystemManage' }, { path: 'menu', name: 'SystemMenu' }] }, { path: '/eco', name: 'Eco', children: [{ path: 'sp-manager', name: 'EcoSpManager', children: [{ path: 'sp-manager-list', name: 'EcoSpManagerList' }, { path: 'sp-menu-role', name: 'EcoSpManagerRole' }] }, { path: 'eco-web-page', name: 'EcoWebPage', children: [{ path: 'eco-page-banner', name: 'EcoWebPageBanner' }, { path: 'eco-hot-news', name: 'EcoWebPageNews' }] }] }] }
-}
