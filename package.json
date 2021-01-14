@@ -9,8 +9,7 @@
     "deploy": "deploy-cli-service deploy --mode dev",
     "new:comp": "node ./scripts/generate-component",
     "new:view": "node ./scripts/generate-view",
-    "ui:init": "et -i src/assets/styles/element-variables.scss",
-    "ui:theme": "et -c src/assets/styles/element-variables.scss -o src/assets/styles/theme/ -m --watch"
+    "theme": "et -i src/assets/styles/element-variables.scss && et -c src/assets/styles/element-variables.scss -o src/assets/styles/theme/ -m --watch"
   },
   "dependencies": {
     "axios": "^0.20.0",
@@ -22,7 +21,7 @@
     "vuex": "^3.4.0"
   },
   "devDependencies": {
-    "@pdeng/element-table": "^0.2.5",
+    "@pdeng/element-table": "^0.2.7",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",

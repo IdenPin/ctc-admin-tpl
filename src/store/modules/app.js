@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
   namespaced: true,
   state: {
