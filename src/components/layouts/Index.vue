@@ -1,9 +1,7 @@
 <template>
-  <div :class="appMain">
+  <div class="ctc-app-main">
     <!-- 顶部 header -->
     <layout-header class="ctc-layout-header" />
-    <!-- 顶部菜单 -->
-    <layout-menu class="ctc-layout-aside" key="top-menu" mode="horizontal" :isTopMenu="topMenu" />
     <!-- main 主区域 -->
     <div class="ctc-layout-main">
       <!-- 左侧边栏 -->
@@ -18,8 +16,6 @@
         <layout-footer class="ctc-layout-footer" />
       </div>
     </div>
-    <!-- 系统设置 -->
-    <right-drawer />
   </div>
 </template>
 <script>
@@ -27,68 +23,39 @@ import { mapGetters } from 'vuex'
 import LayoutMenu from '@/components/layouts/menu/Index.vue'
 import LayoutHeader from '@/components/layouts/Header.vue'
 import LayoutFooter from '@/components/layouts/Footer.vue'
-import RightDrawer from '@/components/layouts/RightDrawer.vue'
 
 export default {
   name: 'AppMain',
   components: {
     LayoutMenu,
     LayoutHeader,
-    LayoutFooter,
-    RightDrawer
+    LayoutFooter
   },
   computed: {
     ...mapGetters({
-      isCollapse: 'app/isCollapse',
-
-      // 导航模式 顶部导航：true, 侧边栏导航： false
-      isTopMenu: 'app/isTopMenu',
-      isFixedLayoutHeader: 'app/isFixedLayoutHeader',
-      isFixedLayoutSidebar: 'app/isFixedLayoutSidebar',
-      isFixedLayoutPage: 'app/isFixedLayoutPage'
+      isCollapse: 'app/isCollapse'
     })
-  },
-  created() {
-    this.mixinStyleFn()
-  },
-  data() {
-    return {
-      fixedHeader: true,
-      fixedAside: true, //关联[互斥]
-      showFooter: false,
-      topMenu: false //关联[互斥]
-    }
-  },
-  methods: {
-    mixinStyleFn() {
-      this.appMain = [
-        'ctc-app-main',
-        this.fixedHeader && 'ctc-layout-header-fixed',
-        this.fixedHeader && this.fixedAside && 'ctc-layout-aside-fixed',
-        this.showFooter && 'ctc-layout-footer-show',
-        this.topMenu && 'ctc-layout-aside-top'
-      ]
-    }
   }
 }
 </script>
 <style lang="scss">
 $spaceWidth: 12px;
+$height: 40px;
 
 .ctc-app-main {
   .el-menu-item,
   .el-submenu__title {
     padding: 0;
-    line-height: 38px;
-    height: 38px;
+    line-height: $height;
+    height: $height;
     &:hover {
       background-color: #f5faff;
     }
   }
   .nest-menu {
     .el-menu-item {
-      line-height: 38px;
-      height: 38px;
+      line-height: $height;
+      height: $height;
       &:hover {
         background-color: #f5faff;
       }
@@ -136,111 +103,57 @@ $spaceWidth: 12px;
     // 右侧内容布局容器
     .ctc-layout-content {
       background: $bgGrey;
-      width: 100%;
-      overflow: auto;
       display: flex;
       flex-direction: column;
-      min-height: 0;
       transition: all 0.2s ease;
-
+      min-height: 100vh;
+      overflow-x: hidden;
+      width: 100%;
       .ctc-layout-page {
         flex: auto;
-        margin: $spaceWidth;
+        // width: calc(100% - #{$spaceWidth} * 2);
+        // margin: $spaceWidth $spaceWidth 0;
         min-height: calc(100vh - #{$headerHeight} - #{$spaceWidth * 2});
         // min-height: calc(100vh - #{$headerHeight} - #{$footerHeight} - #{$spaceWidth * 2} - 10px);
-      }
-
-      // 页底
-      .ctc-layout-footer {
-        color: #acb0b9;
-        text-align: center;
-        line-height: $footerHeight;
-        flex: 0 0 auto;
-        margin-bottom: 10px;
-        display: none;
       }
     }
   }
 }
 
 // 置顶header
-.ctc-layout-header-fixed {
-  .ctc-layout-header {
-    position: fixed;
-    top: 0;
-    z-index: 9;
-    width: 100%;
-  }
-  .ctc-layout-main {
-    margin-top: $headerHeight;
-  }
+.ctc-layout-header {
+  position: fixed;
+  top: 0;
+  z-index: 9;
+  width: 100%;
+}
+.ctc-layout-main {
+  margin-top: $headerHeight;
 }
 
 // 固定侧边栏
-.ctc-layout-aside-fixed {
-  .ctc-layout-aside {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    top: $headerHeight;
-  }
-  .collapse-close {
-    .el-submenu__title {
-      i.el-submenu__icon-arrow,
-      span {
-        display: none;
-      }
-    }
-  }
-  .collapse-open + .ctc-layout-content {
-    margin-left: $sidebarMaxWidth;
-  }
-  .collapse-close + .ctc-layout-content {
-    margin-left: $sidebarMinWidth;
-  }
+.ctc-layout-aside {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  top: $headerHeight;
 }
-
-// footer 页脚是否展示
-.ctc-layout-footer-show {
-  .ctc-layout-page {
-    min-height: calc(100vh - #{$headerHeight} - #{$footerHeight} - #{$spaceWidth * 2} - 10px) !important;
-  }
-  .ctc-layout-footer {
-    display: block !important;
-  }
-}
-
-// menu 指定
-.ctc-layout-aside-top {
-  .ctc-layout-header {
-    & + .ctc-layout-aside {
-      display: block;
-      width: 100% !important;
-      .menu-wrapper > li {
-        i {
-          display: none;
-        }
-        i.el-icon-arrow-down {
-          display: block;
-        }
-        span {
-          margin-right: 20px;
-          vertical-align: bottom;
-        }
-      }
-    }
-  }
-  .ctc-layout-main {
-    margin-top: 100px;
-    .ctc-layout-aside {
+.collapse-close {
+  .el-submenu__title {
+    i.el-submenu__icon-arrow,
+    span {
       display: none;
     }
-    .ctc-layout-content {
-      margin-left: 0;
-      .ctc-layout-page {
-        min-height: calc(100vh - #{$headerHeight} - #{$footerHeight} - #{$spaceWidth * 2} - 10px - 60px) !important;
-      }
-    }
   }
+  .collapse {
+    text-align: center;
+  }
+}
+
+.collapse-open + .ctc-layout-content {
+  margin-left: $sidebarMaxWidth;
+}
+.collapse-close + .ctc-layout-content {
+  margin-left: $sidebarMinWidth;
 }
 </style>

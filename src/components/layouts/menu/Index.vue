@@ -1,22 +1,20 @@
 <template>
-  <el-aside :style="{ width: isCollapse && !isTopMenu ? variables.sidebarMinWidth : variables.sidebarMaxWidth }">
-    <!-- 折叠触发点 -->
+  <div>
     <div class="collapse" @click="$store.commit('app/TOGGLE_COLLAPSE')">
-      <svg-icon icon-class="toggle-right" v-if="isCollapse"></svg-icon>
-      <svg-icon icon-class="toggle-left" v-else></svg-icon>
+      <i :class="`el-icon-s-${isCollapse ? 'fold' : 'unfold'}`" style="font-size: 16px;color:#7b7c7d"></i>
     </div>
-    <el-menu
-      :default-active="activeMenu"
-      :class="['el-menu-vertical', $attrs.mode === 'horizontal' ? 'flex' : '']"
-      :collapse="isCollapse"
-      :unique-opened="false"
-      :collapse-transition="false"
-      router
-      :mode="$attrs.mode"
-    >
-      <sub-menu v-for="route in $store.getters['user/menu']" :key="route.path" :item="route" :base-path="route.path" />
-    </el-menu>
-  </el-aside>
+    <el-scrollbar wrap-class="scrollbar-wrapper">
+      <el-menu
+        :default-active="activeMenu"
+        :collapse="isCollapse"
+        :unique-opened="false"
+        :collapse-transition="false"
+        mode="vertical"
+      >
+        <sub-menu v-for="route in permissionRoutes" :key="route.path" :item="route" :base-path="route.path" />
+      </el-menu>
+    </el-scrollbar>
+  </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -27,19 +25,15 @@ export default {
   components: {
     SubMenu
   },
-  props: {
-    isTopMenu: {
-      type: Boolean,
-      default: false
-    }
-  },
   computed: {
     ...mapGetters({
+      permissionRoutes: 'user/menu',
       isCollapse: 'app/isCollapse'
     }),
     activeMenu() {
       const route = this.$route
       const { meta, path } = route
+      // if set path, the sidebar will highlight the path you set
       if (meta.activeMenu) {
         return meta.activeMenu
       }
@@ -55,25 +49,13 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-// .ctc-layout-aside-fixed {
-//   .el-menu-vertical:not(.el-menu--collapse) {
-//     width: 200px;
-//     min-height: calc(100vh - #{$headerHeight} - 28px);
-//   }
-// }
-.ctc-layout-aside-top {
-  .collapse {
-    display: block;
-  }
+::v-deep .el-scrollbar__wrap {
+  overflow-x: hidden !important;
 }
 .collapse {
   background-color: #fff;
-  // border-right: solid 1px #e6e6e6;
   cursor: pointer;
   padding: 5px 12px;
   text-align: right;
-  .svg-icon {
-    font-size: 18px;
-  }
 }
 </style>

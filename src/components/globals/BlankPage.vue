@@ -1,5 +1,5 @@
 <template>
-  <div>blank page ...</div>
+  <div>BLANK PAGE ...</div>
 </template>
 <script>
 export default {

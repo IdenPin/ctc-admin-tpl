@@ -7,7 +7,7 @@
           !item.alwaysShow
       "
     >
-      <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
+      <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)" :route="onlyOneChild">
         <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{ 'submenu-title-noDropdown': !isNest }">
           <item :icon="onlyOneChild.meta.icon || (item.meta && item.meta.icon)" :title="onlyOneChild.meta.title" />
         </el-menu-item>
@@ -27,19 +27,6 @@
         class="nest-menu"
       />
     </el-submenu>
-    <!-- 子集递归调用 -->
-    <!-- <el-submenu :index="item.path" v-else>
-      <template slot="title">
-        <template v-if="item.meta">
-          <i class="el-icon-location"></i>
-          <span>{{ item.meta.title }}</span>
-        </template>
-      </template>
-      <el-menu-item-group>
-        <template slot="title" v-if="item.groupName">{{ item.groupName }}</template>
-        <sub-menu v-for="subItem in item.children" :key="subItem.path" :item="subItem" :base-path="subItem.path" />
-      </el-menu-item-group>
-    </el-submenu> -->
   </div>
 </template>
 <script>
@@ -49,7 +36,6 @@ import { isExternal } from '@/utils/validate'
 export default {
   name: 'SubMenu',
   props: {
-    // route object
     item: {
       type: Object,
       required: true

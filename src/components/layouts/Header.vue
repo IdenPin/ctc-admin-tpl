@@ -8,27 +8,20 @@
       <!-- <div class="item mr-10">我的待办</div> -->
       <!-- <router-link to="/" class="item mr-10" tag="div">未读通知 </router-link> -->
     </div>
-    <div class="sys-setting" @click="toggleDrawerState"><i class="el-icon-setting"></i> 系统设置</div>
-    <div class="user-dropdown">
-      <div class="user-info">
-        <i class="el-icon-user"></i>
-        <el-dropdown class="dropdown-menu">
-          <span class="text-ellipsis username el-dropdown-link"
-            >{{ $store.state.user.username }}<i class="el-icon-arrow-down ml-3"></i
-          ></span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item @click.native="() => $router.push('/user-info')">
-              查看
-            </el-dropdown-item>
-            <el-dropdown-item @click.native="logout">退出</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-      </div>
-    </div>
+
+    <el-dropdown szie="small">
+      <el-link :underline="false"
+        ><i class="el-icon-s-custom mr-5"></i>{{ username }}<i class="el-icon-arrow-down el-icon--right"
+      /></el-link>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item>个人信息</el-dropdown-item>
+        <el-dropdown-item @click.native="logout">退 出</el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import variables from '@/assets/styles/_variables.scss'
 const { version } = require('../../../package.json')
 export default {
@@ -40,13 +33,15 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      username: 'user/username'
+    }),
     variables() {
       return variables
     }
   },
   methods: {
     ...mapActions({
-      toggleDrawerState: 'app/toggleDrawerState',
       doLogout: 'user/doLogout'
     }),
     logout() {
@@ -123,52 +118,9 @@ export default {
       }
     }
   }
-  .sys-setting {
-    cursor: pointer;
-    color: #acb0b9;
-    margin-right: 20px;
-    font-size: 13px;
-    .el-icon-user {
-      font-size: 16px;
-    }
-  }
-  .user-dropdown {
-    cursor: pointer;
-    .user-info {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      transition: all 0.3s ease;
-      &:hover {
-        i,
-        span {
-          color: #fff;
-        }
-      }
+}
 
-      .dropdown-menu {
-        display: flex;
-      }
-
-      .el-icon-user {
-        font-size: 16px;
-        margin-right: 5px;
-      }
-
-      i,
-      .username {
-        color: #acb0b9;
-      }
-
-      .el-icon-arrow-down {
-        position: relative;
-        top: 0px;
-      }
-
-      .username {
-        max-width: 200px;
-      }
-    }
-  }
+.el-link.el-link--default {
+  color: #e8e8e8;
 }
 </style>

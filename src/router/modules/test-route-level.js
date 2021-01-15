@@ -7,7 +7,7 @@ export default {
   component: Layout,
   meta: {
     title: '路由嵌套',
-    icon: 'menu-icon1'
+    icon: 'el-icon-folder-opened'
   },
   children: [
     {

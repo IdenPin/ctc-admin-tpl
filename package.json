@@ -37,6 +37,7 @@
     "eslint-plugin-vue": "^6.2.2",
     "fs": "0.0.1-security",
     "lint-staged": "^9.5.0",
+    "nprogress": "^0.2.0",
     "path": "^0.12.7",
     "prettier": "^1.19.1",
     "sass": "^1.26.5",

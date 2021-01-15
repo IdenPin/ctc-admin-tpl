@@ -1,12 +1,10 @@
 <template>
   <div class="home-wrap">
-    <div class="nav-bread">
-      <el-breadcrumb separator="/" class="ml-20">
-        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-      </el-breadcrumb>
-    </div>
-    <div class="p-20" style="line-height: 2;margin-top: 10px;background-color:#fff">
+    <!-- <el-select v-model="test">
+      <el-option v-for="item in [1, 3, 4, 5, 7]" :key="item" :label="item"> </el-option>
+    </el-select> -->
+
+    <div class="p-20" style="line-height: 2;background-color:#fff">
       9月14日晚，国家主席习近平在北京同欧盟轮值主席国德国总理默克尔、欧洲理事会主席米歇尔、欧盟委员会主席冯德莱恩共同举行会晤，会晤以视频方式举行。中德欧领导人最新会晤有哪些重点信息？释放了哪些积极信号？人民网记者专访多位专家为您解读。
       9月14日晚，国家主席习近平在北京同欧盟轮值主席国德国总理默克尔、欧洲理事会主席米歇尔、欧盟委员会主席冯德莱恩共同举行会晤，会晤以视频方式举行。
       新华社记者 庞兴雷 摄 【重点一】会晤时机
@@ -38,16 +36,12 @@
 <script>
 // @ is an alias to /src
 export default {
-  name: 'Home'
+  name: 'Home',
+  data() {
+    return {
+      test: ''
+    }
+  }
 }
 </script>
-<style lang="scss" scoped>
-.nav-bread {
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
-  background-color: #fff;
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  margin: -10px -12px 0 -12px;
-}
-</style>
+<style lang="scss" scoped></style>

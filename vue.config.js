@@ -1,7 +1,18 @@
 const path = require('path')
+const ProjectConfig = require('./src/config/project.config')
+
+/**
+ * 结构默认配置
+ */
+const { name, publicPath, outputDir, assetsDir, devServer } = ProjectConfig
+
 module.exports = {
+  publicPath,
+  outputDir,
+  assetsDir,
+  devServer,
   configureWebpack: {
-    name: '长天长后台管理系统通用框架 v0.1.0',
+    name,
     resolve: {
       alias: {
         '@': path.resolve(__dirname, 'src'),
