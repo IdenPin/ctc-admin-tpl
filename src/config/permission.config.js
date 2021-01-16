@@ -1,8 +1,9 @@
 import router from '../router'
 import Store from '../store'
 import NProgress from 'nprogress'
-import 'nprogress/nprogress.css'
 import Config from '@/config'
+import 'nprogress/nprogress.css'
+import { setDocumentTitle } from '@/utils/tools'
 
 /**
  * NProgress 配置
@@ -15,12 +16,18 @@ NProgress.configure(Config.project.nProgress)
 
 router.beforeEach((to, from, next) => {
   NProgress.start()
+
   const token = Store.getters['user/token']
+  const toPath = to.path
+
+  /**
+   * 设置网站不同页面 title
+   */
+  setDocumentTitle(to.meta && to.meta.title)
 
   /**
    * 路由拦截判断
    */
-  const toPath = to.path
   if (!token) {
     /**
      * token 不存在且访问的地址不在白名单里面

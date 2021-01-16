@@ -1,11 +1,10 @@
 /**
- * default-routes 默认路由文件
- * 不需要经过权限验证，所有用户都可以访问
+ * dynamic-routes file <核心>
+ * 根据权限树或者角色动态生成的路由
  */
-
 import Layout from '@/components/layouts/Index.vue'
-import TestRouteLevel from './modules/test-route-level'
-import OtherRoute from './modules/other-route'
+import NestedRoute from './modules/nested-routes'
+import OtherRoute from './modules/other-routes'
 
 export default [
   {
@@ -31,7 +30,8 @@ export default [
       }
     ]
   },
-  TestRouteLevel,
+  // 嵌套路由
+  NestedRoute,
   ...OtherRoute,
   {
     path: '/404',

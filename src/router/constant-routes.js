@@ -5,6 +5,7 @@
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
  *
+ * iframe: false                  判断是否是iframe内链
  * hidden: true                   if set true, item will not show in the sidebar(default is false)
  * alwaysShow: true               if set true, will always show the root menu
  *                                if not set alwaysShow, when item has more than one children route,
@@ -23,8 +24,12 @@
  */
 
 import Config from '@/config'
-import TestRouteLevel from './modules/test-route-level'
-console.log('Config', Config)
-const constantRoutes = [TestRouteLevel]
+import NestedRoutes from './modules/nested-routes'
+import OtherRoutes from './modules/other-routes'
+
+/**
+ * 注意，默认导出的是对象，如果是数组需要使用扩展运算符 ...
+ */
+const constantRoutes = [NestedRoutes, ...OtherRoutes]
 
 export default [...Config.router.defaultRoutes, ...constantRoutes]

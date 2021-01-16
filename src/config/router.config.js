@@ -8,7 +8,6 @@ import Layout from '@/components/layouts/Index.vue'
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
  *
  * iframe: false                  判断是否是iframe内链
- *
  * hidden: true                   if set true, item will not show in the sidebar(default is false)
  * alwaysShow: true               if set true, will always show the root menu
  *                                if not set alwaysShow, when item has more than one children route,

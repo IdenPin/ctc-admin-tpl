@@ -1,3 +1,5 @@
+import Config from '@/config'
+
 // 1 拍平本地路由
 export function flatRoutesFn(routes) {
   let targetObj = {}
@@ -73,4 +75,16 @@ export function mergeRoutesFn(data, localFlatRoutes) {
   }
   createAsyncRoutes(data)
   return newRoutes
+}
+
+/**
+ * 设置网站标题
+ */
+
+export function setDocumentTitle(pageTitle) {
+  if (pageTitle) {
+    document.title = `${pageTitle} - ${Config.project.name}`
+    return
+  }
+  document.title = `${Config.project.name}`
 }

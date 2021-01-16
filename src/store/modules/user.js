@@ -1,6 +1,6 @@
 import { login, userMenu, logout } from '@/api/auth'
 import { flatRoutesFn, addAsyncFullPathFn, mergeRoutesFn } from '@/utils/tools'
-import asyncRoutes from '@/router/async-routes'
+import dynamicRoutes from '@/router/dynamic-routes'
 import router from '@/router'
 
 export default {
@@ -52,7 +52,7 @@ export default {
               },
               code: 200
             })
-          }, 3000)
+          }, 1000)
         })
         commit('SET_USERNAME', data.username)
         commit('SET_TOKEN', data.token)
@@ -70,9 +70,9 @@ export default {
       try {
         const menuData = await userMenu()
         const apiData = menuData.data
-
+        alert('menu')
         // 1 拍平本地路由
-        const localFlatRoutes = flatRoutesFn(asyncRoutes)
+        const localFlatRoutes = flatRoutesFn(dynamicRoutes)
 
         // 2 处理接口返回的数据、生成 fullPath
         const fullPathApiData = addAsyncFullPathFn(apiData)
@@ -119,7 +119,7 @@ export default {
             resolve({
               code: 200
             })
-          }, 2000)
+          }, 100)
         })
         if (code == 200) {
           commit('SET_USERNAME', null)
