@@ -25,11 +25,16 @@
 
 import Config from '@/config'
 import NestedRoutes from './modules/nested-routes'
-import OtherRoutes from './modules/other-routes'
 
 /**
  * 注意，默认导出的是对象，如果是数组需要使用扩展运算符 ...
  */
-const constantRoutes = [NestedRoutes, ...OtherRoutes]
+const constantRoutes = [
+  NestedRoutes,
+  {
+    path: '*',
+    redirect: '/404'
+  }
+]
 
 export default [...Config.router.defaultRoutes, ...constantRoutes]

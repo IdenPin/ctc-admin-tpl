@@ -24,6 +24,7 @@ Router.prototype.push = function push(location) {
 /**
  *  通过 IS_DYNAMIC_ROUTES 确定该项目菜单权限系统是静态的还是动态的
  */
+
 const routes = Config.router.IS_DYNAMIC_ROUTES ? dynamicRoutes : constantRoutes
 console.log('routes', routes)
 const createRouter = () =>
@@ -39,6 +40,7 @@ const router = createRouter()
  * 重置路由hack方法
  * Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
  */
+
 export function resetRouter() {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router

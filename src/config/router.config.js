@@ -1,4 +1,5 @@
 import Layout from '@/components/layouts/Index.vue'
+import { stubFalse } from 'lodash'
 
 /**
  * default-routes
@@ -116,9 +117,9 @@ const whiteListPath = ['/login', '/test']
 const mode = 'hash'
 
 /**
- * 是否启用动态路由
+ * IS_DYNAMIC_ROUTES 是否启用动态路由
  * 动态路由：指的不但需要登录还要根据后台的角色或者路由树做权限过滤操作
- * 静态路由：只需要验证是否登录，本地所有的路由信息都可以访问
+ * 静态路由：只需要验证是否登录，本地所有的路由信息都可以访问（针对不需要获取菜单接口或者用户角色）
  */
 
 export const IS_DYNAMIC_ROUTES = false

@@ -33,7 +33,6 @@
 </template>
 <script>
 import { mapActions } from 'vuex'
-import Config from '@/config'
 import ctcFooter from '@/components/layouts/Footer.vue'
 const { version } = require('../../package.json')
 export default {
@@ -75,8 +74,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      doLogin: 'user/doLogin',
-      fetchMenu: 'user/fetchMenu'
+      doLogin: 'user/doLogin'
     }),
     submitForm(formName) {
       this.$refs[formName].validate(async valid => {
@@ -89,7 +87,6 @@ export default {
           this.loginBtnStatus = true
           try {
             const { code } = await this.doLogin(this.ruleForm)
-            this.loginText = '登录成功 ...'
 
             if (code !== 200) {
               this.loginText = '登 录'
@@ -97,22 +94,6 @@ export default {
               return
             }
             this.loginText = '登录成功 ...'
-
-            /**
-             * 如果 IS_DYNAMIC_ROUTES 为 true
-             * 则登录成功后需要请求后端接口获取角色或者路由树
-             */
-
-            if (Config.router.IS_DYNAMIC_ROUTES) {
-              this.loginText = '获取用户权限信息 ...'
-              const { code, data } = await this.fetchMenu()
-              if (code === 200) {
-                // TODO 动态菜单
-                // this.$router.push('/')
-              }
-            } else {
-              this.$store.commit('user/SET_MENU', this.$router.options.routes)
-            }
 
             this.loginBtnStatus = false
             this.$router.push('/')

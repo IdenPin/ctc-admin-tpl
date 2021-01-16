@@ -47,6 +47,25 @@ router.beforeEach((to, from, next) => {
       next('/')
       NProgress.done()
     } else {
+      /**
+       * 如果 IS_DYNAMIC_ROUTES 为 true
+       * 需要获取后端权限接口
+       * 则登录成功后需要请求后端接口获取角色或者路由树
+       */
+
+      if (Config.router.IS_DYNAMIC_ROUTES) {
+        Store.dispatch('user/fetchMenu').then(({ code, data }) => {
+          if (code === 200) {
+            // TODO 动态菜单
+            // this.$router.push('/')
+          }
+        })
+      } else {
+        // 防止重复追加
+        if (Store.getters['user/menu'].length === 0) {
+          Store.commit('user/SET_MENU', router.options.routes)
+        }
+      }
       next()
     }
   }
