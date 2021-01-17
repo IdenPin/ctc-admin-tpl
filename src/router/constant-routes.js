@@ -30,6 +30,34 @@ import NestedRoutes from './modules/nested-routes'
  * 注意，默认导出的是对象，如果是数组需要使用扩展运算符 ...
  */
 const constantRoutes = [
+  /**
+   * iframe 内链demo
+   */
+
+  {
+    path: 'https://idenpin.github.io/element-table/docs/#/',
+    meta: {
+      title: '报表内链',
+      icon: 'el-icon-document-copy'
+    },
+    iframe: true
+  },
+
+  /**
+   * 外链demo
+   */
+  {
+    path: 'http://www.qq.com',
+    meta: {
+      title: '腾讯外链',
+      icon: 'el-icon-brush'
+    }
+  },
+
+  /**
+   * 嵌套菜单
+   */
+
   NestedRoutes,
   {
     path: '*',

@@ -1,5 +1,4 @@
 import Layout from '@/components/layouts/Index.vue'
-import { stubFalse } from 'lodash'
 
 /**
  * default-routes
@@ -31,7 +30,6 @@ const defaultRoutes = [
     hidden: true,
     component: () => import('@/views/Login.vue')
   },
-
   {
     path: '/',
     name: 'Home',
@@ -49,6 +47,15 @@ const defaultRoutes = [
       }
     ]
   },
+  {
+    path: '/testRoute',
+    hidden: true,
+    component: () => import('@/components/globals/BlankPage.vue'),
+    meta: {
+      title: '测试路由',
+      icon: 'el-icon-files'
+    }
+  },
   /**
    * 用于 iframe 展示容器
    */
@@ -64,30 +71,6 @@ const defaultRoutes = [
         component: () => import('@/components/globals/IframePage.vue')
       }
     ]
-  },
-
-  /**
-   * iframe 内链demo
-   */
-
-  {
-    path: 'https://idenpin.github.io/element-table/docs/#/',
-    meta: {
-      title: '报表内链',
-      icon: 'el-icon-document-copy'
-    },
-    iframe: true
-  },
-
-  /**
-   * 外链demo
-   */
-  {
-    path: 'http://www.qq.com',
-    meta: {
-      title: '腾讯外链',
-      icon: 'el-icon-brush'
-    }
   },
 
   {
@@ -108,7 +91,7 @@ const defaultRoutes = [
  * 白名单，不需要登录就可以访问
  */
 
-const whiteListPath = ['/login', '/test']
+const whiteListPath = ['/login', '/testRoute']
 
 /**
  * 路由模式
@@ -122,6 +105,6 @@ const mode = 'hash'
  * 静态路由：只需要验证是否登录，本地所有的路由信息都可以访问（针对不需要获取菜单接口或者用户角色）
  */
 
-export const IS_DYNAMIC_ROUTES = false
+export const IS_DYNAMIC_ROUTES = true
 
 export default { whiteListPath, defaultRoutes, mode, IS_DYNAMIC_ROUTES }

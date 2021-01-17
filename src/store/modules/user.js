@@ -1,7 +1,7 @@
-import { login, userMenu, logout } from '@/api/auth'
 import { flatRoutesFn, addAsyncFullPathFn, mergeRoutesFn } from '@/utils/tools'
 import dynamicRoutes from '@/router/dynamic-routes'
 import router from '@/router'
+import { menuData, resultRoutes } from '@/mock/menu'
 
 export default {
   namespaced: true,
@@ -39,8 +39,7 @@ export default {
 
     async doLogin({ commit }, formData) {
       try {
-        const { data, code } = await new Promise((resolve, reject) => {
-          console.log('formData', formData)
+        const { data, code } = await new Promise(resolve => {
           setTimeout(() => {
             resolve({
               data: {
@@ -64,46 +63,60 @@ export default {
     },
 
     /**
-     * 获取角色或者菜单树
+     * 1、菜单树
+     * 2、获取角色
      */
     async fetchMenu({ commit }) {
       try {
-        const menuData = await userMenu()
-        const apiData = menuData.data
-        alert('menu')
-        // 1 拍平本地路由
-        const localFlatRoutes = flatRoutesFn(dynamicRoutes)
-
-        // 2 处理接口返回的数据、生成 fullPath
-        const fullPathApiData = addAsyncFullPathFn(apiData)
-
-        // 3 合并生成路由信息
-        const resultRoutes = mergeRoutesFn(fullPathApiData, localFlatRoutes)
-
-        // 4 处理没有children的路由、增加 index
-        resultRoutes.forEach(v => {
-          if (!v.children) {
-            v['children'] = v['children'] || [{}]
-            v.children[0] = {
-              path: 'index',
-              component: localFlatRoutes[`${v.path}/index`].component,
-              meta: {
-                icon: v.meta.icon || localFlatRoutes[`${v.path}/index`].icon,
-                title: v.meta.title
-              }
-            }
-          }
+        const { data } = await new Promise(resolve => {
+          setTimeout(() => {
+            resolve(menuData)
+          }, 2000)
         })
 
-        resultRoutes.push({
-          path: '*',
-          redirect: '/404',
-          hidden: true
-        })
-        commit('SET_MENU', resultRoutes)
-        router.addRoutes(resultRoutes)
-        router.options.routes.push(...resultRoutes)
-        return menuData
+        // 拍平后台菜单树
+        /**
+         * {
+         *  '/a': xxx,
+         *  '/b':xxx
+         * }
+         */
+
+        return resultRoutes
+        // const apiData = data
+        // // 1 拍平本地路由
+        // const localFlatRoutes = flatRoutesFn(dynamicRoutes)
+
+        // // 2 处理接口返回的数据、生成 fullPath
+        // const fullPathApiData = addAsyncFullPathFn(apiData)
+
+        // // 3 合并生成路由信息
+        // const resultRoutes = mergeRoutesFn(fullPathApiData, localFlatRoutes)
+
+        // // 4 处理没有children的路由、增加 index
+        // resultRoutes.forEach(v => {
+        //   if (!v.children) {
+        //     v['children'] = v['children'] || [{}]
+        //     v.children[0] = {
+        //       path: 'index',
+        //       component: localFlatRoutes[`${v.path}/index`].component,
+        //       meta: {
+        //         icon: v.meta.icon || localFlatRoutes[`${v.path}/index`].icon,
+        //         title: v.meta.title
+        //       }
+        //     }
+        //   }
+        // })
+
+        // resultRoutes.push({
+        //   path: '*',
+        //   redirect: '/404',
+        //   hidden: true
+        // })
+        // commit('SET_MENU', resultRoutes)
+        // router.addRoutes(resultRoutes)
+        // router.options.routes.push(...resultRoutes)
+        // return apiData
       } catch (error) {
         return error
       }

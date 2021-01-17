@@ -26,7 +26,6 @@ Router.prototype.push = function push(location) {
  */
 
 const routes = Config.router.IS_DYNAMIC_ROUTES ? dynamicRoutes : constantRoutes
-console.log('routes', routes)
 const createRouter = () =>
   new Router({
     mode: Config.router.mode,

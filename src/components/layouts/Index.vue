@@ -83,6 +83,10 @@ $height: 40px;
       border-right: 1px solid $borderGrey;
       color: #333;
       // transition: all 0.5s ease;
+      .el-scrollbar {
+        overflow-y: auto;
+        height: 100vh;
+      }
     }
 
     .collapse-open {
