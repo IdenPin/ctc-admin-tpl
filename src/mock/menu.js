@@ -66,6 +66,23 @@ export const menuData = {
       id: '4028846f71106f54017110f4c9970002',
       open: true
     },
+    /**
+     * 外链demo
+     */
+    {
+      accessPath: 'http://www.qq.com',
+      name: '腾讯外链',
+      icon: 'el-icon-brush'
+    },
+    /**
+     * iframe 内链demo
+     */
+    {
+      accessPath: 'https://idenpin.github.io/element-table/docs/#/',
+      name: '报表内链',
+      icon: 'el-icon-document-copy',
+      iframe: true
+    },
     {
       accessPath: '/deal-upload',
       name: '处罚信息上报',
