@@ -1,5 +1,5 @@
 import router from '../router'
-import Store from '../store'
+import store from '../store'
 import NProgress from 'nprogress'
 import Config from '@/config'
 import 'nprogress/nprogress.css'
@@ -12,13 +12,18 @@ import { setDocumentTitle } from '@/utils/tools'
 NProgress.configure(Config.project.nProgress)
 
 /**
+ * 解决 动态路由或角色 刷新 component 丢失问题
+ */
+store.getters['user/token'] && Config.router.IS_DYNAMIC_ROUTES && store.dispatch('user/fetchMenu')
+
+/**
  * 全局前置守卫，路由拦截
  */
 
 router.beforeEach((to, from, next) => {
   NProgress.start()
 
-  const token = Store.getters['user/token']
+  const token = store.getters['user/token']
   const toPath = to.path
 
   /**
@@ -50,32 +55,8 @@ router.beforeEach((to, from, next) => {
       next('/')
       NProgress.done()
     } else {
-      /**
-       * 如果 IS_DYNAMIC_ROUTES 为 true
-       * 需要获取后端权限接口
-       * 则登录成功后需要请求后端接口获取角色或者路由树
-       */
-
-      if (Config.router.IS_DYNAMIC_ROUTES) {
-        Store.dispatch('user/fetchMenu').then(data => {
-          router.addRoutes(data)
-          router.options.routes.push(...data)
-          console.log('---后台返回的权限信息----', data)
-          if (Store.getters['user/menu'].length === 0) {
-            Store.commit('user/SET_MENU', router.options.routes)
-          }
-        })
-      } else {
-        /**
-         * 防止重复 push
-         */
-
-        if (Store.getters['user/menu'].length === 0) {
-          Store.commit('user/SET_MENU', router.options.routes)
-        }
-      }
+      next()
     }
-    next()
   }
 })
 

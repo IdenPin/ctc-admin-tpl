@@ -87,15 +87,11 @@ export default {
           this.loginBtnStatus = true
           try {
             const { code } = await this.doLogin(this.ruleForm)
-
             if (code !== 200) {
               this.loginText = '登 录'
               this.loginBtnStatus = false
               return
             }
-            this.loginText = '登录成功 ...'
-
-            this.loginBtnStatus = false
             this.$router.push('/')
           } catch (error) {
             this.loginText = '登 录'

@@ -1,7 +1,7 @@
-import { flatRoutesFn, addAsyncFullPathFn, mergeRoutesFn } from '@/utils/tools'
-import dynamicRoutes from '@/router/dynamic-routes'
 import router from '@/router'
-import { menuData, resultRoutes } from '@/mock/menu'
+import Config from '@/config'
+import { createDynamicRoutes } from '@/router/dynamic-routes'
+import menuData from '@/mock/menu'
 
 export default {
   namespaced: true,
@@ -37,7 +37,7 @@ export default {
      * @returns
      */
 
-    async doLogin({ commit }, formData) {
+    async doLogin({ commit, dispatch }, formData) {
       try {
         const { data, code } = await new Promise(resolve => {
           setTimeout(() => {
@@ -56,7 +56,20 @@ export default {
         commit('SET_USERNAME', data.username)
         commit('SET_TOKEN', data.token)
         commit('SET_USER_INFO', data)
-        return { code }
+
+        /**
+         * 如果 IS_DYNAMIC_ROUTES 为 true
+         * 则登录成功后需要请求后端接口获取角色或者路由树
+         */
+
+        if (Config.router.IS_DYNAMIC_ROUTES) {
+          return await dispatch('fetchMenu')
+        } else {
+          if (this.state.user.menu.length === 0) {
+            commit('SET_MENU', router.options.routes)
+          }
+          return { code }
+        }
       } catch (error) {
         return error
       }
@@ -66,66 +79,29 @@ export default {
      * 1、菜单树
      * 2、获取角色
      */
-    async fetchMenu({ commit }) {
+    async fetchMenu({ commit, dispatch }) {
       try {
-        const { data } = await new Promise(resolve => {
+        return await new Promise(resolve => {
+          commit('SET_MENU', null)
           setTimeout(() => {
-            resolve(menuData)
-          }, 2000)
+            const routes = createDynamicRoutes(menuData.data)
+            routes.unshift(...Config.router.defaultRoutes)
+            commit('SET_MENU', routes)
+            router.addRoutes(routes)
+            resolve({
+              code: 200
+            })
+          }, 500)
         })
-
-        // 拍平后台菜单树
-        /**
-         * {
-         *  '/a': xxx,
-         *  '/b':xxx
-         * }
-         */
-
-        return resultRoutes
-        // const apiData = data
-        // // 1 拍平本地路由
-        // const localFlatRoutes = flatRoutesFn(dynamicRoutes)
-
-        // // 2 处理接口返回的数据、生成 fullPath
-        // const fullPathApiData = addAsyncFullPathFn(apiData)
-
-        // // 3 合并生成路由信息
-        // const resultRoutes = mergeRoutesFn(fullPathApiData, localFlatRoutes)
-
-        // // 4 处理没有children的路由、增加 index
-        // resultRoutes.forEach(v => {
-        //   if (!v.children) {
-        //     v['children'] = v['children'] || [{}]
-        //     v.children[0] = {
-        //       path: 'index',
-        //       component: localFlatRoutes[`${v.path}/index`].component,
-        //       meta: {
-        //         icon: v.meta.icon || localFlatRoutes[`${v.path}/index`].icon,
-        //         title: v.meta.title
-        //       }
-        //     }
-        //   }
-        // })
-
-        // resultRoutes.push({
-        //   path: '*',
-        //   redirect: '/404',
-        //   hidden: true
-        // })
-        // commit('SET_MENU', resultRoutes)
-        // router.addRoutes(resultRoutes)
-        // router.options.routes.push(...resultRoutes)
-        // return apiData
       } catch (error) {
-        return error
+        await dispatch('resetToken')
       }
     },
 
     /**
      * 登出
      */
-    async doLogout({ commit }) {
+    async doLogout({ dispatch }) {
       try {
         const { code } = await new Promise((resolve, reject) => {
           setTimeout(() => {
@@ -135,21 +111,34 @@ export default {
           }, 100)
         })
         if (code == 200) {
-          commit('SET_USERNAME', null)
-          commit('SET_TOKEN', null)
-          commit('SET_USER_INFO', {})
-          commit('SET_MENU', null)
+          await dispatch('resetToken')
         }
         return code
       } catch (error) {
         return error
       }
+    },
+
+    /**
+     * 清空用户信息
+     * @param {*} param0
+     * @returns
+     */
+    resetToken({ commit }) {
+      return new Promise(resolve => {
+        commit('SET_USERNAME', null)
+        commit('SET_TOKEN', null)
+        commit('SET_USER_INFO', {})
+        commit('SET_MENU', null)
+        resolve()
+      })
     }
   },
   getters: {
     username: state => state.username,
     token: state => state.token,
     userInfo: state => state.userInfo,
-    menu: state => state.menu
+    menu: state => state.menu,
+    menuInit: state => state.menuInit
   }
 }

@@ -7,7 +7,6 @@ import Router from 'vue-router'
 import Config from '@/config'
 
 import constantRoutes from './constant-routes'
-import dynamicRoutes from './dynamic-routes'
 
 Vue.use(Router)
 
@@ -25,7 +24,7 @@ Router.prototype.push = function push(location) {
  *  通过 IS_DYNAMIC_ROUTES 确定该项目菜单权限系统是静态的还是动态的
  */
 
-const routes = Config.router.IS_DYNAMIC_ROUTES ? dynamicRoutes : constantRoutes
+const routes = Config.router.IS_DYNAMIC_ROUTES ? Config.router.defaultRoutes : constantRoutes
 const createRouter = () =>
   new Router({
     mode: Config.router.mode,
