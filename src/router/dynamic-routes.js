@@ -1,13 +1,12 @@
-import BlankPage from '@/components/globals/BlankPage'
-import Layout from '@/components/layouts/Index.vue'
-import RouteNode from '@/components/globals/RouteNode.vue'
-import _ from 'lodash'
 /**
  * dynamic-routes file <核心>
  * 根据权限树或者角色动态生成的路由
  * dynamicRoutes 计算通过 router.addRoutes 追加
  */
-import Config from '@/config'
+import BlankPage from '@/components/globals/BlankPage'
+import Layout from '@/components/layouts/Index.vue'
+import RouteNode from '@/components/globals/RouteNode.vue'
+import _ from 'lodash'
 
 /**
  * 拍平后台返回的树
