@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="collapse" @click="$store.commit('app/TOGGLE_COLLAPSE')">
+    <div class="collapse" @click="$store.commit('app/TOGGLE_COLLAPSE', !isCollapse)">
       <i :class="`el-icon-s-${isCollapse ? 'fold' : 'unfold'}`" style="font-size: 16px;color:#7b7c7d"></i>
     </div>
     <el-scrollbar wrap-class="scrollbar-wrapper">

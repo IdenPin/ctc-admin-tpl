@@ -35,6 +35,18 @@ export default {
     ...mapGetters({
       isCollapse: 'app/isCollapse'
     })
+  },
+  methods: {
+    handleResize() {
+      const isMobile = document.body.getBoundingClientRect().width - 1 < 992
+      isMobile ? this.$store.commit('app/TOGGLE_COLLAPSE', true) : this.$store.commit('app/TOGGLE_COLLAPSE', false)
+    }
+  },
+  beforeMount() {
+    window.addEventListener('resize', this.handleResize)
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.handleResize)
   }
 }
 </script>
