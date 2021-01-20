@@ -7,9 +7,8 @@ import GlobalComponents from '@/components/globals'
 import Bus from '@/utils/bus'
 
 import router from './router.config'
-import request from './request.config'
+import net from './net.config'
 import project from './project.config'
-
 export function install(Vue) {
   // 导入全局组件
   Vue.use(GlobalComponents)
@@ -22,4 +21,4 @@ export function install(Vue) {
   Vue.prototype.$bus = Bus
 }
 
-export default { install, router, request, project }
+export default { install, router, net, project }

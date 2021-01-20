@@ -66,6 +66,54 @@ export default {
       id: '4028846f71106f54017110f4c9970002',
       open: true
     },
+    {
+      accessPath: '/nested',
+      children: [
+        {
+          accessPath: 'menu1',
+          component: () => import('@/views/nested/menu1/index'), // Parent router-view
+          redirect: '/nested/menu1/menu1-1',
+          name: 'Menu',
+          children: [
+            {
+              accessPath: 'menu1-1',
+              component: () => import('@/views/nested/menu1/menu1-1'),
+              name: 'Menu1-1'
+            },
+            {
+              accessPath: 'menu1-2',
+              component: () => import('@/views/nested/menu1/menu1-2'),
+              name: 'Menu1-2',
+              redirect: '/nested/menu1/menu1-2/menu1-2-1',
+              children: [
+                {
+                  accessPath: 'menu1-2-1',
+                  component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
+                  name: 'Menu1-2-1'
+                },
+                {
+                  accessPath: 'menu1-2-2',
+                  component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
+                  name: 'Menu1-2-2'
+                }
+              ]
+            },
+            {
+              accessPath: 'menu1-3',
+              component: () => import('@/views/nested/menu1/menu1-3'),
+              name: 'Menu1-3'
+            }
+          ]
+        },
+        {
+          accessPath: 'menu2',
+          name: 'Menu2',
+          component: () => import('@/views/nested/menu2/index'),
+          meta: { title: 'Menu 2' }
+        }
+      ],
+      name: '测试菜单'
+    },
     /**
      * 外链demo
      */
@@ -117,12 +165,6 @@ export default {
       id: '4028846f71106f54017110fbbab30010'
     },
     {
-      accessPath: '/company-search',
-      name: '企业用户查询',
-      icon: 'menu-icon7',
-      id: '4028846f71106f54017110fd69140011'
-    },
-    {
       accessPath: '/system-manage',
       name: ' 系统管理',
       icon: 'menu-icon8',
@@ -162,6 +204,12 @@ export default {
           id: '4028846f71a4b5710171a4e871890007'
         }
       ]
+    },
+    {
+      accessPath: '/company-search',
+      name: '企业用户查询',
+      icon: 'menu-icon7',
+      id: '4028846f71106f54017110fd69140011'
     }
   ],
   status: 200

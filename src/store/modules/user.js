@@ -1,4 +1,5 @@
 import router from '@/router'
+import baseRoutes from '@/router/base-routes'
 import Config from '@/config'
 import { createDynamicRoutes } from '@/router/dynamic-routes'
 import menuData from '@/mock/menu'
@@ -85,7 +86,7 @@ export default {
           commit('SET_MENU', null)
           setTimeout(() => {
             const routes = createDynamicRoutes(menuData.data)
-            routes.unshift(...Config.router.defaultRoutes)
+            routes.unshift(...baseRoutes)
             commit('SET_MENU', routes)
             router.addRoutes(routes)
             resolve({

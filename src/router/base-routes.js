@@ -1,6 +1,8 @@
+import Layout from '@/components/layouts/Index.vue'
+
 /**
- * constant-routes
- * 需要用户登录才可以访问的路由，所有登录后的用户都可见，不做角色区分
+ * base-routes
+ * 不需要登录，不需要经过权限验证，所有用户都可以访问
  * 路由配置模板格式
  * Note: sub-menu only appear when route children.length >= 1
  *
@@ -21,51 +23,65 @@
     activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
   }
  */
-
-import BaseRoutes from './base-routes'
-import NestedRoutes from './modules/nested-routes'
-
-/**
- * 注意，默认导出的是对象，如果是数组需要使用扩展运算符 ...
- */
-const constantRoutes = [
-  /**
-   * iframe 内链demo
-   */
-
+export default [
   {
-    path: 'https://idenpin.github.io/element-table/docs/#/',
-    meta: {
-      title: '报表内链',
-      icon: 'el-icon-document-copy'
-    },
-    iframe: true
+    path: '/login',
+    hidden: true,
+    component: () => import('@/views/Login.vue')
   },
-
-  /**
-   * 外链demo
-   */
   {
-    path: 'http://www.qq.com',
+    path: '/',
+    name: 'Home',
+    component: Layout,
+    redirect: 'index',
+    children: [
+      {
+        path: 'index',
+        name: 'HomeIndex',
+        component: () => import('@/views/Home.vue'),
+        meta: {
+          title: '首页',
+          icon: 'el-icon-files'
+        }
+      }
+    ]
+  },
+  {
+    path: '/testRoute',
+    hidden: true,
+    component: () => import('@/components/globals/BlankPage.vue'),
     meta: {
-      title: '腾讯外链',
-      icon: 'el-icon-brush'
+      title: '测试路由',
+      icon: 'el-icon-files'
     }
   },
-
   /**
-   * 嵌套菜单
+   * 用于 iframe 展示容器
    */
-
-  NestedRoutes,
   {
-    path: '/user-manage',
-    component: () => import('@/views/UserInfo.vue')
+    path: '/iframe',
+    component: Layout,
+    redirect: '/iframe/index',
+    hidden: true,
+    children: [
+      {
+        path: 'index',
+        name: 'IframePage',
+        component: () => import('@/components/globals/IframePage.vue')
+      }
+    ]
   },
+
   {
-    path: '*',
-    redirect: '/404'
+    path: '/404',
+    component: Layout,
+    redirect: '/404/index',
+    hidden: true,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/404.vue')
+      }
+    ]
   }
 ]
-
-export default [...BaseRoutes, ...constantRoutes]

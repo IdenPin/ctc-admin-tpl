@@ -1,12 +1,41 @@
 /**
- * dynamic-routes file <核心>
+ * dynamic-routes
  * 根据权限树或者角色动态生成的路由
  * dynamicRoutes 计算通过 router.addRoutes 追加
  */
 import BlankPage from '@/components/globals/BlankPage'
 import Layout from '@/components/layouts/Index.vue'
 import RouteNode from '@/components/globals/RouteNode.vue'
+
+import constantRoutes from './constant-routes'
 import _ from 'lodash'
+
+/**
+ * 拍平本地路由树
+ * @param {*} localConstantRoutes
+ * @returns
+ */
+
+export function flatLocalMenuFn(localConstantRoutes) {
+  let flatMenuObj = {}
+  let handlerLoop = (data, prefix) => {
+    if (Array.isArray(data)) {
+      data.forEach(v => {
+        const path = prefix ? `${prefix}${v.path}` : v.path
+
+        flatMenuObj[path] = v
+
+        if (v.children && v.children.length > 0) {
+          handlerLoop(v.children, path + '/')
+        }
+      })
+    }
+  }
+  handlerLoop(localConstantRoutes)
+  return flatMenuObj
+}
+
+// console.log('~~~~', flatLocalMenuFn(constantRoutes))
 
 /**
  * 拍平后台返回的树
@@ -24,7 +53,8 @@ import _ from 'lodash'
  * @returns
  */
 
-export function flatMenuFn(apiRoutes) {
+export function flatApiMenuFn(apiRoutes) {
+  let localFlatMenuObj = flatLocalMenuFn(constantRoutes)
   let flatMenuObj = {}
   let handlerLoop = (data, prefix) => {
     if (Array.isArray(data)) {
@@ -37,15 +67,17 @@ export function flatMenuFn(apiRoutes) {
           path: v.accessPath,
           meta: {
             title: v.name,
-            icon: 'el-icon-tickets'
+            icon: v.icon || 'el-icon-tickets'
           }
         }
 
         /**
-         * 如果没有对应的 components， 则先展示默认的 BlankPage 或者 Layout
+         * 如果没有对应的 component， 则先展示默认的 BlankPage 或者 Layout
          */
 
-        flatMenuObj[path].component = hasChild ? Layout : BlankPage
+        flatMenuObj[path].component = hasChild
+          ? Layout
+          : (localFlatMenuObj[path] && localFlatMenuObj[path].component) || BlankPage
 
         /**
          * 如果 path 中 '/' 只有一个，说明没有children，则需要添加一层 layout
@@ -169,7 +201,7 @@ export function cleanKey(routes) {
 
 export function createDynamicRoutes(apiRoutes) {
   // 拍平
-  const flatMenuObj = flatMenuFn(apiRoutes)
+  const flatMenuObj = flatApiMenuFn(apiRoutes)
   // 通过 path 递归查找赋值
   let routes = createMenuFn(apiRoutes, flatMenuObj)
 

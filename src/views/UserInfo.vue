@@ -21,6 +21,5 @@
   background-color: #fff;
   align-items: center;
   padding: 10px;
-  margin: -10px -12px 0 -12px;
 }
 </style>
