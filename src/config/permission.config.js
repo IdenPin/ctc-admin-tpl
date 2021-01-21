@@ -14,7 +14,10 @@ NProgress.configure(Config.project.nProgress)
 /**
  * 解决 动态路由或角色 刷新 component 丢失问题
  */
-store.getters['user/token'] && Config.router.IS_DYNAMIC_ROUTES && store.dispatch('user/fetchMenu')
+const { IS_DYNAMIC_ROUTES, PERMISSION_TREE } = Config.router
+if (store.getters['user/token'] && IS_DYNAMIC_ROUTES) {
+  PERMISSION_TREE ? store.dispatch('user/createRoutesByTree') : store.dispatch('user/createRoutesByRoles')
+}
 
 /**
  * 全局前置守卫，路由拦截

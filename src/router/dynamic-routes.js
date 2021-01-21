@@ -6,6 +6,7 @@
 import BlankPage from '@/components/globals/BlankPage'
 import Layout from '@/components/layouts/Index.vue'
 import RouteNode from '@/components/globals/RouteNode.vue'
+import Config from '@/config'
 
 import constantRoutes from './constant-routes'
 import _ from 'lodash'
@@ -34,8 +35,6 @@ export function flatLocalMenuFn(localConstantRoutes) {
   handlerLoop(localConstantRoutes)
   return flatMenuObj
 }
-
-// console.log('~~~~', flatLocalMenuFn(constantRoutes))
 
 /**
  * 拍平后台返回的树
@@ -72,12 +71,13 @@ export function flatApiMenuFn(apiRoutes) {
         }
 
         /**
-         * 如果没有对应的 component， 则先展示默认的 BlankPage 或者 Layout
+         * 通过path对比，localFlatMenu中获取component。
+         * 如果没有孩子节点且path对应的 component没有， 则先展示默认的 Layout
+         * 否则使用用户配置的component
          */
 
-        flatMenuObj[path].component = hasChild
-          ? Layout
-          : (localFlatMenuObj[path] && localFlatMenuObj[path].component) || BlankPage
+        const userComponent = localFlatMenuObj[path] && localFlatMenuObj[path].component
+        flatMenuObj[path].component = hasChild && !userComponent ? Layout : userComponent || BlankPage
 
         /**
          * 如果 path 中 '/' 只有一个，说明没有children，则需要添加一层 layout
@@ -101,14 +101,17 @@ export function flatApiMenuFn(apiRoutes) {
               redirect: `${path}/index`,
               children: [hasNoChillRoute]
             }
-            flatMenuObj[path] = temp
+            const hasConstantRoutes = flatMenuObj[path].component
+            if (hasConstantRoutes && hasConstantRoutes.name === 'BlankPage') {
+              flatMenuObj[path] = temp
+            }
           }
         } else {
           /**
            * 多层级树，除第一级和最后一级以外children component 设置为 RouteNode 空节点
            */
 
-          if (hasChild) {
+          if (hasChild && !userComponent) {
             flatMenuObj[path]['component'] = RouteNode
           }
         }
@@ -199,21 +202,74 @@ export function cleanKey(routes) {
   loopMenu(routes)
 }
 
-export function createDynamicRoutes(apiRoutes) {
-  // 拍平
-  const flatMenuObj = flatApiMenuFn(apiRoutes)
-  // 通过 path 递归查找赋值
-  let routes = createMenuFn(apiRoutes, flatMenuObj)
+/**
+ * ---------------------------
+ * ---------角色方案-----------
+ * ---------------------------
+ */
 
-  // 清除无用的值
-  cleanKey(_.cloneDeep(routes))
+function hasPermission(roles, route) {
+  if (route.meta && route.meta.roles) {
+    return roles.some(role => route.meta.roles.includes(role))
+  } else {
+    return true
+  }
+}
+
+export function filterRoutesByRoles(routes, roles) {
+  const res = []
+  routes.forEach(route => {
+    const tmp = { ...route }
+    if (hasPermission(roles, tmp)) {
+      if (tmp.children) {
+        tmp.children = filterRoutesByRoles(tmp.children, roles)
+      }
+      res.push(tmp)
+    }
+  })
+
+  return res
+}
+
+/**
+ * 生成最终的权限路由，并且把*放在最后
+ * 方案一，后端返回权限树
+ * 方案二，后端返回角色数组
+ * @returns
+ */
+
+export function createDynamicRoutes(data) {
+  let routes
 
   /**
-   * 模糊路由匹配一定要放在最后
+   * 权限树
    */
-  routes.push({
-    path: '*',
-    redirect: '/404'
-  })
+  if (Config.router.PERMISSION_TREE) {
+    // 拍平
+    const flatMenuObj = flatApiMenuFn(data)
+    // 通过 path 递归查找赋值
+    routes = createMenuFn(data, flatMenuObj)
+
+    // 清除无用的值
+    cleanKey(_.cloneDeep(routes))
+
+    /**
+     * 模糊路由匹配一定要放在最后
+     */
+    routes.push({
+      path: '*',
+      redirect: '/404'
+    })
+  } else {
+    /**
+     * 角色数组
+     */
+    if (data.includes('admin')) {
+      routes = constantRoutes
+    } else {
+      routes = filterRoutesByRoles(constantRoutes, data)
+    }
+  }
+
   return routes
 }

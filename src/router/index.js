@@ -13,7 +13,7 @@ Vue.use(Router)
 
 /**
  * 解决路由跳转 bug
- * Navigation cancelled from "/system-manage/index" to "/assign-document/index" with a new navigation
+ * Navigation cancelled from "/xxx" to "/xxxx" with a new navigation
  */
 
 const originalPush = Router.prototype.push
@@ -24,8 +24,8 @@ Router.prototype.push = function push(location) {
 /**
  *  通过 IS_DYNAMIC_ROUTES 确定该项目菜单权限系统是静态的还是动态的
  */
-
-const routes = Config.router.IS_DYNAMIC_ROUTES ? baseRoutes : constantRoutes
+const { IS_DYNAMIC_ROUTES, PERMISSION_TREE } = Config.router
+const routes = IS_DYNAMIC_ROUTES && PERMISSION_TREE ? baseRoutes : constantRoutes
 const createRouter = () =>
   new Router({
     mode: Config.router.mode,

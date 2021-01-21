@@ -4,7 +4,7 @@
  * 路由配置模板格式
  * Note: sub-menu only appear when route children.length >= 1
  *
- * iframe: false                  判断是否是iframe内链
+ * iframe: false                  if set true, item will show iframe url
  * hidden: true                   if set true, item will not show in the sidebar(default is false)
  * alwaysShow: true               if set true, will always show the root menu
  *                                if not set alwaysShow, when item has more than one children route,
@@ -24,9 +24,11 @@
 
 import BaseRoutes from './base-routes'
 import NestedRoutes from './modules/nested-routes'
+import Layout from '@/components/layouts/Index.vue'
 
 /**
  * 注意，默认导出的是对象，如果是数组需要使用扩展运算符 ...
+ * 如果是动态菜单，且走的是角色模式，则meta中必须配置 roles 和 title 字段
  */
 const constantRoutes = [
   /**
@@ -48,6 +50,7 @@ const constantRoutes = [
   {
     path: 'http://www.qq.com',
     meta: {
+      roles: ['admin'],
       title: '腾讯外链',
       icon: 'el-icon-brush'
     }
@@ -58,9 +61,43 @@ const constantRoutes = [
    */
 
   NestedRoutes,
+  // {
+  //   path: '/user-manage',
+  //   component: () => import('@/views/UserInfo.vue'),
+  //   meta: {
+  //     title: '用户管理',
+  //     roles: ['admin'],
+  //     icon: 'el-icon-brush'
+  //   }
+  // },
   {
     path: '/user-manage',
-    component: () => import('@/views/UserInfo.vue')
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        meta: {
+          title: '用户管理',
+          roles: ['admin'],
+          icon: 'el-icon-brush'
+        },
+        component: () => import('@/views/UserInfo.vue')
+      }
+    ]
+  },
+  {
+    path: '/system-manage',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        meta: {
+          title: '用户管理',
+          icon: 'el-icon-brush'
+        },
+        component: () => import('@/views/UserInfo.vue')
+      }
+    ]
   },
   {
     path: '*',

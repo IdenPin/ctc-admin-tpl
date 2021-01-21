@@ -18,4 +18,10 @@ const mode = 'hash'
 
 const IS_DYNAMIC_ROUTES = true
 
-module.exports = { whiteListPath, mode, IS_DYNAMIC_ROUTES }
+/**
+ * IS_DYNAMIC_ROUTES 为 true 动态权限
+ * PERMISSION_TREE true ? '菜单树权限' : '角色权限'
+ */
+const PERMISSION_TREE = true
+
+module.exports = { whiteListPath, mode, IS_DYNAMIC_ROUTES, PERMISSION_TREE }

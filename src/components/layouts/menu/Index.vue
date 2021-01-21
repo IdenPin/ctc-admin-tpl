@@ -42,9 +42,6 @@ export default {
     variables() {
       return variables
     }
-  },
-  mounted() {
-    console.log('侧边栏菜单', this.$store.getters['user/menu'])
   }
 }
 </script>

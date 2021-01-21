@@ -71,48 +71,38 @@ export default {
       children: [
         {
           accessPath: 'menu1',
-          component: () => import('@/views/nested/menu1/index'), // Parent router-view
-          redirect: '/nested/menu1/menu1-1',
-          name: 'Menu',
+          name: 'Menu1',
           children: [
             {
               accessPath: 'menu1-1',
-              component: () => import('@/views/nested/menu1/menu1-1'),
               name: 'Menu1-1'
             },
             {
               accessPath: 'menu1-2',
-              component: () => import('@/views/nested/menu1/menu1-2'),
               name: 'Menu1-2',
-              redirect: '/nested/menu1/menu1-2/menu1-2-1',
               children: [
                 {
                   accessPath: 'menu1-2-1',
-                  component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
                   name: 'Menu1-2-1'
                 },
                 {
                   accessPath: 'menu1-2-2',
-                  component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
                   name: 'Menu1-2-2'
                 }
               ]
             },
             {
               accessPath: 'menu1-3',
-              component: () => import('@/views/nested/menu1/menu1-3'),
               name: 'Menu1-3'
             }
           ]
         },
         {
           accessPath: 'menu2',
-          name: 'Menu2',
-          component: () => import('@/views/nested/menu2/index'),
-          meta: { title: 'Menu 2' }
+          name: 'Menu2'
         }
       ],
-      name: '测试菜单'
+      name: '路由嵌套'
     },
     /**
      * 外链demo

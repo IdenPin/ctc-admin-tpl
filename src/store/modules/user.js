@@ -7,7 +7,6 @@ import menuData from '@/mock/menu'
 export default {
   namespaced: true,
   state: {
-    // 设置面板关闭
     username: '',
     token: '',
     userInfo: '',
@@ -63,8 +62,9 @@ export default {
          * 则登录成功后需要请求后端接口获取角色或者路由树
          */
 
-        if (Config.router.IS_DYNAMIC_ROUTES) {
-          return await dispatch('fetchMenu')
+        const { IS_DYNAMIC_ROUTES, PERMISSION_TREE } = Config.router
+        if (IS_DYNAMIC_ROUTES) {
+          return PERMISSION_TREE ? await dispatch('createRoutesByTree') : await dispatch('createRoutesByRoles')
         } else {
           if (this.state.user.menu.length === 0) {
             commit('SET_MENU', router.options.routes)
@@ -77,11 +77,11 @@ export default {
     },
 
     /**
-     * 1、菜单树
-     * 2、获取角色
+     * 方案一，后端返回权限菜单树生成路由
      */
-    async fetchMenu({ commit, dispatch }) {
+    async createRoutesByTree({ commit, dispatch }) {
       try {
+        // 获取菜单树接口
         return await new Promise(resolve => {
           commit('SET_MENU', null)
           setTimeout(() => {
@@ -96,6 +96,29 @@ export default {
         })
       } catch (error) {
         await dispatch('resetToken')
+      }
+    },
+
+    /**
+     * 方案二，后端返回用户角色生成路由
+     */
+    async createRoutesByRoles({ commit }) {
+      // 获取角色信息
+      const { roles } = await new Promise(resolve => {
+        commit('SET_MENU', null)
+        setTimeout(() => {
+          resolve({
+            roles: ['user']
+            // roles: ['admin']
+          })
+        }, 500)
+      })
+
+      const routes = createDynamicRoutes(roles)
+      commit('SET_MENU', routes)
+      router.addRoutes(routes)
+      return {
+        code: 200
       }
     },
 
