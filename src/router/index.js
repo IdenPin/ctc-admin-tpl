@@ -5,8 +5,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Config from '@/config'
-
-import { constantRoutes, baseRoutes } from './constant-routes'
+import { baseRoutes } from './constant-routes'
 
 Vue.use(Router)
 
@@ -20,16 +19,11 @@ Router.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
 }
 
-/**
- *  通过 IS_DYNAMIC_ROUTES 确定该项目菜单权限系统是静态的还是动态的
- */
-const { IS_DYNAMIC_ROUTES, PERMISSION_TREE } = Config.router
-const routes = IS_DYNAMIC_ROUTES && PERMISSION_TREE ? baseRoutes : constantRoutes
 const createRouter = () =>
   new Router({
     mode: Config.router.mode,
     scrollBehavior: () => ({ y: 0 }),
-    routes
+    routes: baseRoutes
   })
 
 const router = createRouter()
@@ -41,7 +35,7 @@ const router = createRouter()
 
 export function resetRouter() {
   const newRouter = createRouter()
-  router.matcher = newRouter.matcher // reset router
+  router.matcher = newRouter.matcher
 }
 
 export default router

@@ -45,11 +45,21 @@ const nProgress = {
   showSpinner: true
 }
 
+/**
+ * 业务相关
+ */
+const pager = () => ({
+  total: 100,
+  currentPage: 1,
+  pageSize: 10
+})
+
 module.exports = {
   name,
   publicPath,
   outputDir,
   devServer,
   assetsDir,
-  nProgress
+  nProgress,
+  pager
 }

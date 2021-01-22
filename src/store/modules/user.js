@@ -108,8 +108,8 @@ export default {
         commit('SET_MENU', null)
         setTimeout(() => {
           resolve({
-            roles: ['user']
-            // roles: ['admin']
+            // roles: ['user']
+            roles: ['admin']
           })
         }, 500)
       })

@@ -28,9 +28,23 @@ import NestedRoutes from './modules/nested-routes'
 import Layout from '@/components/layouts/Index.vue'
 
 /**
- * baseRoutes 基础路由
+ * devTemp 只在开发环境生效
  */
-export const baseRoutes = [
+const devTemp = [
+  {
+    path: '/demo',
+    meta: {
+      title: 'Demo 示例',
+      icon: 'el-icon-files'
+    },
+    component: () => import('@/views/demo/index.vue')
+  }
+]
+
+/**
+ * base 基础路由
+ */
+const base = [
   {
     path: '/login',
     hidden: true,
@@ -53,6 +67,21 @@ export const baseRoutes = [
       }
     ]
   },
+  // {
+  //   path: '/demo',
+  //   component: Layout,
+  //   redirect: '/demo/index',
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       meta: {
+  //         title: 'Demo 示例',
+  //         icon: 'el-icon-files'
+  //       },
+  //       component: () => import('@/views/Demo.vue')
+  //     }
+  //   ]
+  // },
   {
     path: '/testRoute',
     hidden: true,
@@ -92,8 +121,11 @@ export const baseRoutes = [
     ]
   }
 ]
+process.env.NODE_ENV === 'development' && base.push(...devTemp)
+export const baseRoutes = base
 
 /**
+ * 通过权限过滤动态添加的路由（非菜单树）
  * 注意，默认导出的是对象，如果是数组需要使用扩展运算符 ...
  * 路由配置按照本地访问的标准路由配置，一层路由需要添加 Layout index 层
  */
@@ -148,7 +180,8 @@ export const constantRoutes = [
     component: Layout,
     meta: {
       title: '用户管理',
-      icon: 'menu-icon3'
+      icon: 'menu-icon3',
+      roles: ['admin']
     },
     alwaysShow: true,
     redirect: '/user-manage/index',
@@ -157,7 +190,6 @@ export const constantRoutes = [
         path: 'index',
         meta: {
           title: '列表',
-          roles: ['admin', 'user'],
           icon: 'menu-icon4'
         },
         component: () => import('@/views/UserInfo.vue')
@@ -169,5 +201,3 @@ export const constantRoutes = [
     redirect: '/404'
   }
 ]
-
-console.log('constantRoutes', constantRoutes)

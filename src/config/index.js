@@ -4,6 +4,7 @@ import ElTableBlock from '@pdeng/element-table'
 import '@/assets/icons'
 
 import GlobalComponents from '@/components/globals'
+import '@/directives'
 import Bus from '@/utils/bus'
 
 import router from './router.config'
