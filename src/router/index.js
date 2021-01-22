@@ -6,8 +6,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Config from '@/config'
 
-import constantRoutes from './constant-routes'
-import baseRoutes from './base-routes'
+import { constantRoutes, baseRoutes } from './constant-routes'
 
 Vue.use(Router)
 

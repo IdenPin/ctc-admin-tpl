@@ -8,7 +8,8 @@ import Layout from '@/components/layouts/Index.vue'
 import RouteNode from '@/components/globals/RouteNode.vue'
 import Config from '@/config'
 
-import constantRoutes from './constant-routes'
+import { constantRoutes } from './constant-routes'
+import asyncRoutes from './async-routes'
 import _ from 'lodash'
 
 /**
@@ -53,7 +54,7 @@ export function flatLocalMenuFn(localConstantRoutes) {
  */
 
 export function flatApiMenuFn(apiRoutes) {
-  let localFlatMenuObj = flatLocalMenuFn(constantRoutes)
+  let localFlatMenuObj = flatLocalMenuFn(Config.router.IS_DYNAMIC_ROUTES ? asyncRoutes : constantRoutes)
   let flatMenuObj = {}
   let handlerLoop = (data, prefix) => {
     if (Array.isArray(data)) {
@@ -101,10 +102,8 @@ export function flatApiMenuFn(apiRoutes) {
               redirect: `${path}/index`,
               children: [hasNoChillRoute]
             }
-            const hasConstantRoutes = flatMenuObj[path].component
-            if (hasConstantRoutes && hasConstantRoutes.name === 'BlankPage') {
-              flatMenuObj[path] = temp
-            }
+
+            flatMenuObj[path] = temp
           }
         } else {
           /**
@@ -244,7 +243,8 @@ export function createDynamicRoutes(data) {
   /**
    * 权限树
    */
-  if (Config.router.PERMISSION_TREE) {
+  const { PERMISSION_TREE, IS_DYNAMIC_ROUTES } = Config.router
+  if (PERMISSION_TREE && IS_DYNAMIC_ROUTES) {
     // 拍平
     const flatMenuObj = flatApiMenuFn(data)
     // 通过 path 递归查找赋值

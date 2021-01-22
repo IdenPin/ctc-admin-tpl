@@ -23,5 +23,5 @@ const IS_DYNAMIC_ROUTES = true
  * PERMISSION_TREE true ? '菜单树权限' : '角色权限'
  */
 const PERMISSION_TREE = true
-
+console.log(`IS_DYNAMIC_ROUTES-PERMISSION_TREE: `, IS_DYNAMIC_ROUTES, PERMISSION_TREE)
 module.exports = { whiteListPath, mode, IS_DYNAMIC_ROUTES, PERMISSION_TREE }

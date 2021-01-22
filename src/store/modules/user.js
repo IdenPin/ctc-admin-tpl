@@ -1,5 +1,5 @@
 import router from '@/router'
-import baseRoutes from '@/router/base-routes'
+import { baseRoutes } from '@/router/constant-routes'
 import Config from '@/config'
 import { createDynamicRoutes } from '@/router/dynamic-routes'
 import menuData from '@/mock/menu'
