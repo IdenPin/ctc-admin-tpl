@@ -4,8 +4,18 @@
 .db {
   display: block;
 }
+.bg-fff {
+  background-color: #fff;
+}
+
 .cursor-p {
   cursor: pointer;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .fs-13 {
@@ -16,6 +26,12 @@
 }
 .fs-16 {
   font-size: 14px;
+}
+.fs-32 {
+  font-size: 32px;
+}
+.fs-64 {
+  font-size: 64px;
 }
 
 .fc-black1 {

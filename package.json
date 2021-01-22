@@ -2,6 +2,7 @@
   "name": "ctc-admin-tpl",
   "version": "0.1.2",
   "private": true,
+  "type": "module",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -13,7 +14,6 @@
   },
   "dependencies": {
     "axios": "^0.20.0",
-    "chalk": "^4.1.0",
     "core-js": "^3.6.5",
     "lodash": "^4.17.20",
     "vue": "^2.6.11",
@@ -29,6 +29,7 @@
     "@vue/cli-service": "~4.5.0",
     "@vue/eslint-config-prettier": "^6.0.0",
     "babel-eslint": "^10.1.0",
+    "chalk": "^4.1.0",
     "deploy-cli-service": "^1.0.9",
     "element-theme-chalk": "^2.13.2",
     "element-ui": "^2.13.2",
@@ -37,6 +38,7 @@
     "eslint-plugin-vue": "^6.2.2",
     "fs": "0.0.1-security",
     "lint-staged": "^9.5.0",
+    "nprogress": "^0.2.0",
     "path": "^0.12.7",
     "prettier": "^1.19.1",
     "sass": "^1.26.5",

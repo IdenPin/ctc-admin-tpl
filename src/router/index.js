@@ -1,37 +1,47 @@
-/* eslint-disable */
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import defaultRoutes from './default-routes'
-import Store from '@/store'
-Vue.use(VueRouter)
+/**
+ * 路由配置文件入口
+ */
 
-// fix: Navigation cancelled from "/system-manage/index" to "/assign-document/index" with a new navigation
-const originalPush = VueRouter.prototype.push
-VueRouter.prototype.push = function push(location) {
+import Vue from 'vue'
+import Router from 'vue-router'
+import Config from '@/config'
+
+import { constantRoutes, baseRoutes } from './constant-routes'
+
+Vue.use(Router)
+
+/**
+ * 解决路由跳转 bug
+ * Navigation cancelled from "/xxx" to "/xxxx" with a new navigation
+ */
+
+const originalPush = Router.prototype.push
+Router.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
 }
-// fix
 
-const router = new VueRouter({
-  mode: 'hash',
-  routes: [...defaultRoutes]
-})
+/**
+ *  通过 IS_DYNAMIC_ROUTES 确定该项目菜单权限系统是静态的还是动态的
+ */
+const { IS_DYNAMIC_ROUTES, PERMISSION_TREE } = Config.router
+const routes = IS_DYNAMIC_ROUTES && PERMISSION_TREE ? baseRoutes : constantRoutes
+const createRouter = () =>
+  new Router({
+    mode: Config.router.mode,
+    scrollBehavior: () => ({ y: 0 }),
+    routes
+  })
 
-// router.beforeEach((to, from, next) => {
-//   const token = Store.getters['user/token']
-//   if (token) {
-//     if (to.path === '/login') {
-//       next({ path: '/' })
-//     } else {
-//       next()
-//     }
-//   } else {
-//     if (to.path === '/login') {
-//       next()
-//     } else {
-//       next(`/login?redirect=${to.path}`)
-//     }
-//   }
-// })
+const router = createRouter()
+
+/**
+ * 重置路由hack方法
+ * Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
+ */
+
+export function resetRouter() {
+  const newRouter = createRouter()
+  router.matcher = newRouter.matcher // reset router
+}
 
 export default router

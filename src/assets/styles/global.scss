@@ -25,8 +25,6 @@ a {
 
 ul,
 li {
-  padding: 0;
-  margin: 0;
   list-style: none;
 }
 
@@ -55,45 +53,28 @@ li {
 //   background-color: #878987;
 // }
 
-.main-card {
-  background-color: #fff;
-  padding: $spaceSize;
-  // height: calc(100vh - #{$headerHeight + 45px})!important;
-}
-
-// 右侧table布局公用部分（带search）
-// .comm-page-table-warp {
-//   .el-card {
-//     height: calc(100vh - 190px);
-//     min-height: 700px;
-//     background-color: #fff;
-//     // margin-top:44px;
-//     border-bottom-color: transparent;
+// // 禁止操作层
+// .disabled-wrap {
+//   position: relative;
+//   .disabled-mask {
+//     position: absolute;
+//     background: #fff;
+//     top: 0;
+//     right: 20px;
+//     border: 0;
+//     width: 100%;
+//     height: 100%;
+//     opacity: 0.6;
+//     z-index: 2;
 //   }
 // }
 
-// 禁止操作层
-.disabled-wrap {
-  position: relative;
-  .disabled-mask {
-    position: absolute;
-    background: #fff;
-    top: 0;
-    right: 20px;
-    border: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.6;
-    z-index: 2;
-  }
-}
-
-// hover Popover title
-.popover-header {
-  font-size: 14px;
-  line-height: 36px;
-  text-indent: 20px;
-  margin: -8px -12px 0 -12px;
-  color: $blackColor1;
-  border-bottom: 1px solid $borderGrey;
-}
+// // hover Popover title
+// .popover-header {
+//   font-size: 14px;
+//   line-height: 36px;
+//   text-indent: 20px;
+//   margin: -8px -12px 0 -12px;
+//   color: $blackColor1;
+//   border-bottom: 1px solid $borderGrey;
+// }

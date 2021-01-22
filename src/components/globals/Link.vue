@@ -1,6 +1,5 @@
 <template>
-  <!-- eslint-disable vue/require-component-is -->
-  <component v-bind="linkProps(to)">
+  <component :is="type" v-bind="linkProps(to)">
     <slot />
   </component>
 </template>
@@ -11,14 +10,28 @@ import { isExternal } from '@/utils/validate'
 export default {
   name: 'AppLink',
   props: {
+    route: {
+      type: Object
+    },
     to: {
       type: String,
       required: true
     }
   },
+  computed: {
+    isExternal() {
+      return isExternal(this.to)
+    },
+    type() {
+      if (this.isExternal) {
+        return 'a'
+      }
+      return 'router-link'
+    }
+  },
   methods: {
     linkProps(url) {
-      if (isExternal(url)) {
+      if (isExternal(url) && this.route.iframe !== true) {
         return {
           is: 'a',
           href: url,
@@ -28,7 +41,7 @@ export default {
       }
       return {
         is: 'router-link',
-        to: url
+        to: this.route.iframe === true ? `/_/index?src=${encodeURIComponent(url)}` : url
       }
     }
   }

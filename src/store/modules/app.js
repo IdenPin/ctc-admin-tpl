@@ -17,8 +17,8 @@ export default {
     isFixedLayoutPage: true
   },
   mutations: {
-    TOGGLE_COLLAPSE: state => {
-      state.isCollapse = !state.isCollapse
+    TOGGLE_COLLAPSE: (state, value) => {
+      state.isCollapse = value
     },
 
     TOGGLE_DRAWER_STATE: state => {

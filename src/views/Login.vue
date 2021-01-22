@@ -21,7 +21,9 @@
             <el-input type="password" placeholder="密码" v-model="ruleForm.password" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="submitForm('ruleForm')">登 录</el-button>
+            <el-button :loading="loginBtnStatus" type="primary" @click="submitForm('ruleForm')">{{
+              loginText
+            }}</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -58,6 +60,8 @@ export default {
     }
     return {
       softVersion: `v${version}`,
+      loginText: '登 录',
+      loginBtnStatus: false,
       ruleForm: {
         username: '韩嘉琛',
         password: '123123'
@@ -70,19 +74,29 @@ export default {
   },
   methods: {
     ...mapActions({
-      doLogin: 'user/doLogin',
-      fetchMenu: 'user/fetchMenu'
+      doLogin: 'user/doLogin'
     }),
     submitForm(formName) {
       this.$refs[formName].validate(async valid => {
         if (valid) {
-          this.$router.push('/')
-          // const res = await this.doLogin(this.ruleForm)
-          // const { code, data } = await this.fetchMenu()
-          // if (res === 200 && code === 200) {
-          //   // TODO 动态菜单
-          //   this.$router.push('/')
-          // }
+          /**
+           * 验证通过调用登录接口
+           */
+
+          this.loginText = '登录中 ...'
+          this.loginBtnStatus = true
+          try {
+            const { code } = await this.doLogin(this.ruleForm)
+            if (code !== 200) {
+              this.loginText = '登 录'
+              this.loginBtnStatus = false
+              return
+            }
+            this.$router.push('/')
+          } catch (error) {
+            this.loginText = '登 录'
+            this.loginBtnStatus = false
+          }
         } else {
           console.log('error submit!!')
           return false

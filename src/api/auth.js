@@ -1,4 +1,4 @@
-import service from '@/utils/request'
+import service from '@/utils/net'
 
 export function login(data) {
   return service({

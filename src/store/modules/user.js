@@ -1,17 +1,16 @@
-import { login, userMenu, logout } from '@/api/auth'
-import { flatRoutesFn, addAsyncFullPathFn, mergeRoutesFn } from '@/utils/tools'
-import defaultRoutes from '@/router/default-routes'
-import asyncRoutes from '@/router/async-routes'
 import router from '@/router'
+import { baseRoutes } from '@/router/constant-routes'
+import Config from '@/config'
+import { createDynamicRoutes } from '@/router/dynamic-routes'
+import menuData from '@/mock/menu'
 
 export default {
   namespaced: true,
   state: {
-    // 设置面板关闭
     username: '',
     token: '',
     userInfo: '',
-    menu: defaultRoutes
+    menu: []
   },
   mutations: {
     SET_USERNAME: (state, value) => {
@@ -25,16 +24,22 @@ export default {
     },
     SET_MENU: (state, value) => {
       if (value === null) {
-        state.menu = defaultRoutes
+        state.menu = []
       } else {
         state.menu = state.menu.concat(...value)
       }
     }
   },
   actions: {
-    async doLogin({ commit }, formData) {
+    /**
+     * 登录
+     * @param {表单提交的数据} formData
+     * @returns
+     */
+
+    async doLogin({ commit, dispatch }, formData) {
       try {
-        const { data, code } = await new Promise((resolve, reject) => {
+        const { data, code } = await new Promise(resolve => {
           setTimeout(() => {
             resolve({
               data: {
@@ -46,85 +51,118 @@ export default {
               },
               code: 200
             })
-          }, 2000)
+          }, 1000)
         })
-        // const { data, code } = await login(formData)
         commit('SET_USERNAME', data.username)
         commit('SET_TOKEN', data.token)
         commit('SET_USER_INFO', data)
-        return code
-      } catch (error) {
-        return error
-      }
-    },
-    async fetchMenu({ commit }) {
-      try {
-        const menuData = await userMenu()
-        const apiData = menuData.data
 
-        // 1 拍平本地路由
-        const localFlatRoutes = flatRoutesFn(asyncRoutes)
+        /**
+         * 如果 IS_DYNAMIC_ROUTES 为 true
+         * 则登录成功后需要请求后端接口获取角色或者路由树
+         */
 
-        // 2 处理接口返回的数据、生成 fullPath
-        const fullPathApiData = addAsyncFullPathFn(apiData)
-
-        // 3 合并生成路由信息
-        const resultRoutes = mergeRoutesFn(fullPathApiData, localFlatRoutes)
-
-        // 4 处理没有children的路由、增加 index
-        resultRoutes.forEach(v => {
-          if (!v.children) {
-            v['children'] = v['children'] || [{}]
-            v.children[0] = {
-              path: 'index',
-              component: localFlatRoutes[`${v.path}/index`].component,
-              meta: {
-                icon: v.meta.icon || localFlatRoutes[`${v.path}/index`].icon,
-                title: v.meta.title
-              }
-            }
+        const { IS_DYNAMIC_ROUTES, PERMISSION_TREE } = Config.router
+        if (IS_DYNAMIC_ROUTES) {
+          return PERMISSION_TREE ? await dispatch('createRoutesByTree') : await dispatch('createRoutesByRoles')
+        } else {
+          if (this.state.user.menu.length === 0) {
+            commit('SET_MENU', router.options.routes)
           }
-        })
-
-        resultRoutes.push({
-          path: '*',
-          redirect: '/404',
-          hidden: true
-        })
-        commit('SET_MENU', resultRoutes)
-        router.addRoutes(resultRoutes)
-        router.options.routes.push(...resultRoutes)
-        return menuData
+          return { code }
+        }
       } catch (error) {
         return error
       }
     },
-    async doLogout({ commit }) {
+
+    /**
+     * 方案一，后端返回权限菜单树生成路由
+     */
+    async createRoutesByTree({ commit, dispatch }) {
+      try {
+        // 获取菜单树接口
+        return await new Promise(resolve => {
+          commit('SET_MENU', null)
+          setTimeout(() => {
+            const routes = createDynamicRoutes(menuData.data)
+            routes.unshift(...baseRoutes)
+            commit('SET_MENU', routes)
+            router.addRoutes(routes)
+            resolve({
+              code: 200
+            })
+          }, 500)
+        })
+      } catch (error) {
+        await dispatch('resetToken')
+      }
+    },
+
+    /**
+     * 方案二，后端返回用户角色生成路由
+     */
+    async createRoutesByRoles({ commit }) {
+      // 获取角色信息
+      const { roles } = await new Promise(resolve => {
+        commit('SET_MENU', null)
+        setTimeout(() => {
+          resolve({
+            roles: ['user']
+            // roles: ['admin']
+          })
+        }, 500)
+      })
+
+      const routes = createDynamicRoutes(roles)
+      commit('SET_MENU', routes)
+      router.addRoutes(routes)
+      return {
+        code: 200
+      }
+    },
+
+    /**
+     * 登出
+     */
+    async doLogout({ dispatch }) {
       try {
         const { code } = await new Promise((resolve, reject) => {
           setTimeout(() => {
             resolve({
               code: 200
             })
-          }, 2000)
+          }, 100)
         })
-        // const { code } = await logout()
         if (code == 200) {
-          commit('SET_USERNAME', null)
-          commit('SET_TOKEN', null)
-          commit('SET_USER_INFO', {})
-          commit('SET_MENU', null)
+          await dispatch('resetToken')
         }
         return code
       } catch (error) {
         return error
       }
+    },
+
+    /**
+     * 清空用户信息
+     * @param {*} param0
+     * @returns
+     */
+    resetToken({ commit }) {
+      return new Promise(resolve => {
+        commit('SET_USERNAME', null)
+        commit('SET_TOKEN', null)
+        commit('SET_USER_INFO', {})
+        commit('SET_MENU', null)
+        resolve()
+      })
     }
   },
   getters: {
-    username: state => state.token,
+    username: state => state.username,
     token: state => state.token,
-    userInfo: state => state.token,
-    menu: state => state.menu
+    userInfo: state => state.userInfo,
+    menu: state => state.menu,
+    menuInit: state => state.menuInit
   }
 }

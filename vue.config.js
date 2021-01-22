@@ -1,7 +1,25 @@
 const path = require('path')
+const ProjectConfig = require('./src/config/project.config')
+const RouterConfig = require('./src/config/router.config')
+
+const chalk = require('chalk')
+
+/**
+ * 结构默认配置
+ */
+const { name, publicPath, outputDir, assetsDir, devServer } = ProjectConfig
+const { mode, IS_DYNAMIC_ROUTES } = RouterConfig
+
+console.log(chalk.green(`> 欢迎使用${name} 进行开发 \n`))
+console.log(chalk.green(`当前路由模式是 ${mode}, ${IS_DYNAMIC_ROUTES ? '已' : '未'}开启动态菜单权限\n`))
+
 module.exports = {
+  publicPath,
+  outputDir,
+  assetsDir,
+  devServer,
   configureWebpack: {
-    name: '长天长后台管理系统通用框架 v0.1.0',
+    name,
     resolve: {
       alias: {
         '@': path.resolve(__dirname, 'src'),
