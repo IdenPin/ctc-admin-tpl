@@ -6,7 +6,7 @@
         <el-button class="ml-30" type="text">查看源码</el-button>
       </div>
     </div>
-    <el-tabs type="card" v-model="activeMenu">
+    <el-tabs v-model="activeMenu">
       <el-tab-pane :label="item.label" :name="item.value + ''" v-for="(item, index) in Const.navMenu" :key="item.value">
         <template v-if="index === 0">
           <el-button type="primary" @click="dialogVisible = true">开启弹层</el-button>
