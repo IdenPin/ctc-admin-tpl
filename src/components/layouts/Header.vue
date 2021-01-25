@@ -9,7 +9,7 @@
       <!-- <router-link to="/" class="item mr-10" tag="div">未读通知 </router-link> -->
     </div>
 
-    <el-dropdown szie="small">
+    <el-dropdown szie="small" v-if="!noPermission">
       <el-link :underline="false"
         ><i class="el-icon-s-custom mr-5"></i>{{ username }}<i class="el-icon-arrow-down el-icon--right"
       /></el-link>
@@ -22,6 +22,7 @@
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import Config from '@/config'
 import variables from '@/assets/styles/_variables.scss'
 const { version } = require('../../../package.json')
 export default {
@@ -29,7 +30,8 @@ export default {
   name: 'Header',
   data() {
     return {
-      softVersion: `v${version}`
+      softVersion: `v${version}`,
+      noPermission: Config.router.NO_PERMISSION
     }
   },
   computed: {

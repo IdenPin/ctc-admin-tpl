@@ -25,7 +25,6 @@ const createRouter = () =>
     scrollBehavior: () => ({ y: 0 }),
     routes: baseRoutes
   })
-
 const router = createRouter()
 
 /**

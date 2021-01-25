@@ -1,7 +1,3 @@
-// import BlankPage from '@/components/globals/BlankPage'
-// import Layout from '@/components/layouts/Index.vue'
-// import RouteNode from '@/components/globals/RouteNode.vue'
-
 export default {
   msg: '查询成功',
   data: [

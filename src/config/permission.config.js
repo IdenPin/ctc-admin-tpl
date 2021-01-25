@@ -39,26 +39,39 @@ router.beforeEach((to, from, next) => {
    * 路由拦截判断
    */
 
-  if (!token) {
-    /**
-     * token 不存在且访问的地址不在白名单里面
-     */
-    if (Config.router.whiteListPath.indexOf(toPath) !== -1) {
-      next()
-    } else {
-      next('/login')
-      NProgress.done()
-    }
-  } else {
-    /**
-     * 如果 token 存在又访问登录界面，则重定向到首页
-     */
+  const { whiteListPath, noTokenRedirectPath, NO_PERMISSION } = Config.router
 
-    if (toPath === '/login') {
-      next('/')
-      NProgress.done()
+  /**
+   * NO_PERMISSION -> true 不需要登录
+   */
+  if (NO_PERMISSION) {
+    if (store.getters['user/menu'].length === 0) {
+      store.commit('user/SET_MENU', router.options.routes)
+    }
+    next()
+    NProgress.done()
+  } else {
+    if (!token) {
+      /**
+       * token 不存在且访问的地址不在白名单里面
+       */
+      if (whiteListPath.indexOf(toPath) !== -1) {
+        next()
+      } else {
+        next(noTokenRedirectPath)
+        NProgress.done()
+      }
     } else {
-      next()
+      /**
+       * 如果 token 存在又访问登录界面，则重定向到首页
+       */
+
+      if (toPath === noTokenRedirectPath) {
+        next('/')
+      } else {
+        next()
+      }
+      NProgress.done()
     }
   }
 })
