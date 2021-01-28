@@ -2,6 +2,7 @@ import Element from 'element-ui'
 import '@/assets/styles/theme/index.css'
 import ElTableBlock from '@pdeng/element-table'
 import '@/assets/icons'
+import QuestionDrawer from '@/components/biz/question-drawer'
 
 import GlobalComponents from '@/components/globals'
 import '@/directives'
@@ -20,6 +21,7 @@ export function install(Vue) {
 
   Vue.config.productionTip = false
   Vue.prototype.$bus = Bus
+  Vue.prototype.$questionDrawer = QuestionDrawer
 }
 
 export default { install, router, net, project }

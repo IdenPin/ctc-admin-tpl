@@ -4,6 +4,7 @@
     v-bind="$attrs"
     :wrapperClosable="wrapperClosable"
     :close-on-press-escape="closeOnPressEscape"
+    :custom-class="$attrs['custom-class'] || ''"
   >
     <div v-if="!$attrs.title" slot="title">
       <slot name="title"></slot>
@@ -33,6 +34,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+::v-deep :focus {
+  outline: 0;
+}
 // #F8F8F8
 ::v-deep .el-drawer__header {
   padding: 0 10px;
@@ -40,5 +44,10 @@ export default {
   line-height: 38px;
   border-bottom: 1px solid #ebeef5;
   background-color: #efeeee;
+  color: #333333;
+}
+::v-deep .el-drawer__body {
+  background: #f4f6fb;
+  overflow: auto;
 }
 </style>

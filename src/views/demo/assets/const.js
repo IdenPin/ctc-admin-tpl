@@ -23,6 +23,26 @@ export default {
     {
       label: '复选框 / ctc-checkbox-group',
       value: 5
+    },
+    {
+      label: '面板 / ctc-card',
+      value: 6
+    },
+    {
+      label: '分割线 / ctc-divider',
+      value: 7
+    },
+    {
+      label: '切换tab / ctc-tab-btn',
+      value: 8
+    },
+    {
+      label: '地图 / ctc-map',
+      value: 9
+    },
+    {
+      label: '图表 / ctc-chart',
+      value: 10
     }
   ]
 }
