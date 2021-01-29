@@ -2,7 +2,6 @@
   "name": "ctc-admin-tpl",
   "version": "0.1.2",
   "private": true,
-  "type": "module",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
