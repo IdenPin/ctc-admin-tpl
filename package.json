@@ -12,7 +12,7 @@
     "theme": "et -i src/assets/styles/element-variables.scss && et -c src/assets/styles/element-variables.scss -o src/assets/styles/theme/ -m --watch"
   },
   "dependencies": {
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "echarts": "^5.0.1",
     "lodash": "^4.17.20",
