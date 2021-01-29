@@ -23,6 +23,8 @@
     "vuex": "^3.4.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
     "@pdeng/element-table": "^0.2.7",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
@@ -52,11 +54,9 @@
     "vue-template-compiler": "^2.6.11",
     "vuex-persistedstate": "^3.1.0"
   },
-  "gitHooks": {
-    "pre-commit": "lint-staged"
-  },
   "husky": {
     "hooks": {
+      "pre-commit": "lint-staged",
       "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS"
     }
   },
