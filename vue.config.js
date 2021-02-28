@@ -5,13 +5,12 @@ const RouterConfig = require('./src/config/router.config')
 const chalk = require('chalk')
 
 /**
- * 结构默认配置
+ * 解构默认配置
  */
 const { name, publicPath, outputDir, assetsDir, devServer } = ProjectConfig
-const { mode, IS_DYNAMIC_ROUTES } = RouterConfig
+const { mode } = RouterConfig
 
-console.log(chalk.green(`> 欢迎使用${name} 进行开发 \n`))
-console.log(chalk.green(`当前路由模式是 ${mode}, ${IS_DYNAMIC_ROUTES ? '已' : '未'}开启动态菜单权限\n`))
+console.log(chalk.green(`当前路由模式是 ${mode}，${RouterConfig.isNeedLogin ? '开启' : '关闭'}了登录拦截 `))
 
 module.exports = {
   publicPath,

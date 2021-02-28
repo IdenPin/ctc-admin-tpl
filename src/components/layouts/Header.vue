@@ -9,7 +9,7 @@
       <!-- <router-link to="/" class="item mr-10" tag="div">未读通知 </router-link> -->
     </div>
 
-    <el-dropdown szie="small">
+    <el-dropdown szie="small" v-if="isNeedLogin">
       <el-link :underline="false"
         ><i class="el-icon-s-custom mr-5"></i>{{ username }}<i class="el-icon-arrow-down el-icon--right"
       /></el-link>
@@ -23,12 +23,13 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import variables from '@/assets/styles/_variables.scss'
+import { isNeedLogin } from '@/config/router.config'
 const { version } = require('../../../package.json')
 export default {
-  components: {},
   name: 'Header',
   data() {
     return {
+      isNeedLogin,
       softVersion: `v${version}`
     }
   },

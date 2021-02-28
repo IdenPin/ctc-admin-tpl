@@ -1,24 +1,27 @@
 # ctc-admin-tpl
 
-## Project setup
+## 模板说明
+`divide/base` 为基础业务系统通用模板，不包含动态角色和动态菜单
+
+## 项目安装
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 开发环境服务启动
 ```
-npm run serve
+npm run dev
 ```
 
-### Compiles and minifies for production
+### 编译打包部署
 ```
 npm run build
 ```
 
-### Lints and fixes files
+### Eslint 格式化
 ```
 npm run lint
 ```
 
-### Customize configuration
+### 自定义配置地址
 See [Configuration Reference](https://cli.vuejs.org/config/).

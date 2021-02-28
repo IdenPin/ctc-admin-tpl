@@ -41,7 +41,7 @@ export default {
       }
       return {
         is: 'router-link',
-        to: this.route.iframe === true ? `/_/index?src=${encodeURIComponent(url)}` : url
+        to: this.route.iframe === true ? `/view/index?src=${encodeURIComponent(url)}` : url
       }
     }
   }

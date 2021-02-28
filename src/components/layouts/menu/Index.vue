@@ -11,7 +11,7 @@
         :collapse-transition="false"
         mode="vertical"
       >
-        <sub-menu v-for="route in permissionRoutes" :key="route.path" :item="route" :base-path="route.path" />
+        <sub-menu v-for="route in Routes" :key="route.path" :item="route" :base-path="route.path" />
       </el-menu>
     </el-scrollbar>
   </div>
@@ -20,14 +20,19 @@
 import { mapGetters } from 'vuex'
 import variables from '@/assets/styles/_variables.scss'
 import SubMenu from '@/components/layouts/menu/SubMenu.vue'
+import Routes from '@/router/routes'
 
 export default {
+  data() {
+    return {
+      Routes
+    }
+  },
   components: {
     SubMenu
   },
   computed: {
     ...mapGetters({
-      permissionRoutes: 'user/menu',
       isCollapse: 'app/isCollapse'
     }),
     activeMenu() {

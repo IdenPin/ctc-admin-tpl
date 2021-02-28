@@ -5,7 +5,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Config from '@/config'
-import { baseRoutes } from './constant-routes'
+import Routes from './routes'
 
 Vue.use(Router)
 
@@ -23,7 +23,7 @@ const createRouter = () =>
   new Router({
     mode: Config.router.mode,
     scrollBehavior: () => ({ y: 0 }),
-    routes: baseRoutes
+    routes: Routes
   })
 
 const router = createRouter()

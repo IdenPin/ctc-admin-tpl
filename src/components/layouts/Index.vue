@@ -64,6 +64,11 @@ $height: 40px;
       background-color: #f5faff;
     }
   }
+
+  .el-menu-item.is-active {
+    background-color: #f5faff;
+  }
+
   .nest-menu {
     .el-menu-item {
       line-height: $height;

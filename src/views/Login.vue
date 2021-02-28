@@ -82,7 +82,6 @@ export default {
           /**
            * 验证通过调用登录接口
            */
-
           this.loginText = '登录中 ...'
           this.loginBtnStatus = true
           try {

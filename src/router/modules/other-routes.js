@@ -1,38 +1,62 @@
-import BlankPage from '@/components/globals/BlankPage'
 import Layout from '@/components/layouts/Index.vue'
 
 export default [
-  // 督办单撤销管理
   {
-    path: '/db-revocation',
+    path: '/testRoute',
+    hidden: true,
+    component: () => import('@/components/globals/BlankPage.vue'),
+    meta: {
+      title: '测试路由',
+      icon: 'el-icon-files'
+    }
+  },
+  {
+    path: 'https://idenpin.github.io/element-table/docs/#/',
+    meta: {
+      title: '报表内链',
+      icon: 'el-icon-document-copy'
+    },
+    iframe: true
+  },
+  {
+    path: 'http://www.qq.com',
+    meta: {
+      roles: ['admin'],
+      title: '腾讯外链',
+      icon: 'el-icon-brush'
+    }
+  },
+  {
+    path: '/system-manage',
     component: Layout,
-    name: 'DbRevocation',
-    redirect: '/db-revocation/index',
     children: [
       {
         path: 'index',
-        name: 'DbRevocationIndex',
-        component: BlankPage,
         meta: {
-          title: '督办单撤销管理',
-          icon: 'menu-icon12'
-        }
+          title: '系统管理',
+          icon: 'el-icon-brush'
+        },
+        component: () => import('@/views/SystemManage.vue')
       }
     ]
   },
   {
-    path: '/assign-document',
+    path: '/user-manage',
     component: Layout,
-    redirect: '/assign-document/index',
+    meta: {
+      title: '用户管理',
+      icon: 'menu-icon3',
+      roles: ['admin']
+    },
+    redirect: '/user-manage/index',
     children: [
       {
         path: 'index',
-        name: 'assignDocumentIndex',
-        component: BlankPage,
         meta: {
-          title: '交办单',
-          icon: 'menu-icon13'
-        }
+          title: '列表',
+          icon: 'menu-icon4'
+        },
+        component: () => import('@/views/UserInfo.vue')
       }
     ]
   }
