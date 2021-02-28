@@ -16,4 +16,9 @@ const mode = 'hash'
 
 const isNeedLogin = true
 
-module.exports = { whiteListPath, mode, isNeedLogin }
+/**
+ * 是否开启navView 导航
+ */
+const isNeedNavView = true
+
+module.exports = { whiteListPath, mode, isNeedLogin, isNeedNavView }

@@ -12,7 +12,17 @@
       />
       <!-- 右侧区域 -->
       <div class="ctc-layout-content">
-        <route-node class="ctc-layout-page"></route-node>
+        <template v-if="isNeedNavView">
+          <layout-nav />
+          <transition name="fade-transform" mode="out-in">
+            <keep-alive :include="$store.state.navView.cachedViews">
+              <router-view :key="$route.path" />
+            </keep-alive>
+          </transition>
+        </template>
+        <transition name="fade-transform" mode="out-in" v-else>
+          <route-node />
+        </transition>
         <layout-footer class="ctc-layout-footer" />
       </div>
     </div>
@@ -20,13 +30,21 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import LayoutNav from '@/components/layouts/nav-view/Index.vue'
 import LayoutMenu from '@/components/layouts/menu/Index.vue'
 import LayoutHeader from '@/components/layouts/Header.vue'
 import LayoutFooter from '@/components/layouts/Footer.vue'
+import { isNeedNavView } from '@/config/router.config'
+import RouteNode from '@/components/globals/RouteNode'
 
 export default {
   name: 'AppMain',
+  data() {
+    return { isNeedNavView }
+  },
   components: {
+    RouteNode,
+    LayoutNav,
     LayoutMenu,
     LayoutHeader,
     LayoutFooter
@@ -53,6 +71,33 @@ export default {
 <style lang="scss">
 $spaceWidth: 12px;
 $height: 40px;
+
+/* fade */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.28s;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
+
+/* fade-transform */
+.fade-transform-leave-active,
+.fade-transform-enter-active {
+  transition: all 0.5s;
+}
+
+.fade-transform-enter {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.fade-transform-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
 
 .ctc-app-main {
   .el-menu-item,

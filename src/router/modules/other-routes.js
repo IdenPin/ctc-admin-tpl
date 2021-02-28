@@ -29,9 +29,12 @@ export default [
   {
     path: '/system-manage',
     component: Layout,
+    redirect: '/system-manage/index',
+    name: 'systemManege',
     children: [
       {
         path: 'index',
+        name: 'Index',
         meta: {
           title: '系统管理',
           icon: 'el-icon-brush'
@@ -52,6 +55,7 @@ export default [
     children: [
       {
         path: 'index',
+        name: 'Index',
         meta: {
           title: '列表',
           icon: 'menu-icon4'

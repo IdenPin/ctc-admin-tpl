@@ -10,6 +10,9 @@ import Bus from '@/utils/bus'
 import router from './router.config'
 import net from './net.config'
 import project from './project.config'
+
+import VueCookies from 'vue-cookies'
+
 export function install(Vue) {
   // 导入全局组件
   Vue.use(GlobalComponents)
@@ -17,6 +20,9 @@ export function install(Vue) {
     size: 'small'
   })
   Vue.use(ElTableBlock)
+
+  Vue.use(VueCookies)
+  Vue.$cookies.config('7d')
 
   Vue.config.productionTip = false
   Vue.prototype.$bus = Bus

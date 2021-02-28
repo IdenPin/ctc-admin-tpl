@@ -1,5 +1,5 @@
 // 网站 name
-const name = '长天长后台管理系统通用框架 v0.1.0'
+const name = '长天长后台管理系统通用框架 v0.1.1'
 
 // 开发以及部署时的URL
 const publicPath = ''

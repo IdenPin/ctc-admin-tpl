@@ -1,11 +1,11 @@
-import router from '@/router'
+import cookies from 'vue-cookies'
 
 export default {
   namespaced: true,
   state: {
-    username: '',
-    token: '',
-    userInfo: ''
+    username: cookies.get('username') || '',
+    token: cookies.get('token') || '',
+    userInfo: cookies.get('userInfo') || {}
   },
   mutations: {
     SET_USERNAME: (state, value) => {
@@ -42,6 +42,10 @@ export default {
         commit('SET_USERNAME', data.username)
         commit('SET_TOKEN', data.token)
         commit('SET_USER_INFO', data)
+
+        cookies.set('username', data.username)
+        cookies.set('token', data.token)
+        cookies.set('userInfo', data)
         return { code, data }
       } catch (error) {
         return error
@@ -74,11 +78,17 @@ export default {
      * @param {*} param0
      * @returns
      */
-    resetToken({ commit }) {
+    resetToken({ commit, dispatch }) {
+      dispatch('navView/delAllViews', null, { root: true })
+
       return new Promise(resolve => {
         commit('SET_USERNAME', null)
         commit('SET_TOKEN', null)
         commit('SET_USER_INFO', {})
+
+        cookies.remove('username')
+        cookies.remove('token')
+        cookies.remove('userInfo')
         resolve()
       })
     }

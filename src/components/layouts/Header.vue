@@ -14,7 +14,7 @@
         ><i class="el-icon-s-custom mr-5"></i>{{ username }}<i class="el-icon-arrow-down el-icon--right"
       /></el-link>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item>个人信息</el-dropdown-item>
+        <el-dropdown-item @click.native="$router.push('/')">个人信息</el-dropdown-item>
         <el-dropdown-item @click.native="logout">退 出</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>

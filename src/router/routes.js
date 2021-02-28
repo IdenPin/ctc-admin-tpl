@@ -24,6 +24,17 @@ import { isNeedLogin } from '@/config/router.config'
 
 const routes = [
   {
+    path: '/redirect',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/redirect/:path(.*)',
+        component: () => import('@/views/Redirect.vue')
+      }
+    ]
+  },
+  {
     path: '/',
     component: Layout,
     redirect: '/index',
@@ -33,6 +44,8 @@ const routes = [
         name: 'HomeIndex',
         component: () => import('@/views/Home.vue'),
         meta: {
+          // noCache: true,
+          affix: true,
           title: '首页',
           icon: 'el-icon-files'
         }
@@ -46,6 +59,7 @@ const routes = [
     children: [
       {
         path: 'index',
+        name: 'DemoIndex',
         meta: {
           title: '组件示例',
           icon: 'el-icon-files'

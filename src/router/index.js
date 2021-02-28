@@ -9,18 +9,18 @@ import Routes from './routes'
 
 Vue.use(Router)
 
-/**
- * 解决路由跳转 bug
- * Navigation cancelled from "/xxx" to "/xxxx" with a new navigation
- */
-
+// 允许路由重复点击
 const originalPush = Router.prototype.push
-Router.prototype.push = function push(location) {
+Router.prototype.push = function push(location, onResolve, onReject) {
+  if (onResolve || onReject) {
+    return originalPush.call(this, location, onResolve, onReject)
+  }
   return originalPush.call(this, location).catch(err => err)
 }
 
 const createRouter = () =>
   new Router({
+    base: Config.project.publicPath,
     mode: Config.router.mode,
     scrollBehavior: () => ({ y: 0 }),
     routes: Routes
