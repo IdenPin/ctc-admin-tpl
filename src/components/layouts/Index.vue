@@ -140,11 +140,16 @@ $height: 40px;
     display: flex;
 
     // 左侧侧边栏容器
+    .el-menu,
+    .ctc-layout-aside {
+      width: 100%;
+      transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    }
+
     .ctc-layout-aside {
       background-color: $topHeaderColor;
       border-right: 1px solid $borderGrey;
       color: #333;
-      // transition: all 0.5s ease;
       .el-scrollbar {
         overflow-y: auto;
         height: 100vh;
@@ -158,7 +163,7 @@ $height: 40px;
       width: $sidebarMaxWidth;
       // min-height: calc(100vh - #{$headerHeight});
     }
-    .collapse-min {
+    .collapse-close {
       flex: 0 0 $sidebarMinWidth;
       max-width: $sidebarMinWidth;
       min-width: $sidebarMinWidth;
@@ -171,7 +176,7 @@ $height: 40px;
       background: $bgGrey;
       display: flex;
       flex-direction: column;
-      transition: all 0.2s ease;
+      transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
       min-height: 100vh;
       overflow-x: hidden;
       width: 100%;
@@ -203,6 +208,7 @@ $height: 40px;
   left: 0;
   bottom: 0;
   top: $headerHeight;
+  z-index: 2;
 }
 .collapse-close {
   .el-submenu__title {
