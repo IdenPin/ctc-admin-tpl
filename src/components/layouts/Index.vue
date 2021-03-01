@@ -179,7 +179,7 @@ $height: 40px;
         flex: auto;
         // width: calc(100% - #{$spaceWidth} * 2);
         // margin: $spaceWidth $spaceWidth 0;
-        min-height: calc(100vh - #{$headerHeight} - #{$spaceWidth * 2});
+        min-height: calc(100vh - #{$headerHeight} - #{$spaceWidth * 2} - 40px);
         // min-height: calc(100vh - #{$headerHeight} - #{$footerHeight} - #{$spaceWidth * 2} - 10px);
       }
     }

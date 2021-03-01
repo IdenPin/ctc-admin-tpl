@@ -51,7 +51,7 @@ export default {
 .collapse {
   background-color: #fff;
   cursor: pointer;
-  padding: 5px 12px;
+  padding: 8px 12px;
   text-align: right;
 }
 </style>

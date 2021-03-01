@@ -10,7 +10,13 @@ const chalk = require('chalk')
 const { name, publicPath, outputDir, assetsDir, devServer } = ProjectConfig
 const { mode } = RouterConfig
 
-console.log(chalk.green(`当前路由模式是 ${mode}，${RouterConfig.isNeedLogin ? '开启' : '关闭'}了登录拦截 `))
+console.log(
+  chalk.green(
+    `当前路由模式是 ${mode}，${RouterConfig.isNeedLogin ? '开启' : '关闭'}了登录拦截, ${
+      RouterConfig.isNeedNavView ? '开启' : '关闭'
+    }开启了顶部nav导航。`
+  )
+)
 
 module.exports = {
   publicPath,
