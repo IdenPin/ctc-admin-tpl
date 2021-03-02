@@ -1,5 +1,5 @@
 // 网站 name
-const name = '长天长后台管理系统通用框架 v0.1.1'
+const name = '重点排污单位自动监控与基础数据库系统'
 
 // 开发以及部署时的URL
 const publicPath = ''
@@ -42,7 +42,7 @@ const nProgress = {
   easing: 'ease',
   speed: 500,
   trickleSpeed: 200,
-  showSpinner: true
+  showSpinner: false
 }
 
 /**

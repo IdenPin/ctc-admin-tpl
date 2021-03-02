@@ -2,31 +2,41 @@
   <div class="ctc-layout-header-container">
     <router-link to="/index" tag="div" class="logo-box">
       <i class="icon-logo"></i>
-      <div class="title">长天长后台管理系统通用框架 {{ softVersion }}</div>
+      <div class="title">重点排污单位自动监控与基础数据库系统</div>
     </router-link>
-    <div class="top-nav">
-      <!-- <div class="item mr-10">我的待办</div> -->
-      <!-- <router-link to="/" class="item mr-10" tag="div">未读通知 </router-link> -->
-    </div>
 
-    <el-dropdown szie="small" v-if="isNeedLogin">
-      <el-link :underline="false"
-        ><i class="el-icon-s-custom mr-5"></i>{{ username }}<i class="el-icon-arrow-down el-icon--right"
-      /></el-link>
-      <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item @click.native="$router.push('/')">个人信息</el-dropdown-item>
-        <el-dropdown-item @click.native="logout">退 出</el-dropdown-item>
-      </el-dropdown-menu>
-    </el-dropdown>
+    <!-- 导航nav -->
+    <div class="top-nav">
+      <layout-nav />
+    </div>
+    <div class="user-about">
+      <el-badge is-dot class="item mr-10">
+        <el-link :underline="false"><i class="fs-18 el-icon-bell"></i></el-link>
+      </el-badge>
+      <el-dropdown szie="small" v-if="isNeedLogin">
+        <el-link :underline="false">
+          <i class="fs-18 el-icon-user"></i>
+          <!-- {{ username }} -->
+        </el-link>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item @click.native="$router.push('/')">个人信息</el-dropdown-item>
+          <el-dropdown-item @click.native="logout">退 出</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </div>
   </div>
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import LayoutNav from '@/components/layouts/nav-view/Index.vue'
 import variables from '@/assets/styles/_variables.scss'
 import { isNeedLogin } from '@/config/router.config'
 const { version } = require('../../../package.json')
 export default {
   name: 'Header',
+  components: {
+    LayoutNav
+  },
   data() {
     return {
       isNeedLogin,
@@ -68,6 +78,9 @@ export default {
     display: flex;
     align-items: center;
     cursor: pointer;
+    border-right: 1px solid #2a304b;
+    padding-right: 10px;
+    min-width: 340px;
     .icon-logo {
       line-height: $headerHeight;
       display: block;
@@ -118,6 +131,15 @@ export default {
         margin-left: 22px;
       }
     }
+  }
+  .user-about {
+    padding-left: 10px;
+    border-left: 1px solid #2a304b;
+    height: $headerHeight;
+    min-width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 

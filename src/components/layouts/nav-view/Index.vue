@@ -13,9 +13,23 @@
         @contextmenu.prevent.native="openMenu(tag, $event)"
       >
         {{ tag.title }}
-        <span v-if="!isAffix(tag)" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
+        <i v-if="!isAffix(tag)" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
       </router-link>
     </panel-scroll>
+
+    <!-- <el-dropdown type="primary" @click="() => {}" class="contextmenu">
+      <div class="nav-hanldle"><i class="el-icon-setting"></i>操作</div>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item @click.native="refreshSelectedTag(selectedTag)"
+          ><i class="el-icon-refresh-right"></i>刷新</el-dropdown-item
+        >
+        <el-dropdown-item v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)"
+          ><i class="el-icon-close"></i>关闭当前</el-dropdown-item
+        >
+        <el-dropdown-item @click="closeOthersTags"><i class="el-icon-circle-close"></i>关闭其他</el-dropdown-item>
+        <el-dropdown-item @click="closeAllTags(selectedTag)"><i class="el-icon-error"></i>关闭所有</el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown> -->
     <ul v-show="visible" :style="{ left: left + 'px', top: top + 'px' }" class="contextmenu">
       <li @click="refreshSelectedTag(selectedTag)"><i class="el-icon-refresh-right"></i>刷新</li>
       <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)"><i class="el-icon-close"></i>关闭当前</li>
@@ -178,9 +192,11 @@ export default {
       const left = e.clientX - offsetLeft + 15 // 15: margin right
 
       if (left > maxLeft) {
-        this.left = maxLeft
+        // this.left = maxLeft
+        this.left = '-100%'
       } else {
-        this.left = left
+        // this.left = left
+        this.left = 240 + left
       }
 
       this.top = e.clientY
@@ -199,46 +215,28 @@ export default {
 
 <style lang="scss" scoped>
 .tags-view-container {
-  height: 34px;
+  line-height: $headerHeight;
+  height: 45px;
   width: 100%;
-  background: #fff;
-  border-bottom: 1px solid #d8dce5;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
+  border-bottom: 1px solid $borderGrey;
+  display: flex;
   .tags-view-wrapper {
+    width: calc(100vw - 480px);
     .tags-view-item {
       display: inline-block;
       position: relative;
       cursor: pointer;
-      height: 26px;
-      line-height: 26px;
-      border: 1px solid #edeff3;
-      color: #495060;
-      background: #fff;
-      padding: 0 8px;
-      font-size: 12px;
-      margin-left: 5px;
-      margin-top: 4px;
-      border-radius: 3px;
-      &:first-of-type {
-        margin-left: 15px;
-      }
+      color: #acb0b9;
+      padding: 0 15px;
+      font-size: 14px;
       &:last-of-type {
         margin-right: 15px;
       }
       &.active {
-        background-color: #323856;
+        background-color: #464d6e;
         color: #fff;
         border-color: #323856;
-        &::before {
-          content: '';
-          background: #fff;
-          display: inline-block;
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-          position: relative;
-          margin-right: 2px;
-        }
+        font-weight: 500;
       }
     }
   }
@@ -256,7 +254,9 @@ export default {
     box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.3);
     li {
       margin: 0;
-      padding: 5px 10px;
+      padding: 0 10px;
+      line-height: 26px;
+      height: 26px;
       cursor: pointer;
       i {
         margin-right: 3px;
@@ -266,34 +266,44 @@ export default {
       }
     }
   }
+
+  // .nav-hanldle {
+  //   width: 60px;
+  //   background: #fff;
+  //   text-align: center;
+  // }
 }
 </style>
 
 <style lang="scss">
-//reset element css of el-icon-close
 .tags-view-wrapper {
   .tags-view-item {
+    border-left: 1px solid #2a304b;
     .el-icon-close {
       width: 16px;
       height: 16px;
-      vertical-align: 2px;
+      position: relative;
+      top: -10px;
+      right: -2px;
       border-radius: 50%;
       text-align: center;
       transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
       transform-origin: 100% 50%;
       &:before {
         transform: scale(0.8);
-        display: inline-block;
-        vertical-align: -3px;
+        position: relative;
+        display: block;
+        top: 1px;
       }
       &:hover {
-        background-color: #323856;
         color: #fff;
+        background: #72799d;
         &:before {
           transform: scale(1);
           font-weight: 500;
-          display: inline-block;
-          vertical-align: -3px;
+          display: block;
+          position: relative;
+          top: 2px;
         }
       }
     }

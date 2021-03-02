@@ -19,6 +19,6 @@ const isNeedLogin = true
 /**
  * 是否开启navView 导航
  */
-const isNeedNavView = false
+const isNeedNavView = true
 
 module.exports = { whiteListPath, mode, isNeedLogin, isNeedNavView }

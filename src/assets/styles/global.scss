@@ -10,12 +10,13 @@
 }
 html,
 body {
-  color: #000000a6;
-  font-size: 14px;
+  margin: 0;
+  padding: 0;
   font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
-  font-variant: tabular-nums;
-  background-color: #fff;
-  font-feature-settings: 'tnum';
+  font-weight: 400;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
 }
 
 a {
@@ -51,30 +52,4 @@ li {
 // ::-webkit-scrollbar-thumb:hover {
 //   height: 50px;
 //   background-color: #878987;
-// }
-
-// // 禁止操作层
-// .disabled-wrap {
-//   position: relative;
-//   .disabled-mask {
-//     position: absolute;
-//     background: #fff;
-//     top: 0;
-//     right: 20px;
-//     border: 0;
-//     width: 100%;
-//     height: 100%;
-//     opacity: 0.6;
-//     z-index: 2;
-//   }
-// }
-
-// // hover Popover title
-// .popover-header {
-//   font-size: 14px;
-//   line-height: 36px;
-//   text-indent: 20px;
-//   margin: -8px -12px 0 -12px;
-//   color: $blackColor1;
-//   border-bottom: 1px solid $borderGrey;
 // }

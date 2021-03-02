@@ -2,7 +2,7 @@
   <div class="ctc-login">
     <div class="ctc-header">
       <i class="icon-logo"></i>
-      <div class="title">长天长后台管理系统通用框架 {{ softVersion }}</div>
+      <div class="title">重点排污单位自动监控与基础数据库系统</div>
     </div>
     <div class="ctc-main">
       <div class="ctc-login-left"></div>

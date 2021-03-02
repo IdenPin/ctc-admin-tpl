@@ -13,27 +13,25 @@
       <!-- 右侧区域 -->
       <div class="ctc-layout-content">
         <template v-if="isNeedNavView">
-          <layout-nav />
           <transition name="fade-transform" mode="out-in">
             <keep-alive :include="$store.state.navView.cachedViews">
-              <router-view :key="$route.path" />
+              <router-view class="ctc-layout-page" :key="$route.path" />
             </keep-alive>
           </transition>
         </template>
         <transition name="fade-transform" mode="out-in" v-else>
           <route-node />
         </transition>
-        <layout-footer class="ctc-layout-footer" />
+        <!-- <layout-footer class="ctc-layout-footer" /> -->
       </div>
     </div>
   </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import LayoutNav from '@/components/layouts/nav-view/Index.vue'
 import LayoutMenu from '@/components/layouts/menu/Index.vue'
 import LayoutHeader from '@/components/layouts/Header.vue'
-import LayoutFooter from '@/components/layouts/Footer.vue'
+// import LayoutFooter from '@/components/layouts/Footer.vue'
 import { isNeedNavView } from '@/config/router.config'
 import RouteNode from '@/components/globals/RouteNode'
 
@@ -44,28 +42,27 @@ export default {
   },
   components: {
     RouteNode,
-    LayoutNav,
     LayoutMenu,
-    LayoutHeader,
-    LayoutFooter
+    LayoutHeader
+    // LayoutFooter
   },
   computed: {
     ...mapGetters({
       isCollapse: 'app/isCollapse'
     })
-  },
-  methods: {
-    handleResize() {
-      const isMobile = document.body.getBoundingClientRect().width - 1 < 992
-      isMobile ? this.$store.commit('app/TOGGLE_COLLAPSE', true) : this.$store.commit('app/TOGGLE_COLLAPSE', false)
-    }
-  },
-  beforeMount() {
-    window.addEventListener('resize', this.handleResize)
-  },
-  beforeDestroy() {
-    window.removeEventListener('resize', this.handleResize)
   }
+  // methods: {
+  //   handleResize() {
+  //     const isMobile = document.body.getBoundingClientRect().width - 1 < 992
+  //     isMobile ? this.$store.commit('app/TOGGLE_COLLAPSE', true) : this.$store.commit('app/TOGGLE_COLLAPSE', false)
+  //   }
+  // },
+  // beforeMount() {
+  //   window.addEventListener('resize', this.handleResize)
+  // },
+  // beforeDestroy() {
+  //   window.removeEventListener('resize', this.handleResize)
+  // }
 }
 </script>
 <style lang="scss">
@@ -107,10 +104,12 @@ $height: 40px;
     height: $height;
     &:hover {
       background-color: #f5faff;
+      color: $mainColor;
     }
   }
 
   .el-menu-item.is-active {
+    color: $mainColor;
     background-color: #f5faff;
   }
 
@@ -119,6 +118,7 @@ $height: 40px;
       line-height: $height;
       height: $height;
       &:hover {
+        color: $mainColor;
         background-color: #f5faff;
       }
     }
@@ -126,9 +126,9 @@ $height: 40px;
 
   // 顶部页头容器
   .ctc-layout-header {
-    // min-width: $minWidth;
     background-color: $topHeaderColor;
     height: $headerHeight !important;
+    z-index: 99;
     padding: 0 10px;
     & + .ctc-layout-aside {
       display: none;
@@ -147,12 +147,12 @@ $height: 40px;
     }
 
     .ctc-layout-aside {
-      background-color: $topHeaderColor;
+      background-color: #fff;
       border-right: 1px solid $borderGrey;
-      color: #333;
+      color: #555b6a;
       .el-scrollbar {
         overflow-y: auto;
-        height: 100vh;
+        height: calc(100vh - #{$headerHeight});
       }
     }
 
@@ -177,14 +177,15 @@ $height: 40px;
       display: flex;
       flex-direction: column;
       transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-      min-height: 100vh;
-      overflow-x: hidden;
+      overflow: hidden;
       width: 100%;
       .ctc-layout-page {
         flex: auto;
+        overflow-y: auto;
         // width: calc(100% - #{$spaceWidth} * 2);
         // margin: $spaceWidth $spaceWidth 0;
-        min-height: calc(100vh - #{$headerHeight} - #{$spaceWidth * 2} - 40px);
+        height: calc(100vh - #{$headerHeight});
+        // min-height: calc(100vh - #{$headerHeight} - #{$footerHeight} - #{$spaceWidth * 2});
         // min-height: calc(100vh - #{$headerHeight} - #{$footerHeight} - #{$spaceWidth * 2} - 10px);
       }
     }

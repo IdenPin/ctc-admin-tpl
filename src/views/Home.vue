@@ -1,20 +1,6 @@
 <template>
-  <div class="home-wrap">
-    <!-- <el-select v-model="test">
-      <el-option v-for="item in [1, 3, 4, 5, 7]" :key="item" :label="item"> </el-option>
-    </el-select> -->
-
-    <div class="m-10 p-20" style="line-height: 2;background-color:#fff">
-      9月14日晚，国家主席习近平在北京同欧盟轮值主席国德国总理默克尔、欧洲理事会主席米歇尔、欧盟委员会主席冯德莱恩共同举行会晤，会晤以视频方式举行。中德欧领导人最新会晤有哪些重点信息？释放了哪些积极信号？人民网记者专访多位专家为您解读。
-      9月14日晚，国家主席习近平在北京同欧盟轮值主席国德国总理默克尔、欧洲理事会主席米歇尔、欧盟委员会主席冯德莱恩共同举行会晤，会晤以视频方式举行。
-      新华社记者 庞兴雷 摄 【重点一】会晤时机
-      【解读】德国成为欧盟轮值主席国、中欧疫情有所控制背景下，中欧高层交流推进合作。
-      【中国国际问题研究院常务副院长阮宗泽】今年下半年，德国成为了欧盟轮值主席国，中欧的疫情也有所控制。在此背景下，中欧不仅都需要着力恢复发展经济、保持疫情控制常态化，还需要推进合作。这次中欧高层的交流对于推动中欧关系更上一层楼起到非常重要的作用，也为中欧下一步的发展展现了一个鲜明清晰的路线图。
-      【解读】中欧建交45周年关键节点加强沟通，有助于找到更多利益契合点。
-      【中国国际问题研究院国际战略研究所副所长苏晓晖】在中国与欧盟建交45周年这个关键节点上，一些西方媒体出现了唱衰中欧关系与合作的声音，这类歪曲事实的行为需要批驳和纠正。因此，习近平主席与默克尔总理的视频交流是及时和关键的，也表明了双方对彼此的重视。当今世界正经历百年未有之大变局，新冠肺炎疫情又加速了变化，中国与欧洲都是变局中的重要因素，双方在此时加强沟通，了解彼此的政策及对未来关系的定位，有助于双方找到更多利益契合点，推动双方关系与合作的发展。
-
-      <br />
-    </div>
+  <div class="home-wrap" v-loading="true">
+    测试
   </div>
 </template>
 
@@ -29,4 +15,26 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss">
+.el-loading-spinner .circular {
+  height: 42px;
+  width: 42px;
+  animation: loading-rotate 2s linear infinite;
+  display: none;
+}
+
+.el-loading-mask {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .el-loading-spinner {
+    background: url(~@/assets/images/loading.gif) no-repeat;
+    background-size: 40px 48px;
+    height: 50px;
+    width: 45px;
+    .el-loading-text {
+      margin: 40px 0;
+    }
+  }
+}
+</style>
